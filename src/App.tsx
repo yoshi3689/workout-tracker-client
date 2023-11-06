@@ -5,11 +5,15 @@ import Login from "./routes/Login";
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/:username",
     element: <Root />,
   },
   {
     path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/register",
     element: <Login />,
   },
 ]);
