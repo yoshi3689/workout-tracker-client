@@ -1,5 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import axios, { AxiosError } from 'axios';
+import { useParams } from 'react-router-dom';
 import Routines from '../Routines'
+import Unauthorized from '../Unauthorized';
 
 export type Set = {
   rep?: number;
@@ -26,6 +29,17 @@ const Root = () => {
 
   const [workoutName, setWorkoutName] = useState("");
   const [routines, setRoutines] = useState<Routine[]>([]);
+  const [error, setError] = useState<string>(""); 
+  const params = useParams();
+  useEffect(() => {
+    axios.get("http://localhost:5001/dashboard/" + params.username)
+      .then(res => console.log(res))
+      .catch((error: AxiosError) => {
+        console.error(error.message);
+        setError(error.message);
+      })
+      ;
+  }, [params])
   
 
 
@@ -49,7 +63,8 @@ const Root = () => {
   }
   return (
     <main>
-      <div>
+      {routines && (<div>
+        <div>
         <h3>List of routines created in the past</h3>
         <Routines routines={routines} setRoutines={setRoutines} />
       </div>
@@ -70,6 +85,8 @@ const Root = () => {
           <button onClick={handleCreate}>Create+</button>
         </div>
       </div>
+      </div>)}
+      {error && (<Unauthorized error={error} />)}
     </main>
   );
 }
