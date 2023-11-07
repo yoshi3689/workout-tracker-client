@@ -5,7 +5,7 @@ import Login from "./routes/Login";
 
 const router = createBrowserRouter([
   {
-    path: "/:username",
+    path: "/dashboard/:username",
     element: <Root />,
   },
   {
