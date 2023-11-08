@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction, nanoid } from "@reduxjs/toolkit";
-import { IExercise } from "./exerciseSlice";
 
 export interface ISet {
   ID: string,

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import ExerciseDropdown from './ExerciseDropdown';
 import SetRow from './SetRow';
-import { Routine, Workout } from './routes/Root';
+import { Routine, Workout } from '../routes/Root';
 
 // represent a workout containing info such as 
 // exercise, total reps, sets and etc

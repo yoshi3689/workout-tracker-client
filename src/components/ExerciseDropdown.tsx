@@ -1,5 +1,5 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
-import { Exercise, Workout } from "./routes/Root"
+import React, { useEffect, useState } from "react";
+import { Exercise, Workout } from "../routes/Root"
 
 const ExerciseDropdown: React.FC<{setWorkout:Function, workout: Workout, routineId:number }> = ({ setWorkout, workout, routineId }) => {
   

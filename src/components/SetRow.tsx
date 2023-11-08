@@ -1,5 +1,5 @@
 import React from 'react'
-import { Workout, Set } from "./routes/Root"
+import { Workout, Set } from "../routes/Root"
 const SetRow: React.FC<{ setWorkout: Function; workout: Workout, set: Set }> = ({
   setWorkout,
   workout,

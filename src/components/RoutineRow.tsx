@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Routine, Workout } from './routes/Root';
+import { Routine, Workout } from '../routes/Root';
 // import ExerciseDropdown from './ExerciseDropdown';
 import WorkoutRow from './WorkoutRow';
 

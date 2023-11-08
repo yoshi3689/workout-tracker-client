@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useParams } from 'react-router-dom';
-import Routines from '../Routines'
-import Unauthorized from '../Unauthorized';
+import Routines from '../components/Routines'
+import Unauthorized from '../components/Unauthorized';
 
 export type Set = {
   rep?: number;
