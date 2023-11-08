@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useParams } from 'react-router-dom';
 import Routines from '../Routines'
 import Unauthorized from '../Unauthorized';
@@ -33,7 +33,10 @@ const Root = () => {
   const params = useParams();
   useEffect(() => {
     axios.get("http://localhost:5001/dashboard/" + params.username)
-      .then(res => console.log(res))
+      .then((res: AxiosResponse) => {
+        console.log(res)
+        setRoutines(res.data);
+      })
       .catch((error: AxiosError) => {
         console.error(error.message);
         setError(error.message);
@@ -63,7 +66,7 @@ const Root = () => {
   }
   return (
     <main>
-      {routines && (<div>
+      {(routines && !error) && (<div>
         <div>
         <h3>List of routines created in the past</h3>
         <Routines routines={routines} setRoutines={setRoutines} />
