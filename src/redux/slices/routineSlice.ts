@@ -9,12 +9,7 @@ export interface IRoutine {
 }
 
 export const RoutineInitialState: Record<string, IRoutine> = {
-  useIdHere: {
-    ID: "useIdHere",
-    name: "aaa",
-    createdAt: new Date(),
-    exercises: {},
-  }
+  
 };
 
 

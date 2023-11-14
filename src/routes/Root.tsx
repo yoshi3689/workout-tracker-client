@@ -4,6 +4,9 @@ import { useParams } from 'react-router-dom';
 import Routines from '../components/Routines'
 import Unauthorized from '../components/Unauthorized';
 
+import { useAppSelector } from '../redux/hooks';
+
+
 export type Set = {
   rep?: number;
   rest?: number;
@@ -26,16 +29,21 @@ export type Exercise = {
   };
 
 const Root = () => {
-
   const [workoutName, setWorkoutName] = useState("");
   const [routines, setRoutines] = useState<Routine[]>([]);
   const [error, setError] = useState<string>(""); 
+
+  const loggedInUser = useAppSelector(state => state.user);
+
   const params = useParams();
   useEffect(() => {
-    axios.get("http://localhost:5001/dashboard/" + params.username)
+    // console.log(cookies.jwt);
+    axios.defaults.withCredentials = true
+    axios
+      .get("http://localhost:5001/dashboard/" + params.username)
       .then((res: AxiosResponse) => {
         console.log(res)
-        setRoutines(res.data);
+        setRoutines(res.data.data);
       })
       .catch((error: AxiosError) => {
         console.error(error.message);
@@ -66,6 +74,7 @@ const Root = () => {
   }
   return (
     <main>
+      Welcome {loggedInUser.username}
       {(routines && !error) && (<div>
         <div>
         <h3>List of routines created in the past</h3>
