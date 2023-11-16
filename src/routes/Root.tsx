@@ -14,7 +14,7 @@ const Root = () => {
 
   const loggedInUser = useAppSelector(state => {
     console.log(state);
-    return state.user;
+    return state.persistedReducer.user;
   });
 
   
