@@ -30,13 +30,14 @@ export const userSlice = createSlice({
   initialState: UserInitialState,
   reducers: {
     editUser: (state, action: PayloadAction<IUser>) => {
-      state = { ...action.payload };
+      return { ...action.payload };
     },
     logout: (state) => {
-      state = UserInitialState;
+      return UserInitialState;
     },
     loginOrRegister: (state, action: PayloadAction<IUser>) => {
-      state = action.payload;
+      console.log(action.payload)
+      return action.payload;
     },
   },
 });

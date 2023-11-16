@@ -1,5 +1,5 @@
 import React from 'react'
-import { Routine } from '../routes/Root'
+// import Routine from '../routes/Root'
 import RoutineRow from './RoutineRow';
 
 import Box from "@mui/material/Box";
@@ -15,9 +15,65 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { IRoutine } from '../redux/slices/routineSlice';
 
+const testRoutineObjectArray: IRoutine[] = [
+  {
+  ID: "1",
+  name: "1",
+  createdAt: new Date(),
+  exercises: {
+    11: {
+    ID: "11",
+    name: "11",
+    muscleGroups: ["11"],
+    sets: {
+      111: {
+        ID: "111",
+        rep: 0,
+        weight: 0,
+        rest: 0,
+      },
+      112: {
+        ID: "112",
+        rep: 0,
+        weight: 0,
+        rest: 0,
+      },
+      },
+    }
+  }
+  },
+  {
+  ID: "2",
+  name: "2",
+  createdAt: new Date(),
+  exercises: {
+    22: {
+    ID: "22",
+    name: "22",
+    muscleGroups: ["22"],
+    sets: {
+      212: {
+        ID: "212",
+        rep: 0,
+        weight: 0,
+        rest: 0,
+      },
+      222: {
+        ID: "222",
+        rep: 0,
+        weight: 0,
+        rest: 0,
+      },
+      },
+    }
+  }
+  },
+  
+]
 
-const Routines: React.FC<{ routines: Routine[], setRoutines: Function }> = ({ routines, setRoutines }) => {
+const Routines: React.FC<{ routines: IRoutine[], setRoutines: Function }> = ({ routines, setRoutines }) => {
   
 
   return (
@@ -40,100 +96,26 @@ const Routines: React.FC<{ routines: Routine[], setRoutines: Function }> = ({ ro
               </TableCell>
             </TableRow>
           </TableHead>
-
           <TableBody>
-            {routines &&
-              routines.map((routine) => (
-                <TableRow key={routine.name}>
-                  <TableCell component="th" scope="row">
-                    {routine.name}
-                  </TableCell>
-                  {/* <TableCell>{routine.customerId}</TableCell>
-                      <TableCell align="right">{routine.amount}</TableCell>
-                      <TableCell align="right">
-                        {Math.round(routine.amount * row.price * 100) / 100}
-                      </TableCell> */}
-                </TableRow>
-              ))}
-            <TableRow>
-              <TableCell component="th" scope="row">
-                Hello this is supposed to be routine1
-              </TableCell>
-              {/* <TableCell>{routine.customerId}</TableCell>
-                      <TableCell align="right">{routine.amount}</TableCell>
-                      <TableCell align="right">
-                        {Math.round(routine.amount * row.price * 100) / 100}
-                      </TableCell> */}
-            </TableRow>
-            <TableRow>
-              <TableCell
-                style={{ paddingBottom: 0, paddingTop: 0 }}
-                colSpan={6}
-                scope="row"
-              >
-                This is going to be another row but with a collapsible nested
-                table, and represents name of the routine. In this table, we are
-                trying to display name of exercise and the collapse button
-                <Collapse in={true} timeout="auto" unmountOnExit>
-                  <Box sx={{ margin: 1 }}>
-                    <Typography
-                      variant="h6"
-                      gutterBottom
-                      component="div"
-                    ></Typography>
-                    <Table size="small" aria-label="purchases">
-                      <TableHead>
-                        <TableRow>
-                          <TableCell>Date</TableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        <TableRow>
-                          <TableCell
-                            style={{ paddingBottom: 0, paddingTop: 0 }}
-                            colSpan={6}
-                            scope="row"
-                          >
-                            This is going to be another row but with a
-                            collapsible nested table, and represents name of the
-                            exercise. Collapsible table for displaying each set
-                            as a row
-                            <Collapse in={true} timeout="auto" unmountOnExit>
-                              <Box sx={{ margin: 1 }}>
-                                <Typography
-                                  variant="h6"
-                                  gutterBottom
-                                  component="div"
-                                ></Typography>
-                                <Table size="small" aria-label="purchases">
-                                  <TableHead>
-                                    <TableRow>
-                                      <TableCell>Date</TableCell>
-                                      <TableCell>Customer</TableCell>
-                                      <TableCell align="right">
-                                        Amount
-                                      </TableCell>
-                                      <TableCell align="right">
-                                        Total price ($)
-                                      </TableCell>
-                                    </TableRow>
-                                  </TableHead>
-                                  <TableBody>
-                                    <TableRow>
-                                      <TableCell></TableCell>
-                                    </TableRow>
-                                  </TableBody>
-                                </Table>
-                              </Box>
-                            </Collapse>
-                          </TableCell>
-                        </TableRow>
-                      </TableBody>
-                    </Table>
-                  </Box>
-                </Collapse>
-              </TableCell>
-            </TableRow>
+            {
+              // routines[0]
+              // ? routines.map((routine) => (
+              //     <RoutineRow
+              //       key={routine.name}
+              //       routine={routine}
+              //       setRoutines={setRoutines}
+              //       routines={routines}
+              //     ></RoutineRow>
+              //   ))
+              // :
+              testRoutineObjectArray.map((routine) => (
+                  <RoutineRow
+                    key={routine.name}
+                    routine={routine}
+                    setRoutines={setRoutines}
+                    routines={routines}
+                  ></RoutineRow>
+                ))}
           </TableBody>
         </Table>
       </React.Fragment>

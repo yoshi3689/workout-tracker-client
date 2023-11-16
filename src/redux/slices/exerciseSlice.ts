@@ -4,6 +4,7 @@ import { ISet } from "./setsSlice";
 export interface IExercise {
   ID: string;
   name: string;
+  muscleGroups: [string];
   sets: Record<string, ISet>;
 }
 
@@ -11,6 +12,7 @@ export const ExerciseInitialState: Record<string, IExercise> = {
   useIdHere: {
     ID: "useIdHere",
     name: "aaa",
+    muscleGroups: ['biceps'],
     sets: {}
   }
 };

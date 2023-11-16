@@ -1,40 +1,36 @@
 import React, { useEffect, useState } from "react";
-import { Exercise, Workout } from "../routes/Root"
+import { IExercise } from "../redux/slices/exerciseSlice";
+import exercises from "../data/exercises.json";
 
-const ExerciseDropdown: React.FC<{setWorkout:Function, workout: Workout, routineId:number }> = ({ setWorkout, workout, routineId }) => {
+const ExerciseDropdown: React.FC<{setExercise:Function, exercise: IExercise, routineId:string }> = ({ setExercise, exercise, routineId }) => {
   
-  const [exercises, setExercises] = useState<Exercise[]>([])
 
   const handleChange = (value:string) => {
-    setWorkout({
-      ...workout,
+    setExercise({
+      ...exercise,
       exercise: value
     });
   }
-  useEffect(() => {
-    fetch("/api/exercises")
-      .then((res) => res.json())
-      .then((data) => setExercises(data));
-  }, []);
+  
   return (
-    <div>
-      <label htmlFor="exercise">Exercise name:</label>
+    <>
+      <label htmlFor="exercise">Exercis name:</label>
 
       {exercises && exercises[0] && (
         <select
           name="exercise"
           id="exercise"
-          value={workout.exercise}
+          value={exercise.name}
           onChange={(e) => handleChange(e.target.value)}
         >
           {exercises.map((e, i) => (
-            <option key={e.name+routineId+i} value={e.name}>
+            <option key={e.name + routineId + i} value={e.name}>
               {e.name}
             </option>
           ))}
         </select>
       )}
-    </div>
+    </>
   );
 }
 

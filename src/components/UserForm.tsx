@@ -54,8 +54,8 @@ const UserForm: React.FC = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     const res = isLogin
-      ? await axios.post("/login", { username, password })
-      : await axios.post("/register", { username, password, email });
+      ? await axios.post("api/login", { username, password })
+      : await axios.post("api/register", { username, password, email });
     const user: IUser = res.data
     console.log(user)
     dispatch(loginOrRegister(user));

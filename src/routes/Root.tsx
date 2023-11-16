@@ -5,52 +5,33 @@ import Routines from '../components/Routines'
 import Unauthorized from '../components/Unauthorized';
 
 import { useAppSelector } from '../redux/hooks';
-
-
-export type Set = {
-  rep?: number;
-  rest?: number;
-  weight?: number;
-};
-export type Workout = {
-  exercise: string;
-  sets: Set[];
-  totalReps: number;
-};
-export type Routine = {
-  id: number;
-  name: string;
-  workouts: Workout[];
-};
-
-export type Exercise = {
-    name: string;
-    muscleGroup: string;
-  };
+import { IRoutine } from '../redux/slices/routineSlice';
 
 const Root = () => {
   const [workoutName, setWorkoutName] = useState("");
-  const [routines, setRoutines] = useState<Routine[]>([]);
+  const [routines, setRoutines] = useState<IRoutine[]>([]);
   const [error, setError] = useState<string>(""); 
 
-  const loggedInUser = useAppSelector(state => state.user);
+  const loggedInUser = useAppSelector(state => {
+    console.log(state);
+    return state.user;
+  });
 
   const params = useParams();
   useEffect(() => {
-    // console.log(cookies.jwt);
+    console.log(loggedInUser)
     axios.defaults.withCredentials = true
     axios
-      .get("http://localhost:5001/dashboard/" + params.username)
+      .get(`http://localhost:5001/api/dashboard/` + params.username)
       .then((res: AxiosResponse) => {
-        console.log(res)
+        console.log(res);
         setRoutines(res.data.data);
       })
       .catch((error: AxiosError) => {
         console.error(error.message);
         setError(error.message);
-      })
-      ;
-  }, [params])
+      });
+  }, [params, loggedInUser])
   
 
 
@@ -66,16 +47,17 @@ const Root = () => {
   const handleCreate = () => {
     // should I make an interface for Routine type or no??
     setRoutines([...routines,
-      { id: routines.length,
+      { ID: "",
         name: workoutName,
-        workouts: []
+        exercises: {},
+        createdAt: new Date()
     }]);
     setWorkoutName("");
   }
   return (
     <main>
       Welcome {loggedInUser.username}
-      {(routines && !error) && (<div>
+      {(!error) && (<div>
         <div>
         <h3>List of routines created in the past</h3>
         <Routines routines={routines} setRoutines={setRoutines} />

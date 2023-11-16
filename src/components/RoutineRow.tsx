@@ -1,12 +1,27 @@
 import React, { useEffect, useState } from 'react'
-import { Routine, Workout } from '../routes/Root';
 // import ExerciseDropdown from './ExerciseDropdown';
-import WorkoutRow from './WorkoutRow';
+import ExerciseRow from './ExerciseRow';
+import { IRoutine } from '../redux/slices/routineSlice';
+
+import Box from "@mui/material/Box";
+import Collapse from "@mui/material/Collapse";
+import IconButton from "@mui/material/IconButton";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { IExercise } from '../redux/slices/exerciseSlice';
 
 // represent a whole workout routine
-const RoutineRow: React.FC<{ routine: Routine, setRoutines: Function, routines: Routine[]  }> = ({ routine, setRoutines, routines }) => {
-  const [workouts, setWorkouts] = useState<Workout[]>([
-    { exercise: "", totalReps: 0, sets: [] },
+const RoutineRow: React.FC<{ routine: IRoutine, setRoutines: Function, routines: IRoutine[]  }> = ({ routine, setRoutines, routines }) => {
+  const [workouts, setWorkouts] = useState<IExercise[]>([
+    { ID:"exerciseTest", name: "", sets: {}, muscleGroups: [""] },
   ]);
   useEffect(() => {
     console.log(workouts);
@@ -15,24 +30,38 @@ const RoutineRow: React.FC<{ routine: Routine, setRoutines: Function, routines: 
 
   // add a new workout
   const handleAdd = () => {
-    setWorkouts([...workouts, { exercise: "", totalReps: 0, sets: [] }]);
+    setWorkouts([
+      ...workouts,
+      { ID: "exerciseTest", name: "", sets: {}, muscleGroups: [""] },
+    ]);
   };
   return (
     <div className="row">
-      <h4>Routine name: {routine.name}</h4>
-      <div>
-        <h5>List of workout</h5>
-        <div>
-          {workouts.map((workout, i) => (
-            <WorkoutRow
-              workout={workout}
-              routineId={routine.id}
-              key={i + "" + routine.id}
+      <TableRow>
+        <TableCell scope="row">
+          <Typography>{routine.name}</Typography>
+        </TableCell>
+        {/* <TableCell>{routine.customerId}</TableCell>
+            <TableCell align="right">{routine.amount}</TableCell>
+            <TableCell align="right">
+              {Math.round(routine.amount * row.price * 100) / 100}
+            </TableCell> */}
+        <TableCell>
+          {workouts.map((exercise, i) => (
+            <ExerciseRow
+              exercise={exercise}
+              routineId={routine.ID}
+              key={i + "" + routine.ID}
               setRoutines={setRoutines}
               routines={routines}
             />
           ))}
-        </div>
+        </TableCell>
+      </TableRow>
+      <h4></h4>
+      <div>
+        <h5>List of exercises</h5>
+        <div></div>
       </div>
       <div>
         <button onClick={handleAdd}>Add Exercise +</button>

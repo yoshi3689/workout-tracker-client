@@ -9,34 +9,7 @@ export interface IRoutine {
 }
 
 export const RoutineInitialState: Record<string, IRoutine> = {
-  
 };
-
-
-
-// {
-//     Routines: {
-//         [ID]: {
-//             ID: string,
-//             RandomizeQuestions: boolean,
-//             RandomizeAnswers: boolean,
-//             Blocks: string[] // array of block IDs
-//         }
-//     }
-//     Blocks: {
-//         [ID]: {
-//             ID: string, 
-//             Title: string,  
-//             Questions: string[] // array of question IDs
-//         }
-//     },
-//     Questions: // etc.
-// }
-// export const UNINITIALIZED = "UNINITIALIZED"
-// type State = typeof RoutineInitialState | typeof UNINITIALIZED | null;
-
-// // Define your initial state
-// const initialState: State  = UNINITIALIZED;
 
 export const RoutineSlice = createSlice({
   name: "Routines",

@@ -13,6 +13,8 @@ const store = configureStore({
     sets: SetSlice.reducer,
     user: userSlice.reducer
   },
+  devTools: { trace: true, traceLimit: 25 },
+      
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
