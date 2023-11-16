@@ -56,10 +56,9 @@ const UserForm: React.FC = () => {
     const res = isLogin
       ? await axios.post("api/login", { username, password })
       : await axios.post("api/register", { username, password, email });
-    const user: IUser = res.data
-    console.log(user)
-    dispatch(loginOrRegister(user));
-    navigate(`/dashboard/${user.username}`);
+    const accessToken: string = res.data.accessToken
+    dispatch(loginOrRegister({username, accessToken}));
+    navigate(`/dashboard/${username}`);
   }
 
   const handleFormSwitch = (e:any) => {

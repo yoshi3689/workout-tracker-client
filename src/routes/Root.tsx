@@ -17,12 +17,14 @@ const Root = () => {
     return state.user;
   });
 
-  const params = useParams();
+  
   useEffect(() => {
     console.log(loggedInUser)
-    axios.defaults.withCredentials = true
-    axios
-      .get(`http://localhost:5001/api/dashboard/` + params.username)
+    axios.defaults.withCredentials = true;
+    axios.get(
+      `http://localhost:5001/api/dashboard/` + loggedInUser.username,
+      {headers:{ "Authorization": `Bearer ${loggedInUser.accessToken}` }}
+      )
       .then((res: AxiosResponse) => {
         console.log(res);
         setRoutines(res.data.data);
@@ -31,7 +33,7 @@ const Root = () => {
         console.error(error.message);
         setError(error.message);
       });
-  }, [params, loggedInUser])
+  }, [loggedInUser])
   
 
 

@@ -1,15 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IRoutine } from "./routineSlice";
 
 export interface IUser {
-  _id: string,
-  username: string;
-  email: string;
-  password: string;
-  createdAt: string|null;
-  lastActiveAt: string|null;
-  isEmailVerified: boolean;
-  routines: null;
+  _id?: string,
+  username?: string;
+  email?: string;
+  accessToken?: string;
+  createdAt?: string|null;
+  lastActiveAt?: string|null;
+  isEmailVerified?: boolean;
   roles?: [string];
 }
 
@@ -17,11 +15,10 @@ export const UserInitialState: IUser|null = {
   _id: "",
   username: "",
   email: "",
-  password: "",
+  accessToken: "",
   createdAt: "",
   lastActiveAt: "",
   isEmailVerified: false,
-  routines: null,
   roles: [""],
 };
 
