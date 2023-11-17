@@ -5,6 +5,7 @@ export interface IUser {
   username?: string;
   email?: string;
   accessToken?: string;
+  isLoggedIn?: boolean;
   createdAt?: string|null;
   lastActiveAt?: string|null;
   isEmailVerified?: boolean;
@@ -16,6 +17,7 @@ export const UserInitialState: IUser|null = {
   username: "",
   email: "",
   accessToken: "",
+  isLoggedIn: false,
   createdAt: "",
   lastActiveAt: "",
   isEmailVerified: false,
@@ -36,7 +38,11 @@ export const userSlice = createSlice({
       console.log(action.payload)
       return action.payload;
     },
+    checkLoginStatus: (state, action: PayloadAction<IUser>) => {
+      console.log(action.payload)
+      return { ...state, isLoggedIn: action.payload.isLoggedIn };
+    },
   },
 });
 
-export const { editUser, logout, loginOrRegister } = userSlice.actions
+export const { editUser, logout, loginOrRegister, checkLoginStatus } = userSlice.actions

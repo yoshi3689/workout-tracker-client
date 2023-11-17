@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { useParams } from 'react-router-dom';
 import Routines from '../components/Routines'
 import Unauthorized from '../components/Unauthorized';
 
 import { useAppSelector } from '../redux/hooks';
+import { useAppDispatch } from '../redux/hooks';
 import { IRoutine } from '../redux/slices/routineSlice';
+import { checkLoginStatus } from '../redux/slices/userSlice';
 
 const Root = () => {
   const [workoutName, setWorkoutName] = useState("");
@@ -13,9 +14,10 @@ const Root = () => {
   const [error, setError] = useState<string>(""); 
 
   const loggedInUser = useAppSelector(state => {
-    console.log(state);
     return state.persistedReducer.user;
   });
+
+  const dispatch = useAppDispatch();
 
   
   useEffect(() => {
@@ -23,17 +25,18 @@ const Root = () => {
     axios.defaults.withCredentials = true;
     axios.get(
       `http://localhost:5001/api/dashboard/` + loggedInUser.username,
-      {headers:{ "Authorization": `Bearer ${loggedInUser.accessToken}` }}
-      )
+      { headers: { "Authorization": `Bearer ${loggedInUser.accessToken}` } }
+    )
       .then((res: AxiosResponse) => {
         console.log(res);
         setRoutines(res.data.data);
       })
       .catch((error: AxiosError) => {
+        dispatch(checkLoginStatus({ isLoggedIn: false }));
         console.error(error.message);
         setError(error.message);
       });
-  }, [loggedInUser])
+  }, [dispatch, loggedInUser]);
   
 
 

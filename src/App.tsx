@@ -2,11 +2,14 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Root from "./routes/Root";
 import Login from "./routes/Login";
 import Register from "./routes/Register";
+import Home from "./routes/Home";
+
+import LoginPersist from "./middleware/LoginPersist"
 
 const router = createBrowserRouter([
   {
-    path: "/dashboard/:username",
-    element: <Root />,
+    path: "/",
+    element: <Home />,
   },
   {
     path: "/login",
@@ -15,6 +18,16 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "/",
+    element: <LoginPersist />,
+    children: [
+      {
+        path: "/dashboard/:username",
+        element: <Root />,
+      },
+    ],
   },
 ]);
 
