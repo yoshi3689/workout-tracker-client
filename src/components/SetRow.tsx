@@ -27,9 +27,6 @@ const SetRow: React.FC<{ setExercise: Function; exercise: IExercise, set: ISet }
           colSpan={6}
           scope="row"
         >
-          This is going to be another row but with a collapsible nested table,
-          and represents name of the exercise. Collapsible table for displaying
-          each set as a row
           <Collapse in={true} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Typography
@@ -40,10 +37,6 @@ const SetRow: React.FC<{ setExercise: Function; exercise: IExercise, set: ISet }
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Date</TableCell>
-                    <TableCell>Customer</TableCell>
-                    <TableCell align="right">Amount</TableCell>
-                    <TableCell align="right">Total price ($)</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>

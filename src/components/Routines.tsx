@@ -74,52 +74,58 @@ const testRoutineObjectArray: IRoutine[] = [
 ]
 
 const Routines: React.FC<{ routines: IRoutine[], setRoutines: Function }> = ({ routines, setRoutines }) => {
-  
-
   return (
-    <div>
-      <React.Fragment>
-        <Table>
-          <TableHead>
-            <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
-              {/* <TableCell>
-          <IconButton
-            aria-label="expand row"
-            size="small"
-            onClick={() => setOpen(!open)}
-          >
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
-        </TableCell> */}
-              <TableCell component="th" scope="row" align="center">
-                list of Rutines
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {
-              // routines[0]
-              // ? routines.map((routine) => (
-              //     <RoutineRow
-              //       key={routine.name}
-              //       routine={routine}
-              //       setRoutines={setRoutines}
-              //       routines={routines}
-              //     ></RoutineRow>
-              //   ))
-              // :
-              testRoutineObjectArray.map((routine) => (
-                  <RoutineRow
-                    key={routine.name}
-                    routine={routine}
-                    setRoutines={setRoutines}
-                    routines={routines}
-                  ></RoutineRow>
-                ))}
-          </TableBody>
-        </Table>
-      </React.Fragment>
-    </div>
+    // <div>
+    //   <React.Fragment>
+    //     <Table>
+    //       <TableHead>
+    //         <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
+
+    //           <TableCell component="th" scope="row" align="center">
+    //             list of Rutines
+    //           </TableCell>
+    //         </TableRow>
+    //       </TableHead>
+    //     </Table>
+    //   </React.Fragment>
+    // </div>
+
+    <TableContainer component={Paper} style={{"maxWidth":"500px"}}>
+      <Table aria-label="collapsible table" >
+        <TableHead>
+          <TableRow>
+            {/* <TableCell />
+            <TableCell />
+            <TableCell>
+              <Typography component="h4" gutterBottom>
+                Routines
+              </Typography>
+            </TableCell>
+            <TableCell />
+            <TableCell /> */}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {routines
+            ? routines.map((routine) => (
+                <RoutineRow
+                  key={routine.name}
+                  routine={routine}
+                  setRoutines={setRoutines}
+                  routines={routines}
+                ></RoutineRow>
+              ))
+            : testRoutineObjectArray.map((routine) => (
+                <RoutineRow
+                  key={routine.name}
+                  routine={routine}
+                  setRoutines={setRoutines}
+                  routines={routines}
+                ></RoutineRow>
+              ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 

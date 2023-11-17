@@ -17,6 +17,8 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { IExercise } from '../redux/slices/exerciseSlice';
 import { IRoutine } from '../redux/slices/routineSlice';
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import ClearIcon from "@mui/icons-material/Clear";
 
 // represent a Exercise containing info such as 
 // exercise, total reps, sets and etc
@@ -49,58 +51,46 @@ const ExerciseRow: React.FC<{ exercise: IExercise, setRoutines: Function, routin
     });
   }
   return (
-    <div className="row">
-      <TableRow>
-        <TableCell
-          style={{ paddingBottom: 0, paddingTop: 0 }}
-          colSpan={6}
-          scope="row"
-        >
-          This is going to be another row but with a collapsible nested table,
-          and represents name of the exercise. In this table, we are trying to
-          display name of exercise and the collapse button
-          <Collapse in={true} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }}>
-              <Typography
-                variant="h6"
-                gutterBottom
-                component="div"
-              ></Typography>
-              <Table size="small" aria-label="purchases">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Sets</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  
-                </TableBody>
-              </Table>
-            </Box>
-          </Collapse>
-        </TableCell>
-      </TableRow>
-      ExerciseRow
-      <ExerciseDropdown
-        routineId={routineId}
-        exercise={currentExercise}
-        setExercise={setCurrentExercise}
-      />
-      <h6>Sets:</h6>
-      <div>
-        {/* {currentExercise.sets && currentExercise.sets.} */}
-        {Object.values(currentExercise.sets).map((set, i) => (
-          <SetRow
-            exercise={currentExercise}
-            key={"" + i + routineId}
-            set={set}
-            setExercise={setCurrentExercise}
-          />
-        ))}
-        <button onClick={handleAdd}>Add Set</button>
-        <button>---Remove Exercise</button>
-      </div>
-    </div>
+    <Box sx={{ margin: 1 }}>
+      <Table size="small" aria-label="purchases">
+        <TableHead>
+          <TableRow>
+            <TableCell component="th">
+              <Typography component="h5">Exercises</Typography>
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          <TableRow>
+            <TableCell>
+              <ExerciseDropdown
+                routineId={routineId}
+                exercise={currentExercise}
+                setExercise={setCurrentExercise}
+              />
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              {Object.values(currentExercise.sets).map((set, i) => (
+                <SetRow
+                  exercise={currentExercise}
+                  key={"" + i + routineId}
+                  set={set}
+                  setExercise={setCurrentExercise}
+                />
+              ))}
+              <IconButton color="primary" onClick={handleAdd}>
+                <AddCircleIcon />
+              </IconButton>
+              <IconButton color="secondary" onClick={handleAdd}>
+                <ClearIcon />
+              </IconButton>
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </Box>
   );
 };
 

@@ -3,23 +3,28 @@ import React, { useEffect, useState } from 'react'
 import ExerciseRow from './ExerciseRow';
 import { IRoutine } from '../redux/slices/routineSlice';
 
-import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
+
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { IExercise } from '../redux/slices/exerciseSlice';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 // represent a whole workout routine
-const RoutineRow: React.FC<{ routine: IRoutine, setRoutines: Function, routines: IRoutine[]  }> = ({ routine, setRoutines, routines }) => {
+const RoutineRow: React.FC<{ routine: IRoutine, setRoutines: Function, routines: IRoutine[] }> = ({ routine, setRoutines, routines }) => {
+        /* <TableCell>
+          <IconButton
+            aria-label="expand row"
+            size="small"
+            onClick={() => setOpen(!open)}
+          >
+            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+          </IconButton>
+        </TableCell> */
+  const [open, setOpen] = React.useState(false);
   const [workouts, setWorkouts] = useState<IExercise[]>([
     { ID:"exerciseTest", name: "", sets: {}, muscleGroups: [""] },
   ]);
@@ -35,18 +40,50 @@ const RoutineRow: React.FC<{ routine: IRoutine, setRoutines: Function, routines:
       { ID: "exerciseTest", name: "", sets: {}, muscleGroups: [""] },
     ]);
   };
+
   return (
-    <div className="row">
-      <TableRow>
-        <TableCell scope="row">
-          <Typography>{routine.name}</Typography>
+    <React.Fragment>
+      <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
+        <TableCell width="30%">
+          <IconButton
+            aria-label="expand row"
+            size="small"
+            onClick={() => setOpen(!open)}
+          >
+            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+          </IconButton>
         </TableCell>
-        {/* <TableCell>{routine.customerId}</TableCell>
-            <TableCell align="right">{routine.amount}</TableCell>
-            <TableCell align="right">
-              {Math.round(routine.amount * row.price * 100) / 100}
-            </TableCell> */}
-        <TableCell>
+        <TableCell align="left" component="th" scope="row">
+          {routine.name}
+        </TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            {workouts.map((exercise, i) => (
+              <ExerciseRow
+                exercise={exercise}
+                routineId={routine.ID}
+                key={i + "" + routine.ID}
+                setRoutines={setRoutines}
+                routines={routines}
+              />
+            ))}
+          </Collapse>
+        </TableCell>
+      </TableRow>
+      <TableRow>
+        <IconButton color="primary">
+          <AddCircleIcon />
+        </IconButton>
+      </TableRow>
+    </React.Fragment>
+  );
+};
+
+export default RoutineRow
+
+{/* <TableCell>
           {workouts.map((exercise, i) => (
             <ExerciseRow
               exercise={exercise}
@@ -56,18 +93,4 @@ const RoutineRow: React.FC<{ routine: IRoutine, setRoutines: Function, routines:
               routines={routines}
             />
           ))}
-        </TableCell>
-      </TableRow>
-      <h4></h4>
-      <div>
-        <h5>List of exercises</h5>
-        <div></div>
-      </div>
-      <div>
-        <button onClick={handleAdd}>Add Exercise +</button>
-      </div>
-    </div>
-  );
-};
-
-export default RoutineRow
+        </TableCell> */}
