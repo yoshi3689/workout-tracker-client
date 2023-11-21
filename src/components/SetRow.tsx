@@ -1,67 +1,74 @@
-import React from 'react'
-// import { Exercise, Set } from "../routes/Root"
-import { IExercise } from '../redux/slices/exerciseSlice';
-import { ISet } from '../redux/slices/setsSlice';
+import React, { useState } from 'react'
+
+import { ISet, editSet, deleteSet } from '../redux/slices/setsSlice';
+import { useAppDispatch } from "../redux/hooks";
 
 import Box from "@mui/material/Box";
-import Collapse from "@mui/material/Collapse";
-import IconButton from "@mui/material/IconButton";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 
-const SetRow: React.FC<{ setExercise: Function; exercise: IExercise, set: ISet }> = ({
-  setExercise,
-  exercise,
+import Input from "@mui/material/Input";
+import InputLabel from "@mui/material/InputLabel";
+import InputAdornment from "@mui/material/InputAdornment";
+import FormControl from "@mui/material/FormControl";
+
+import ClearIcon from "@mui/icons-material/Clear";
+import IconButton from "@mui/material/IconButton";
+
+const SetRow: React.FC<{ set: ISet }> = ({
   set
 }) => {
+  const dispatch = useAppDispatch();
+
+  const [rest, setRest] = useState(0);
+  const [weight, setWeight] = useState(0);
+  const [rep, setRep] = useState(0);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement|HTMLTextAreaElement>, setState: Function) => {
+    console.log(e.currentTarget.value);
+    setState(e.currentTarget.value);
+    dispatch(editSet({ ID: "" ,rest, weight, rep: rep }));
+  }
+  const handleDelete = () => {
+    console.log("attempting to remove this set");
+    dispatch(deleteSet("place ID here"));
+  }
   return (
-    <>
-      <TableRow>
-        <TableCell
-          style={{ paddingBottom: 0, paddingTop: 0 }}
-          colSpan={6}
-          scope="row"
-        >
-          <Collapse in={true} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }}>
-              <Typography
-                variant="h6"
-                gutterBottom
-                component="div"
-              ></Typography>
-              <Table size="small" aria-label="purchases">
-                <TableHead>
-                  <TableRow>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow>
-                    <TableCell></TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </Box>
-          </Collapse>
-        </TableCell>
-      </TableRow>
-      <div className="row">
-        <label htmlFor="reps">reps</label>
-
-        <input type="number" name="reps" id="reps" />
-        <label htmlFor="rest">rest</label>
-
-        <input type="number" name="rest" id="rest" />
-
-        <label htmlFor="weight">weight</label>
-        <input type="number" name="weight" id="weight" />
-        <button>---Remove Set</button>
-      </div>
-    </>
+    <Box display="flex" className={`set`}>
+      <FormControl sx={{ m: 1 }} variant="standard">
+        <InputLabel shrink={true} htmlFor="standard-adornment-rep">
+          rep
+        </InputLabel>
+        <Input id="standard-adornment-rep" onChange={(e) => {
+          handleChange(e, setRep);
+        }} />
+      </FormControl>
+      <FormControl sx={{ m: 1 }} variant="standard">
+        <InputLabel shrink={true} htmlFor="standard-adornment-weight" >
+          weight
+        </InputLabel>
+        <Input
+          id="standard-adornment-weight"
+          endAdornment={<InputAdornment position="end">lbs</InputAdornment>}
+          onChange={(e) => {
+          handleChange(e, setWeight);
+        }}
+        />
+      </FormControl>
+      <FormControl sx={{ m: 1 }} variant="standard">
+        <InputLabel shrink={true} htmlFor="standard-adornment-rest">
+          rest
+        </InputLabel>
+        <Input
+          id="standard-adornment-rest"
+          endAdornment={<InputAdornment position="end">(s)</InputAdornment>}
+          onChange={(e) => {
+          handleChange(e, setRest);
+        }}
+        />
+      </FormControl>
+      <IconButton className="mt-1" color="secondary" onClick={handleDelete}>
+        <ClearIcon />
+      </IconButton>
+    </Box>
   );
 };
 

@@ -2,11 +2,39 @@ import React, { useState, useEffect } from 'react'
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import Routines from '../components/Routines'
 import Unauthorized from '../components/Unauthorized';
+import RoutineRow from "../components/RoutineRow";
 
 import { useAppSelector } from '../redux/hooks';
 import { useAppDispatch } from '../redux/hooks';
 import { IRoutine } from '../redux/slices/routineSlice';
 import { checkLoginStatus } from '../redux/slices/userSlice';
+
+const routine:IRoutine = {
+  ID: "1",
+  name: "1",
+  createdAt: new Date(),
+  exercises: {
+    11: {
+      ID: "11",
+      name: "11",
+      muscleGroups: ["11"],
+      sets: {
+        111: {
+          ID: "111",
+          rep: 0,
+          weight: 0,
+          rest: 0,
+        },
+        112: {
+          ID: "112",
+          rep: 0,
+          weight: 0,
+          rest: 0,
+        },
+      },
+    }
+  }
+};
 
 const Root = () => {
   const [workoutName, setWorkoutName] = useState("");
@@ -62,30 +90,39 @@ const Root = () => {
   return (
     <main>
       Welcome {loggedInUser.username}
-      {(!error) && (<div>
+      {!error && (
         <div>
-        <h3>List of routines created in the past</h3>
-        <Routines routines={routines} setRoutines={setRoutines} />
-      </div>
-      <div className="stick-to-bottom">
-        <h4>
-          <label htmlFor="workout-name">Name</label>
-        </h4>
-        <div>
-          <input
-            type="text"
-            name="workout-name"
-            id="workout-name"
-            onChange={(e) => setWorkoutName(e.target.value)}
-          />
+          <div>
+            <h3>List of routines created in the past</h3>
+            <Routines routines={routines} setRoutines={setRoutines} />
+          </div>
+          <div className="stick-to-bottom">
+            <h4>
+              <label htmlFor="workout-name">Name</label>
+            </h4>
+            <div>
+              <RoutineRow
+                key={routine.name}
+                routine={routine}
+                setRoutines={setRoutines}
+                routines={routines}
+                isNew={false}
+              />
+              <input
+                type="text"
+                name="workout-name"
+                id="workout-name"
+                onChange={(e) => setWorkoutName(e.target.value)}
+              />
+            </div>
+            <div>
+              <button onClick={handleCancel}>Cancel</button>
+              <button onClick={handleCreate}>Create+</button>
+            </div>
+          </div>
         </div>
-        <div>
-          <button onClick={handleCancel}>Cancel</button>
-          <button onClick={handleCreate}>Create+</button>
-        </div>
-      </div>
-      </div>)}
-      {error && (<Unauthorized error={error} />)}
+      )}
+      {error && <Unauthorized error={error} />}
     </main>
   );
 }

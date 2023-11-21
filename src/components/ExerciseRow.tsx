@@ -1,24 +1,22 @@
 import React, { useState } from 'react'
 import ExerciseDropdown from './ExerciseDropdown';
-import SetRow from './SetRow';
+
+import { useAppDispatch } from "../redux/hooks";
 
 import Box from "@mui/material/Box";
-import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
+
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { IExercise } from '../redux/slices/exerciseSlice';
 import { IRoutine } from '../redux/slices/routineSlice';
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import ClearIcon from "@mui/icons-material/Clear";
+import SetRows from './SetRows';
 
 // represent a Exercise containing info such as 
 // exercise, total reps, sets and etc
@@ -28,6 +26,7 @@ const ExerciseRow: React.FC<{ exercise: IExercise, setRoutines: Function, routin
   // build a function that modifies a routine in the list.
   // specifically the Exercises of the routine by reflecting the state change
   // in Exercises list
+  const dispatch = useAppDispatch();
   const [currentExercise, setCurrentExercise] = useState<IExercise>({
     ID: "",
     name: "",
@@ -72,20 +71,15 @@ const ExerciseRow: React.FC<{ exercise: IExercise, setRoutines: Function, routin
           </TableRow>
           <TableRow>
             <TableCell>
-              {Object.values(currentExercise.sets).map((set, i) => (
-                <SetRow
-                  exercise={currentExercise}
-                  key={"" + i + routineId}
-                  set={set}
-                  setExercise={setCurrentExercise}
+              <SetRows
+                  sets={Object.values(currentExercise.sets)}
                 />
-              ))}
-              <IconButton color="primary" onClick={handleAdd}>
+              {/* <IconButton color="primary" onClick={handleAdd}>
                 <AddCircleIcon />
               </IconButton>
               <IconButton color="secondary" onClick={handleAdd}>
                 <ClearIcon />
-              </IconButton>
+              </IconButton> */}
             </TableCell>
           </TableRow>
         </TableBody>

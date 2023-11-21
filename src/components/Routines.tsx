@@ -2,9 +2,6 @@ import React from 'react'
 // import Routine from '../routes/Root'
 import RoutineRow from './RoutineRow';
 
-import Box from "@mui/material/Box";
-import Collapse from "@mui/material/Collapse";
-import IconButton from "@mui/material/IconButton";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -75,34 +72,14 @@ const testRoutineObjectArray: IRoutine[] = [
 
 const Routines: React.FC<{ routines: IRoutine[], setRoutines: Function }> = ({ routines, setRoutines }) => {
   return (
-    // <div>
-    //   <React.Fragment>
-    //     <Table>
-    //       <TableHead>
-    //         <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
-
-    //           <TableCell component="th" scope="row" align="center">
-    //             list of Rutines
-    //           </TableCell>
-    //         </TableRow>
-    //       </TableHead>
-    //     </Table>
-    //   </React.Fragment>
-    // </div>
-
-    <TableContainer component={Paper} style={{"maxWidth":"500px"}}>
-      <Table aria-label="collapsible table" >
+    <TableContainer component={Paper} style={{ maxWidth: "500px" }}>
+      <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>
-            {/* <TableCell />
-            <TableCell />
+            <TableCell></TableCell>
             <TableCell>
-              <Typography component="h4" gutterBottom>
-                Routines
-              </Typography>
+              <Typography component="h4">Routines</Typography>
             </TableCell>
-            <TableCell />
-            <TableCell /> */}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -113,6 +90,7 @@ const Routines: React.FC<{ routines: IRoutine[], setRoutines: Function }> = ({ r
                   routine={routine}
                   setRoutines={setRoutines}
                   routines={routines}
+                  isNew={false}
                 ></RoutineRow>
               ))
             : testRoutineObjectArray.map((routine) => (
@@ -121,7 +99,8 @@ const Routines: React.FC<{ routines: IRoutine[], setRoutines: Function }> = ({ r
                   routine={routine}
                   setRoutines={setRoutines}
                   routines={routines}
-                ></RoutineRow>
+                  isNew={false}
+                />
               ))}
         </TableBody>
       </Table>

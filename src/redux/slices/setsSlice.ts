@@ -33,4 +33,4 @@ export const SetSlice = createSlice({
   },
 });
 
-export const { addSet } = SetSlice.actions
+export const { addSet, editSet, deleteSet } = SetSlice.actions
