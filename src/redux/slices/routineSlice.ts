@@ -5,6 +5,7 @@ export interface IRoutine {
   _id: string,
   name: string,
   createdAt: Date,
+  isEditing: boolean,
   exercises: Record<string, IExercise>,
 }
 

@@ -19,6 +19,7 @@ const testRoutineObjectArray: IRoutine[] = [
   _id: "1",
   name: "1",
   createdAt: new Date(),
+  isEditing: false,
   exercises: {
     11: {
     _id: "11",
@@ -45,6 +46,7 @@ const testRoutineObjectArray: IRoutine[] = [
   _id: "2",
   name: "2",
   createdAt: new Date(),
+  isEditing: false,
   exercises: {
     22: {
     _id: "22",
