@@ -16,7 +16,7 @@ import { IExercise, addExercise } from '../redux/slices/exerciseSlice';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 // represent a whole workout routine
-const RoutineRow: React.FC<{ routine:IRoutine, setRoutines: Function, routines: IRoutine[], isNew: boolean  }> = ({ routine, setRoutines, routines, isNew }) => {
+const RoutineRow: React.FC<{ routine:IRoutine, isNew: boolean  }> = ({ routine, isNew }) => {
 
   const [open, setOpen] = React.useState(false);
   const [workouts, setWorkouts] = useState<IExercise[]>([
@@ -64,8 +64,6 @@ const RoutineRow: React.FC<{ routine:IRoutine, setRoutines: Function, routines: 
                   exercise={exercise}
                   routineId={routine._id}
                   key={i + "" + routine._id}
-                  setRoutines={setRoutines}
-                  routines={routines}
                 />
               ))}
             </Collapse>
@@ -76,8 +74,6 @@ const RoutineRow: React.FC<{ routine:IRoutine, setRoutines: Function, routines: 
                   exercise={exercise}
                   routineId={routine._id}
                   key={i + "" + routine._id}
-                  setRoutines={setRoutines}
-                  routines={routines}
                 />
               ))}
             </>

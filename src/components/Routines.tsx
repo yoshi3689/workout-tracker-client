@@ -1,5 +1,4 @@
 import React from 'react'
-// import Routine from '../routes/Root'
 import RoutineRow from './RoutineRow';
 
 import Table from "@mui/material/Table";
@@ -90,8 +89,6 @@ const Routines: React.FC<{ routines: IRoutine[], setRoutines: Function }> = ({ r
                 <RoutineRow
                   key={routine.name}
                   routine={routine}
-                  setRoutines={setRoutines}
-                  routines={routines}
                   isNew={false}
                 ></RoutineRow>
               ))
@@ -99,8 +96,6 @@ const Routines: React.FC<{ routines: IRoutine[], setRoutines: Function }> = ({ r
                 <RoutineRow
                   key={routine.name}
                   routine={routine}
-                  setRoutines={setRoutines}
-                  routines={routines}
                   isNew={false}
                 />
               ))}

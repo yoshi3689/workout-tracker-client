@@ -20,8 +20,8 @@ import SetRows from './SetRows';
 
 // represent a Exercise containing info such as 
 // exercise, total reps, sets and etc
-const ExerciseRow: React.FC<{ exercise: IExercise, setRoutines: Function, routineId: string, routines: IRoutine[] }> = ({
-  exercise, setRoutines, routineId, routines
+const ExerciseRow: React.FC<{ exercise: IExercise, routineId: string }> = ({
+  exercise, routineId,
 }) => {
   // build a function that modifies a routine in the list.
   // specifically the Exercises of the routine by reflecting the state change

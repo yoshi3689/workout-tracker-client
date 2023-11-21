@@ -4,10 +4,20 @@ import Routines from '../components/Routines'
 import Unauthorized from '../components/Unauthorized';
 import RoutineRow from "../components/RoutineRow";
 
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import Paper from "@mui/material/Paper";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/material/Typography";
+
 import { useAppSelector } from '../redux/hooks';
 import { useAppDispatch } from '../redux/hooks';
 import { IRoutine } from '../redux/slices/routineSlice';
 import { checkLoginStatus } from '../redux/slices/userSlice';
+import RoutineCreate from '../components/RoutineCreate';
 
 const routine:IRoutine = {
   _id: "1",
@@ -104,13 +114,9 @@ const Root = () => {
               <label htmlFor="workout-name">Name</label>
             </h4>
             <div>
-              <RoutineRow
-                key={routine.name}
-                routine={routine}
-                setRoutines={setRoutines}
-                routines={routines}
-                isNew={false}
-              />
+              <RoutineCreate 
+                routine={routine} />
+    
               <input
                 type="text"
                 name="workout-name"
