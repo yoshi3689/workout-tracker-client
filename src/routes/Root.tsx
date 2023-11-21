@@ -12,6 +12,7 @@ import { checkLoginStatus } from '../redux/slices/userSlice';
 const routine:IRoutine = {
   _id: "1",
   name: "1",
+  isEditing: false,
   createdAt: new Date(),
   exercises: {
     11: {
@@ -80,7 +81,9 @@ const Root = () => {
   const handleCreate = () => {
     // should I make an interface for Routine type or no??
     setRoutines([...routines,
-      { _id: "",
+      {
+        _id: "",
+        isEditing: false,
         name: workoutName,
         exercises: {},
         createdAt: new Date()
