@@ -16,23 +16,23 @@ import { IRoutine } from '../redux/slices/routineSlice';
 
 const testRoutineObjectArray: IRoutine[] = [
   {
-  ID: "1",
+  _id: "1",
   name: "1",
   createdAt: new Date(),
   exercises: {
     11: {
-    ID: "11",
+    _id: "11",
     name: "11",
     muscleGroups: ["11"],
     sets: {
       111: {
-        ID: "111",
+        _id: "111",
         rep: 0,
         weight: 0,
         rest: 0,
       },
       112: {
-        ID: "112",
+        _id: "112",
         rep: 0,
         weight: 0,
         rest: 0,
@@ -42,23 +42,23 @@ const testRoutineObjectArray: IRoutine[] = [
   }
   },
   {
-  ID: "2",
+  _id: "2",
   name: "2",
   createdAt: new Date(),
   exercises: {
     22: {
-    ID: "22",
+    _id: "22",
     name: "22",
     muscleGroups: ["22"],
     sets: {
       212: {
-        ID: "212",
+        _id: "212",
         rep: 0,
         weight: 0,
         rest: 0,
       },
       222: {
-        ID: "222",
+        _id: "222",
         rep: 0,
         weight: 0,
         rest: 0,

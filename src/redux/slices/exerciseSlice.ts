@@ -2,7 +2,7 @@ import { createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
 import { ISet } from "./setsSlice";
 
 export interface IExercise {
-  ID: string;
+  _id: string;
   name: string;
   muscleGroups: [string];
   sets: Record<string, ISet>;
@@ -10,7 +10,7 @@ export interface IExercise {
 
 export const ExerciseInitialState: Record<string, IExercise> = {
   useIdHere: {
-    ID: "useIdHere",
+    _id: "useIdHere",
     name: "aaa",
     muscleGroups: ['biceps'],
     sets: {}
@@ -23,10 +23,10 @@ export const ExerciseSlice = createSlice({
   reducers: {
     addExercise: (state, action: PayloadAction<IExercise>) => {
       const newId = nanoid();
-      state[newId] = { ...action.payload, ID: newId };
+      state[newId] = { ...action.payload, _id: newId };
     },
     editExercise: (state, action: PayloadAction<IExercise>) => {
-      state[action.payload.ID] = { ...action.payload };
+      state[action.payload._id] = { ...action.payload };
     },
     deleteExercise: (state, action: PayloadAction<string>) => {
       delete state[action.payload];

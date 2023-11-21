@@ -28,12 +28,12 @@ const ExerciseRow: React.FC<{ exercise: IExercise, setRoutines: Function, routin
   // in Exercises list
   const dispatch = useAppDispatch();
   const [currentExercise, setCurrentExercise] = useState<IExercise>({
-    ID: "",
+    _id: "",
     name: "",
     muscleGroups: [""],
     sets: {
       abc:{
-        ID: "abc",
+        _id: "abc",
         rep: 0,
         rest: 0,
         weight: 0,
@@ -45,7 +45,7 @@ const ExerciseRow: React.FC<{ exercise: IExercise, setRoutines: Function, routin
     setCurrentExercise({
       ...currentExercise,
       sets: {
-        ...currentExercise.sets, test: { ID: "test", rep: 0, rest: 0, weight: 0 }
+        ...currentExercise.sets, test: { _id: "test", rep: 0, rest: 0, weight: 0 }
       },
     });
   }

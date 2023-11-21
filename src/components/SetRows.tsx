@@ -26,7 +26,7 @@ const SetRows: React.FC<{ sets: ISet[] }> = ({
     e.preventDefault();
     dispatch(
       addSet({
-        ID: "",
+        _id: "",
         rep: 0,
         rest: 0,
         weight: 0,
@@ -54,7 +54,7 @@ const SetRows: React.FC<{ sets: ISet[] }> = ({
                       <Grid item>
                         {sets.map((set, i) => (
                           <SetRow
-                            key={"" + i + set.ID}
+                            key={"" + i + set._id}
                             set={set}
                           />
                         ))}

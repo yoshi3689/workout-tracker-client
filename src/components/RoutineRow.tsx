@@ -16,11 +16,11 @@ import { IExercise, addExercise } from '../redux/slices/exerciseSlice';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 // represent a whole workout routine
-const RoutineRow: React.FC<{ routine: IRoutine, setRoutines: Function, routines: IRoutine[], isNew: boolean  }> = ({ routine, setRoutines, routines, isNew }) => {
+const RoutineRow: React.FC<{ routine:IRoutine, setRoutines: Function, routines: IRoutine[], isNew: boolean  }> = ({ routine, setRoutines, routines, isNew }) => {
 
   const [open, setOpen] = React.useState(false);
   const [workouts, setWorkouts] = useState<IExercise[]>([
-    { ID:"exerciseTest", name: "", sets: {}, muscleGroups: [""] },
+    { _id:"exerciseTest", name: "", sets: {}, muscleGroups: [""] },
   ]);
   useEffect(() => {
     console.log(workouts);
@@ -31,7 +31,7 @@ const RoutineRow: React.FC<{ routine: IRoutine, setRoutines: Function, routines:
 
   // add a new exercise
   const handleAdd = () => {
-    const newExercise:IExercise = { ID: "exerciseTest", name: "", sets: {}, muscleGroups: [""] };
+    const newExercise:IExercise = { _id: "exerciseTest", name: "", sets: {}, muscleGroups: [""] };
     setWorkouts([
       ...workouts,
       newExercise,
@@ -62,8 +62,8 @@ const RoutineRow: React.FC<{ routine: IRoutine, setRoutines: Function, routines:
               {workouts.map((exercise, i) => (
                 <ExerciseRow
                   exercise={exercise}
-                  routineId={routine.ID}
-                  key={i + "" + routine.ID}
+                  routineId={routine._id}
+                  key={i + "" + routine._id}
                   setRoutines={setRoutines}
                   routines={routines}
                 />
@@ -74,8 +74,8 @@ const RoutineRow: React.FC<{ routine: IRoutine, setRoutines: Function, routines:
               {workouts.map((exercise, i) => (
                 <ExerciseRow
                   exercise={exercise}
-                  routineId={routine.ID}
-                  key={i + "" + routine.ID}
+                  routineId={routine._id}
+                  key={i + "" + routine._id}
                   setRoutines={setRoutines}
                   routines={routines}
                 />

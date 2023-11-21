@@ -25,7 +25,7 @@ const SetRow: React.FC<{ set: ISet }> = ({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement|HTMLTextAreaElement>, setState: Function) => {
     console.log(e.currentTarget.value);
     setState(e.currentTarget.value);
-    dispatch(editSet({ ID: "" ,rest, weight, rep: rep }));
+    dispatch(editSet({ _id: "" ,rest, weight, rep: rep }));
   }
   const handleDelete = () => {
     console.log("attempting to remove this set");

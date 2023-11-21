@@ -2,7 +2,7 @@ import { createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
 import { IExercise } from "./exerciseSlice";
 
 export interface IRoutine {
-  ID: string,
+  _id: string,
   name: string,
   createdAt: Date,
   exercises: Record<string, IExercise>,
@@ -17,10 +17,10 @@ export const RoutineSlice = createSlice({
   reducers: {
     addRoutine: (state, action: PayloadAction<IRoutine>) => {
       const newId = nanoid();
-      state[newId] = { ...action.payload, ID: newId };
+      state[newId] = { ...action.payload, _id: newId };
     },
     editRoutine: (state, action: PayloadAction<IRoutine>) => {
-      state[action.payload.ID] = { ...action.payload };
+      state[action.payload._id] = { ...action.payload };
     },
     deleteRoutine: (state, action: PayloadAction<string>) => {
       delete state[action.payload];
