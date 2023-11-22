@@ -90,7 +90,8 @@ const Root = () => {
             <h4>
               <label htmlFor="workout-name">Name</label>
             </h4>
-              <RoutineCreate 
+            <RoutineCreate 
+                accessToken={loggedInUser.accessToken?loggedInUser.accessToken:""}
                 routine={routine} />
           </div>
         </>

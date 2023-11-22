@@ -47,7 +47,7 @@ let a:IRoutine = {
   // }
 };
 
-const RoutineCreate: React.FC<{ routine: IRoutine }> = ({ routine }) => {
+const RoutineCreate: React.FC<{ routine: IRoutine, accessToken: string }> = ({ routine, accessToken }) => {
   const [workoutName, setWorkoutName] = useState("");
 
   const dispatch = useAppDispatch();
@@ -61,7 +61,7 @@ const RoutineCreate: React.FC<{ routine: IRoutine }> = ({ routine }) => {
   // add a new workout routine to the list(probs API call to the DB)
   // reset the name
   const handleCreate = () => {
-    dispatch(addRoutine({ ...a, name: workoutName }))
+    dispatch(addRoutine({ ...a, name: workoutName, _id: accessToken }))
     handleCancel();
   };
   return (

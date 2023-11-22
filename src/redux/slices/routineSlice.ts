@@ -1,5 +1,6 @@
-import { createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
 import { IExercise } from "./exerciseSlice";
+import axios from "axios";
 
 export interface IRoutine {
   _id: string,
@@ -12,14 +13,29 @@ export interface IRoutine {
 export const RoutineInitialState: Record<string, IRoutine> = {
 };
 
+const BASE = "http://localhost:5001";
+
+export const addRoutine = createAsyncThunk(
+  "routines/addRoutine",
+  async (data: IRoutine) => {
+    // const newId = nanoid();
+    const response = await axios.post(`${BASE}/api/routines`, {
+      ...data,
+      _id: ""
+    }, { headers: { "Authorization": `Bearer ${data._id}` } });
+    console.log(response);
+    return response.data.response;
+  }
+);
+
 export const RoutineSlice = createSlice({
-  name: "Routines",
+  name: "routines",
   initialState: RoutineInitialState,
   reducers: {
-    addRoutine: (state, action: PayloadAction<IRoutine>) => {
-      const newId = nanoid();
-      state[newId] = { ...action.payload, _id: newId };
-    },
+    // addRoutine: (state, action: PayloadAction<IRoutine>) => {
+    //   const newId = nanoid();
+    //   state[newId] = { ...action.payload, _id: newId };
+    // },
     editRoutine: (state, action: PayloadAction<IRoutine>) => {
       state[action.payload._id] = { ...action.payload };
     },
@@ -29,4 +45,4 @@ export const RoutineSlice = createSlice({
   },
 });
 
-export const { addRoutine } = RoutineSlice.actions
+export const { editRoutine, deleteRoutine } = RoutineSlice.actions
