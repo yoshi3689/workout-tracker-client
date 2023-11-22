@@ -1,7 +1,6 @@
 import React from 'react'
 
 import { ISet, addSet } from "../redux/slices/setsSlice";
-import { useAppDispatch } from "../redux/hooks";
 
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -16,12 +15,12 @@ import Typography from "@mui/material/Typography";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import IconButton from "@mui/material/IconButton";
 import SetRow from './SetRow';
+import { useAppDispatch } from "../redux/hooks";
 
 const SetRows: React.FC<{ sets: ISet[] }> = ({
   sets
 }) => {
   const dispatch = useAppDispatch();
-
   const handleAdd = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     dispatch(
@@ -35,7 +34,17 @@ const SetRows: React.FC<{ sets: ISet[] }> = ({
   }
   return (
     <>
-            <TableRow>
+      <TableRow>
+          <TableCell></TableCell>
+          <TableCell>Sets</TableCell>
+          <TableCell></TableCell>
+          <TableCell>
+            <IconButton color="primary" onClick={handleAdd}>
+              <AddCircleIcon />
+            </IconButton>
+          </TableCell>
+        </TableRow>
+      <TableRow>
         <TableCell
           style={{ paddingBottom: 0, paddingTop: 0 }}
           colSpan={6}
@@ -45,7 +54,9 @@ const SetRows: React.FC<{ sets: ISet[] }> = ({
             <Typography variant="h6" gutterBottom component="div"></Typography>
             <Table size="small" aria-label="purchases">
               <TableHead>
-                <TableRow></TableRow>
+                <TableRow>
+
+                </TableRow>
               </TableHead>
               <TableBody>
                 <TableRow>

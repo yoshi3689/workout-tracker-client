@@ -41,20 +41,36 @@ const RoutineRow: React.FC<{ routine:IRoutine, isNew: boolean  }> = ({ routine, 
 
   return (
     <React.Fragment>
-      <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
-        <TableCell width="30%">
-          <IconButton
-            aria-label="expand row"
-            size="small"
-            onClick={() => setOpen(!open)}
-          >
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
-        </TableCell>
-        <TableCell align="left" component="th" scope="row">
-          {routine.name}
-        </TableCell>
-      </TableRow>
+      {!isNew && (
+        <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
+          <TableCell width="30%">
+            <IconButton
+              aria-label="expand row"
+              size="small"
+              onClick={() => setOpen(!open)}
+            >
+              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            </IconButton>
+          </TableCell>
+
+          <TableCell align="left" component="th" scope="row">
+            {routine.name}
+          </TableCell>
+        </TableRow>
+      )}
+      {isNew && (
+        <TableRow>
+          <TableCell></TableCell>
+          <TableCell>Exercises</TableCell>
+          <TableCell></TableCell>
+          <TableCell>
+            <IconButton color="primary" onClick={handleAdd}>
+              <AddCircleIcon />
+            </IconButton>
+          </TableCell>
+        </TableRow>
+      )}
+
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           {!isNew ? (
@@ -78,13 +94,6 @@ const RoutineRow: React.FC<{ routine:IRoutine, isNew: boolean  }> = ({ routine, 
               ))}
             </>
           )}
-        </TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell>
-          <IconButton color="primary" onClick={handleAdd}>
-            <AddCircleIcon />
-          </IconButton>
         </TableCell>
       </TableRow>
     </React.Fragment>

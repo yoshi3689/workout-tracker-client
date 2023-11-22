@@ -26,7 +26,7 @@ const ExerciseRow: React.FC<{ exercise: IExercise, routineId: string }> = ({
   // build a function that modifies a routine in the list.
   // specifically the Exercises of the routine by reflecting the state change
   // in Exercises list
-  const dispatch = useAppDispatch();
+  
   const [currentExercise, setCurrentExercise] = useState<IExercise>({
     _id: "",
     name: "",
@@ -52,13 +52,13 @@ const ExerciseRow: React.FC<{ exercise: IExercise, routineId: string }> = ({
   return (
     <Box sx={{ margin: 1 }}>
       <Table size="small" aria-label="purchases">
-        <TableHead>
+        {/* <TableHead>
           <TableRow>
             <TableCell component="th">
               <Typography component="h5">Exercises</Typography>
             </TableCell>
           </TableRow>
-        </TableHead>
+        </TableHead> */}
         <TableBody>
           <TableRow>
             <TableCell>

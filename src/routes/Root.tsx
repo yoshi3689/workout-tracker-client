@@ -2,16 +2,16 @@ import React, { useState, useEffect } from 'react'
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import Routines from '../components/Routines'
 import Unauthorized from '../components/Unauthorized';
-import RoutineRow from "../components/RoutineRow";
+// import RoutineRow from "../components/RoutineRow";
 
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import Paper from "@mui/material/Paper";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Typography from "@mui/material/Typography";
+// import Table from "@mui/material/Table";
+// import TableBody from "@mui/material/TableBody";
+// import TableCell from "@mui/material/TableCell";
+// import Paper from "@mui/material/Paper";
+// import TableContainer from "@mui/material/TableContainer";
+// import TableHead from "@mui/material/TableHead";
+// import TableRow from "@mui/material/TableRow";
+// import Typography from "@mui/material/Typography";
 
 import { useAppSelector } from '../redux/hooks';
 import { useAppDispatch } from '../redux/hooks';
@@ -48,7 +48,7 @@ const routine:IRoutine = {
 };
 
 const Root = () => {
-  const [workoutName, setWorkoutName] = useState("");
+  
   const [routines, setRoutines] = useState<IRoutine[]>([]);
   const [error, setError] = useState<string>(""); 
 
@@ -77,34 +77,11 @@ const Root = () => {
       });
   }, [dispatch, loggedInUser]);
   
-
-
-  // set to the initial state
-  // , and close the form (in the future)
-  const handleCancel = () => {
-    setWorkoutName("");
-  }
-
-  // for now just add the new workout routine to an array
-  // add a new workout routine to the list(probs API call to the DB)
-  // reset the name
-  const handleCreate = () => {
-    // should I make an interface for Routine type or no??
-    setRoutines([...routines,
-      {
-        _id: "",
-        isEditing: false,
-        name: workoutName,
-        exercises: {},
-        createdAt: new Date()
-    }]);
-    setWorkoutName("");
-  }
   return (
     <main>
       Welcome {loggedInUser.username}
-      {!error && (
-        <div>
+      {!error ? (
+        <>
           <div>
             <h3>List of routines created in the past</h3>
             <Routines routines={routines} setRoutines={setRoutines} />
@@ -113,25 +90,15 @@ const Root = () => {
             <h4>
               <label htmlFor="workout-name">Name</label>
             </h4>
-            <div>
               <RoutineCreate 
                 routine={routine} />
-    
-              <input
-                type="text"
-                name="workout-name"
-                id="workout-name"
-                onChange={(e) => setWorkoutName(e.target.value)}
-              />
-            </div>
-            <div>
-              <button onClick={handleCancel}>Cancel</button>
-              <button onClick={handleCreate}>Create+</button>
-            </div>
           </div>
-        </div>
-      )}
-      {error && <Unauthorized error={error} />}
+        </>
+      )
+      :
+      (<Unauthorized error={error} />)
+    }
+      
     </main>
   );
 }
