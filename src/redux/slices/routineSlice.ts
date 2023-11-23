@@ -5,7 +5,7 @@ import axios from "axios";
 export interface IRoutine {
   _id: string,
   name: string,
-  createdAt: Date,
+  createdAt: string,
   isEditing: boolean,
   exercises: Record<string, IExercise>,
 }
@@ -19,10 +19,27 @@ export const addRoutine = createAsyncThunk(
   "routines/addRoutine",
   async (data: IRoutine) => {
     // const newId = nanoid();
-    const response = await axios.post(`${BASE}/api/routines`, {
-      ...data,
-      _id: ""
-    }, { headers: { "Authorization": `Bearer ${data._id}` } });
+    const response = await axios.post(
+      `${BASE}/api/routines`,
+      {
+        ...data,
+        _id: "",
+      },
+      { headers: { Authorization: `Bearer ${data._id}` } }
+    );
+    console.log(response);
+    return response.data.response;
+  }
+);
+export const getRoutines = createAsyncThunk<
+  Promise<IRoutine[]>,
+  string | undefined
+>(
+  "routines/getRoutines",
+  async (accessToken: string | undefined) => {
+    const response = await axios.get(`${BASE}/api/routines`, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
     console.log(response);
     return response.data.response;
   }

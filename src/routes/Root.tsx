@@ -15,7 +15,7 @@ import Unauthorized from '../components/Unauthorized';
 
 import { useAppSelector } from '../redux/hooks';
 import { useAppDispatch } from '../redux/hooks';
-import { IRoutine } from '../redux/slices/routineSlice';
+import { IRoutine, getRoutines } from '../redux/slices/routineSlice';
 import { checkLoginStatus } from '../redux/slices/userSlice';
 import RoutineCreate from '../components/RoutineCreate';
 
@@ -23,7 +23,7 @@ const routine:IRoutine = {
   _id: "1",
   name: "1",
   isEditing: false,
-  createdAt: new Date(),
+  createdAt: new Date().toISOString(),
   exercises: {
     11: {
       _id: "11",
@@ -58,24 +58,19 @@ const Root = () => {
 
   const dispatch = useAppDispatch();
 
-  
+  const fetchRoutines = async () => {
+    try {
+      const routines = await dispatch(getRoutines(loggedInUser.accessToken)).unwrap();
+      setRoutines(routines);
+    } catch (err) {
+      dispatch(checkLoginStatus({ isLoggedIn: false }));
+      // console.error(err.message);
+      // setError(err.message);
+    }
+  }
   useEffect(() => {
-    console.log(loggedInUser)
-    axios.defaults.withCredentials = true;
-    axios.get(
-      `http://localhost:5001/api/dashboard/` + loggedInUser.username,
-      { headers: { "Authorization": `Bearer ${loggedInUser.accessToken}` } }
-    )
-      .then((res: AxiosResponse) => {
-        console.log(res);
-        setRoutines(res.data.data);
-      })
-      .catch((error: AxiosError) => {
-        dispatch(checkLoginStatus({ isLoggedIn: false }));
-        console.error(error.message);
-        setError(error.message);
-      });
-  }, [dispatch, loggedInUser]);
+    fetchRoutines();
+  }, [loggedInUser, fetchRoutines]);
   
   return (
     <main>

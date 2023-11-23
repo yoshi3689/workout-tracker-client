@@ -22,7 +22,7 @@ let a:IRoutine = {
   _id: "",
   name: "",
   isEditing: true,
-  createdAt: new Date(),
+  createdAt: new Date().toISOString(),
   exercises: {}
   // exercises: {
   //   11: {

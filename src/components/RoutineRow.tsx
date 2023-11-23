@@ -14,29 +14,45 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { IExercise, addExercise } from '../redux/slices/exerciseSlice';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { editCurrentRoutine } from '../redux/slices/currentRoutineSlice';
 
 // represent a whole workout routine
 const RoutineRow: React.FC<{ routine:IRoutine, isNew: boolean  }> = ({ routine, isNew }) => {
 
   const [open, setOpen] = React.useState(false);
-  const [workouts, setWorkouts] = useState<IExercise[]>([
-    { _id:"exerciseTest", name: "", sets: {}, muscleGroups: [""] },
+  const [exercises, setExercises] = useState<IExercise[]>([
+    
   ]);
+
+  const editExercises = () => {
+    // it's good to have an id assigned to each exercise 
+    // does not have to be a proper random generated id
+    // just like 1, 2, 3
+  }
+
   useEffect(() => {
-    console.log(workouts);
-  }, [workouts]);
+    console.log(exercises);
+  }, [exercises]);
 
   const dispatch = useAppDispatch();
 
 
   // add a new exercise
   const handleAdd = () => {
-    const newExercise:IExercise = { _id: "exerciseTest", name: "", sets: {}, muscleGroups: [""] };
-    setWorkouts([
-      ...workouts,
+    const newExercise:IExercise = { _id: exercises.length+1+"", name: "", sets: {}, muscleGroups: [""] };
+    setExercises([
+      ...exercises,
       newExercise,
     ]);
-    dispatch(addExercise(newExercise));
+
+    console.log(routine);
+    // assigning a new exercise 
+    let tempExercises: Record<string, IExercise> = routine.exercises;
+    tempExercises[newExercise._id] = newExercise;
+    dispatch(editCurrentRoutine({ 
+      ...routine,
+      exercises: tempExercises
+      }));
   };
 
   return (
@@ -75,7 +91,7 @@ const RoutineRow: React.FC<{ routine:IRoutine, isNew: boolean  }> = ({ routine, 
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           {!isNew ? (
             <Collapse in={open} timeout="auto" unmountOnExit>
-              {workouts.map((exercise, i) => (
+              {exercises.map((exercise, i) => (
                 <ExerciseRow
                   exercise={exercise}
                   routineId={routine._id}
@@ -85,7 +101,7 @@ const RoutineRow: React.FC<{ routine:IRoutine, isNew: boolean  }> = ({ routine, 
             </Collapse>
           ) : (
             <>
-              {workouts.map((exercise, i) => (
+              {exercises.map((exercise, i) => (
                 <ExerciseRow
                   exercise={exercise}
                   routineId={routine._id}
