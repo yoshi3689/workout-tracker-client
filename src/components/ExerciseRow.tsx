@@ -29,9 +29,9 @@ const ExerciseRow: React.FC<{ exercise: IExercise, routineId: string }> = ({
   // in Exercises list
 
   // 
-  const handleExerciseChange = () => {
-
-  }
+  // const handleExerciseChange = () => {
+    
+  // }
 
   // add a new set to an exercise
   // const handleAdd = () => {
@@ -63,7 +63,7 @@ const ExerciseRow: React.FC<{ exercise: IExercise, routineId: string }> = ({
           </TableRow>
           <TableRow>
             <TableCell>
-              {(exercise._id) && <SetRows exerciseId={exercise._id} />}
+              {(exercise) && <SetRows exercise={exercise} />}
               {/* <IconButton color="primary" onClick={handleAdd}>
                 <AddCircleIcon />
               </IconButton>

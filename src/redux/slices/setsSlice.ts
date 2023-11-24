@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction, nanoid } from "@reduxjs/toolkit";
 
 export interface ISet {
-  _id: string,
+  _id: string;
   rep: number;
   rest: number;
   weight: number;

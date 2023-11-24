@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { ISet, addSet } from "../redux/slices/setsSlice";
 
@@ -16,24 +16,42 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import IconButton from "@mui/material/IconButton";
 import SetRow from './SetRow';
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
+import { IExercise } from '../redux/slices/exerciseSlice';
+import { editCurrentRoutine } from '../redux/slices/currentRoutineSlice';
 
-const SetRows: React.FC<{exerciseId: string}> = ({exerciseId}) => {
+const SetRows: React.FC<{exercise: IExercise}> = ({exercise}) => {
+  const [currentSets, setCurrentSets] = useState<ISet[]>(exercise.sets);
   const dispatch = useAppDispatch();
-  const setsInExercise = useAppSelector(state => {
-    const exercise = state.persistedReducer.currentRoutine.exercises.find(e => e._id === exerciseId);
-    return exercise ? exercise.sets : [];
+  const routine = useAppSelector(state => {
+    return state.persistedReducer.currentRoutine;
   });
+
   const handleAdd = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    dispatch(
-      addSet({
-        _id: "",
-        rep: 0,
-        rest: 0,
-        weight: 0,
-      })
-    );
+    const setSkelton = {
+      _id: currentSets.length+1+"",
+      rep: 0,
+      rest: 0,
+      weight: 0,
+    }
+    setCurrentSets([setSkelton, ...currentSets])
   }
+
+  useEffect(() => {
+    let tempExercises: IExercise[] = routine.exercises.map((e) => {
+      if (e._id === exercise._id)
+        return {
+          ...exercise, sets: currentSets
+        };
+      else return e;
+    });
+    console.log(tempExercises, routine.exercises);
+    dispatch(editCurrentRoutine({
+      ...routine,
+      exercises: [...tempExercises]
+    }));
+    // console.log(tempExercises)
+  }, [currentSets]);
   return (
     <>
       <TableRow>
@@ -65,9 +83,10 @@ const SetRows: React.FC<{exerciseId: string}> = ({exerciseId}) => {
                   <TableCell>
                     <Grid container>
                       <Grid item>
-                        {setsInExercise != undefined && setsInExercise.map((set, i) => (
+                        {currentSets.map((set, i) => (
                           <SetRow
                             key={"" + i + set._id}
+                            exercise={exercise}
                             set={set}
                           />
                         ))}
@@ -76,9 +95,9 @@ const SetRows: React.FC<{exerciseId: string}> = ({exerciseId}) => {
                           display={"flex"}
                           style={{ justifyContent: "end" }}
                         >
-                          <IconButton color="primary" onClick={handleAdd}>
+                          {/* <IconButton color="primary" onClick={handleAdd}>
                             <AddCircleIcon />
-                          </IconButton>
+                          </IconButton> */}
                         </Grid>
                       </Grid>
                     </Grid>

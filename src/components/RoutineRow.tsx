@@ -46,11 +46,11 @@ const RoutineRow: React.FC<{ routine: IRoutine, isNew: boolean }> = ({ routine, 
 
   useEffect(() => {
     // assigning a new exercise to the record of exercises
-    let tempExercises: IExercise[] = [...exercises];
+    let tempExercises: IExercise[] = exercises;
     console.log(tempExercises);
     dispatch(editCurrentRoutine({
       ...routine,
-      exercises: tempExercises
+      exercises: [...tempExercises]
     }));
   }, [exercises]);
 
