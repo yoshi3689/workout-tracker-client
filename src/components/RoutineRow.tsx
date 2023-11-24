@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import ExerciseRow from './ExerciseRow';
 import { IRoutine } from '../redux/slices/routineSlice';
 
-import { useAppDispatch } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 
 import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
@@ -12,18 +12,15 @@ import TableRow from "@mui/material/TableRow";
 
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { IExercise, addExercise } from '../redux/slices/exerciseSlice';
+import { IExercise } from '../redux/slices/exerciseSlice';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { editCurrentRoutine } from '../redux/slices/currentRoutineSlice';
-import { store } from '../redux/store';
 
 // represent a whole workout routine
-const RoutineRow: React.FC<{ routine:IRoutine, isNew: boolean  }> = ({ routine, isNew }) => {
-
+const RoutineRow: React.FC<{ routine: IRoutine, isNew: boolean }> = ({ routine, isNew }) => {
+  const currentExercises = useAppSelector(state => state.persistedReducer.currentRoutine.exercises);
   const [open, setOpen] = React.useState(false);
-  const [exercises, setExercises] = useState<IExercise[]>([
-    
-  ]);
+  const [exercises, setExercises] = useState<IExercise[]>(currentExercises);
 
   const editExercises = () => {
     // it's good to have an id assigned to each exercise 
@@ -38,24 +35,24 @@ const RoutineRow: React.FC<{ routine:IRoutine, isNew: boolean  }> = ({ routine, 
   const dispatch = useAppDispatch();
 
 
-  // add a new exercise
+  // add a new exercise tuple
   const handleAdd = () => {
-    const newExercise:IExercise = { _id: exercises.length+1+"", name: "", sets: {}, muscleGroups: [""] };
+    const newExercise:IExercise = { _id: exercises.length+1+"", name: "", sets: [], muscleGroups: [""] };
     setExercises([
       ...exercises,
       newExercise,
     ]);
-
-    console.log(routine);
-    // assigning a new exercise 
-    let tempExercises: Record<string, IExercise> = routine.exercises;
-    console.log(store.getState());
-    tempExercises[newExercise._id] = newExercise;
-    dispatch(editCurrentRoutine({ 
-      ...routine,
-      exercises: {...tempExercises}
-      }));
   };
+
+  useEffect(() => {
+    // assigning a new exercise to the record of exercises
+    let tempExercises: IExercise[] = [...exercises];
+    console.log(tempExercises);
+    dispatch(editCurrentRoutine({
+      ...routine,
+      exercises: tempExercises
+    }));
+  }, [exercises]);
 
   return (
     <React.Fragment>

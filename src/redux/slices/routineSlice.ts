@@ -7,7 +7,7 @@ export interface IRoutine {
   name: string,
   createdAt: string,
   isEditing: boolean,
-  exercises: Record<string, IExercise>,
+  exercises: IExercise[],
 }
 
 export const RoutineInitialState: Record<string, IRoutine> = {

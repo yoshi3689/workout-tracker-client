@@ -7,17 +7,39 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import NativeSelect from '@mui/material/NativeSelect';
+import { useAppSelector, useAppDispatch } from "../redux/hooks";
+import { editCurrentRoutine } from "../redux/slices/currentRoutineSlice";
 
 
-const ExerciseDropdown: React.FC<{setExercise:Function, exercise: IExercise, routineId:string }> = ({ setExercise, exercise, routineId }) => {
-  
 
-  const handleChange = (value:string) => {
+const ExerciseDropdown: React.FC<{exerciseId:string, currentExercise:IExercise }> = ({ exerciseId, currentExercise }) => {
+  const [exercise, setExercise] = useState<IExercise>(currentExercise);
+  const routine = useAppSelector(state => {
+    return state.persistedReducer.currentRoutine;
+  });
+
+  const dispatch = useAppDispatch();
+
+
+  const handleChange = (value: string) => {
     setExercise({
       ...exercise,
-      exercise: value
+      name: value
     });
   }
+
+  useEffect(() => {
+    let tempExercises: IExercise[] = routine.exercises.map(e => {
+      if (e._id === exerciseId) return exercise
+      else return e
+    });
+    
+    console.log(tempExercises, routine.exercises);
+    dispatch(editCurrentRoutine({ 
+      ...routine,
+      exercises: tempExercises
+      }));
+  },[exercise, exerciseId])
   
   return (
     <FormControl>
@@ -25,6 +47,7 @@ const ExerciseDropdown: React.FC<{setExercise:Function, exercise: IExercise, rou
         Exercise Name
       </InputLabel>
       <NativeSelect
+        defaultValue={exercises[0].name}
         inputProps={{
           name:"exercise",
           id:"exercise"
@@ -32,7 +55,7 @@ const ExerciseDropdown: React.FC<{setExercise:Function, exercise: IExercise, rou
         onChange={(e) => handleChange(e.target.value)}
       >
         {exercises.map((e, i) => (
-                <option key={e.name + routineId + i} value={e.name}>
+                <option key={e.name + exerciseId + i} value={e.name}>
                   {e.name}
                 </option>
               ))}

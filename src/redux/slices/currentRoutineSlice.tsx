@@ -6,7 +6,7 @@ export interface IRoutine {
   name: string,
   createdAt: string,
   isEditing: boolean,
-  exercises: Record<string, IExercise>,
+  exercises: IExercise[],
 }
 
 export const currentRoutineInitialState: IRoutine = {
@@ -14,7 +14,7 @@ export const currentRoutineInitialState: IRoutine = {
   name: "",
   createdAt: new Date().toISOString(),
   isEditing: true,
-  exercises: {},
+  exercises: [],
 };
 
 export const currentRoutineSlice = createSlice({

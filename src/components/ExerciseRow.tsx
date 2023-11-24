@@ -20,35 +20,28 @@ import SetRows from './SetRows';
 
 // represent a Exercise containing info such as 
 // exercise, total reps, sets and etc
+
 const ExerciseRow: React.FC<{ exercise: IExercise, routineId: string }> = ({
   exercise, routineId,
 }) => {
   // build a function that modifies a routine in the list.
   // specifically the Exercises of the routine by reflecting the state change
   // in Exercises list
-  
-  const [currentExercise, setCurrentExercise] = useState<IExercise>({
-    _id: "",
-    name: "",
-    muscleGroups: [""],
-    sets: {
-      abc:{
-        _id: "abc",
-        rep: 0,
-        rest: 0,
-        weight: 0,
-      },
-    },
-  });
 
-  const handleAdd = () => {
-    setCurrentExercise({
-      ...currentExercise,
-      sets: {
-        ...currentExercise.sets, test: { _id: "test", rep: 0, rest: 0, weight: 0 }
-      },
-    });
+  // 
+  const handleExerciseChange = () => {
+
   }
+
+  // add a new set to an exercise
+  // const handleAdd = () => {
+  //   setCurrentExercise({
+  //     ...currentExercise,
+  //     sets: {
+  //       ...currentExercise.sets, test: { _id: "test", rep: 0, rest: 0, weight: 0 }
+  //     },
+  //   });
+  // }
   return (
     <Box sx={{ margin: 1 }}>
       <Table size="small" aria-label="purchases">
@@ -63,17 +56,14 @@ const ExerciseRow: React.FC<{ exercise: IExercise, routineId: string }> = ({
           <TableRow>
             <TableCell>
               <ExerciseDropdown
-                routineId={routineId}
-                exercise={currentExercise}
-                setExercise={setCurrentExercise}
+                exerciseId={exercise._id}
+                currentExercise={exercise}
               />
             </TableCell>
           </TableRow>
           <TableRow>
             <TableCell>
-              <SetRows
-                  sets={Object.values(currentExercise.sets)}
-                />
+              {(exercise._id) && <SetRows exerciseId={exercise._id} />}
               {/* <IconButton color="primary" onClick={handleAdd}>
                 <AddCircleIcon />
               </IconButton>

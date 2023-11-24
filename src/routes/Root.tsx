@@ -24,8 +24,7 @@ const routine:IRoutine = {
   name: "1",
   isEditing: false,
   createdAt: new Date().toISOString(),
-  exercises: {
-  }
+  exercises: []
 };
 
 const Root = () => {

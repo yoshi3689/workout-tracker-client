@@ -15,12 +15,14 @@ import Typography from "@mui/material/Typography";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import IconButton from "@mui/material/IconButton";
 import SetRow from './SetRow';
-import { useAppDispatch } from "../redux/hooks";
+import { useAppSelector, useAppDispatch } from "../redux/hooks";
 
-const SetRows: React.FC<{ sets: ISet[] }> = ({
-  sets
-}) => {
+const SetRows: React.FC<{exerciseId: string}> = ({exerciseId}) => {
   const dispatch = useAppDispatch();
+  const setsInExercise = useAppSelector(state => {
+    const exercise = state.persistedReducer.currentRoutine.exercises.find(e => e._id === exerciseId);
+    return exercise ? exercise.sets : [];
+  });
   const handleAdd = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     dispatch(
@@ -63,7 +65,7 @@ const SetRows: React.FC<{ sets: ISet[] }> = ({
                   <TableCell>
                     <Grid container>
                       <Grid item>
-                        {sets.map((set, i) => (
+                        {setsInExercise != undefined && setsInExercise.map((set, i) => (
                           <SetRow
                             key={"" + i + set._id}
                             set={set}

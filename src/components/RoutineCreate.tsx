@@ -23,7 +23,7 @@ let routineSkelton:IRoutine = {
   name: "",
   isEditing: true,
   createdAt: new Date().toISOString(),
-  exercises: {}
+  exercises: []
   // exercises: {
   //   11: {
   //     _id: "11",
