@@ -53,11 +53,13 @@ const Root = () => {
   }, [loggedInUser]);
   
   return (
-    <main>
+    <main
+    // style={{ "display": "flex", "justifyContent": "center" }}
+    >
       Welcome {loggedInUser.username}
       {!error ? (
         <>
-          <div>
+          <div >
             <h3>List of routines created in the past</h3>
             <Routines routines={routines} setRoutines={setRoutines} />
           </div>
@@ -65,16 +67,17 @@ const Root = () => {
             <h4>
               <label htmlFor="workout-name">Name</label>
             </h4>
-            <RoutineCreate 
-                accessToken={loggedInUser.accessToken?loggedInUser.accessToken:""}
-                routine={routine} />
+            <RoutineCreate
+              accessToken={
+                loggedInUser.accessToken ? loggedInUser.accessToken : ""
+              }
+              routine={routine}
+            />
           </div>
         </>
-      )
-      :
-      (<Unauthorized error={error} />)
-    }
-      
+      ) : (
+        <Unauthorized error={error} />
+      )}
     </main>
   );
 }

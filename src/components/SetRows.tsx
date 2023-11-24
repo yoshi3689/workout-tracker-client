@@ -89,7 +89,8 @@ const SetRows: React.FC<{exercise: IExercise}> = ({exercise}) => {
                             exercise={exercise}
                             set={set}
                           />
-                        ))}
+                          ))
+                        }
                         <Grid
                           item
                           display={"flex"}

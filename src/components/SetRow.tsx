@@ -41,25 +41,30 @@ const SetRow: React.FC<{ set: ISet, exercise: IExercise }> = ({
   });
 
   useEffect(() => {
-    // console.log(currentSets);
+    setTimeout(() => {
+      let tempExercises: IExercise[] = routine.exercises.map((e) => {
+        if (e._id === exercise._id)
+          return {
+            ...exercise,
+            sets: exercise.sets.map((s) => {
+              if (s._id === set._id) return { ...set, rest, rep, weight };
+              else return s;
+            }),
+          };
+        else return e;
+      });
+      console.log(tempExercises, routine.exercises);
+      dispatch(
+        editCurrentRoutine({
+          ...routine,
+          exercises: [...tempExercises],
+        })
+      );
+    }, 2000);
+    
     // find the exercise to modify its set
     // modify the set array by creating a new one with a new entry to it
-    let tempExercises: IExercise[] = routine.exercises.map((e) => {
-      if (e._id === exercise._id)
-        return {
-          ...exercise, sets: exercise.sets.map(s => {
-            if (s._id === set._id) return { ...set, rest, rep, weight }
-            else return s;
-          })
-        };
-      else return e;
-    });
-    console.log(tempExercises, routine.exercises);
-    dispatch(editCurrentRoutine({
-      ...routine,
-      exercises: [...tempExercises]
-    }));
-    // console.log(tempExercises)
+    
   }, [rest, weight, rep]);
 
   return (
@@ -68,20 +73,25 @@ const SetRow: React.FC<{ set: ISet, exercise: IExercise }> = ({
         <InputLabel shrink={true} htmlFor="standard-adornment-rep">
           rep
         </InputLabel>
-        <Input id="standard-adornment-rep" onChange={(e) => {
-          handleChange(e, setRep);
-        }} />
+        <Input
+          id="standard-adornment-rep"
+          value={rep}
+          onChange={(e) => {
+            handleChange(e, setRep);
+          }}
+        />
       </FormControl>
       <FormControl sx={{ m: 1 }} variant="standard">
-        <InputLabel shrink={true} htmlFor="standard-adornment-weight" >
+        <InputLabel shrink={true} htmlFor="standard-adornment-weight">
           weight
         </InputLabel>
         <Input
           id="standard-adornment-weight"
           endAdornment={<InputAdornment position="end">lbs</InputAdornment>}
+          value={weight}
           onChange={(e) => {
-          handleChange(e, setWeight);
-        }}
+            handleChange(e, setWeight);
+          }}
         />
       </FormControl>
       <FormControl sx={{ m: 1 }} variant="standard">
@@ -90,10 +100,11 @@ const SetRow: React.FC<{ set: ISet, exercise: IExercise }> = ({
         </InputLabel>
         <Input
           id="standard-adornment-rest"
+          value={rest}
           endAdornment={<InputAdornment position="end">(s)</InputAdornment>}
           onChange={(e) => {
-          handleChange(e, setRest);
-        }}
+            handleChange(e, setRest);
+          }}
         />
       </FormControl>
       <IconButton className="mt-1" color="secondary" onClick={handleDelete}>
