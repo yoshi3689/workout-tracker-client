@@ -16,30 +16,58 @@ import IconButton from "@mui/material/IconButton";
 import { IExercise } from "../redux/slices/exerciseSlice";
 import { editCurrentRoutine } from "../redux/slices/currentRoutineSlice";
 
+
 const SetRow: React.FC<{ set: ISet, exercise: IExercise }> = ({
   set, exercise
 }) => {
   const dispatch = useAppDispatch();
+  const [currentSet, setCurrentSet] = useState<ISet|null>(set);
+  const [rest, setRest] = useState(set.rest);
+  const [weight, setWeight] = useState(set.weight);
+  const [rep, setRep] = useState(set.rep);
 
-  const [rest, setRest] = useState(0);
-  const [weight, setWeight] = useState(0);
-  const [rep, setRep] = useState(0);
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement|HTMLTextAreaElement>, setState: Function) => {
-    console.log(e.currentTarget.value);
-    setState(e.currentTarget.value);
-    dispatch(editSet({ _id: set._id ,rest, weight, rep: rep }));
-  }
-  const handleDelete = () => {
-    console.log("attempting to remove this set");
-    dispatch(deleteSet("place ID here"));
-  }
-  
   const routine = useAppSelector(state => {
-    // for some reason, the exercise aray in this routine is empty
-    // console.log(state.persistedReducer.currentRoutine)
     return state.persistedReducer.currentRoutine;
   });
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement|HTMLTextAreaElement>, setState: Function) => {
+    console.log(e.currentTarget.value);
+    setState(e.currentTarget.value);
+    // dispatch(editSet({ _id: set._id ,rest, weight, rep: rep }));
+  }
+  const handleDelete = () => {
+    setCurrentSet(null);
+    // dispatch(deleteSet("place ID here"));
+  }
+  
+  
+
+  useEffect(() => {
+    // delete routine.exercises[parseInt(exercise._id) - 1].sets[parseInt(set._id) - 1];
+    // console.log(tempExercises, routine.exercises);
+    if (currentSet == null) {
+      
+      let tempExercises: IExercise[] = routine.exercises.map((e) => {
+        if (e._id === exercise._id)
+          return {
+            ...exercise,
+            sets: exercise.sets.filter((s) => {
+              if (s._id === set._id) return false;
+              else return true;
+            }),
+          };
+        else return e;
+      });
+      console.log(tempExercises);
+      dispatch(
+        editCurrentRoutine({
+          ...routine,
+          exercises: [...tempExercises],
+        })
+      );
+    }
+      }, [currentSet]);
+  // modifies redux state
   useEffect(() => {
     setTimeout(() => {
       let tempExercises: IExercise[] = routine.exercises.map((e) => {
@@ -53,7 +81,7 @@ const SetRow: React.FC<{ set: ISet, exercise: IExercise }> = ({
           };
         else return e;
       });
-      console.log(tempExercises, routine.exercises);
+      // console.log(tempExercises, routine.exercises);
       dispatch(
         editCurrentRoutine({
           ...routine,
@@ -107,7 +135,11 @@ const SetRow: React.FC<{ set: ISet, exercise: IExercise }> = ({
           }}
         />
       </FormControl>
-      <IconButton className="mt-1" color="secondary" onClick={handleDelete}>
+      <IconButton
+        className="mt-1"
+        color="secondary"
+        onClick={handleDelete}
+      >
         <ClearIcon />
       </IconButton>
     </Box>

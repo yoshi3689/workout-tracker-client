@@ -85,7 +85,7 @@ const SetRows: React.FC<{exercise: IExercise}> = ({exercise}) => {
                       <Grid item>
                         {currentSets.map((set, i) => (
                           <SetRow
-                            key={"" + i + set._id}
+                            key={"" + i + set._id+exercise._id}
                             exercise={exercise}
                             set={set}
                           />

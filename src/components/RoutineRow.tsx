@@ -100,7 +100,7 @@ const RoutineRow: React.FC<{ routine: IRoutine, isNew: boolean }> = ({ routine, 
             </Collapse>
           ) : (
             <>
-              {exercises.map((exercise, i) => (
+              {currentExercises.map((exercise, i) => (
                 <ExerciseRow
                   exercise={exercise}
                   routineId={routine._id}
