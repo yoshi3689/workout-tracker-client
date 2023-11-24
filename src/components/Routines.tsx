@@ -13,63 +13,63 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { IRoutine } from '../redux/slices/routineSlice';
 
-const testRoutineObjectArray: IRoutine[] = [
-  {
-  _id: "1",
-  name: "1",
-  createdAt: new Date().toISOString(),
-  isEditing: false,
-  exercises: {
-    11: {
-    _id: "11",
-    name: "11",
-    muscleGroups: ["11"],
-    sets: {
-      111: {
-        _id: "111",
-        rep: 0,
-        weight: 0,
-        rest: 0,
-      },
-      112: {
-        _id: "112",
-        rep: 0,
-        weight: 0,
-        rest: 0,
-      },
-      },
-    }
-  }
-  },
-  {
-  _id: "2",
-  name: "2",
-  createdAt: new Date().toISOString(),
-  isEditing: false,
-  exercises: {
-    22: {
-    _id: "22",
-    name: "22",
-    muscleGroups: ["22"],
-    sets: {
-      212: {
-        _id: "212",
-        rep: 0,
-        weight: 0,
-        rest: 0,
-      },
-      222: {
-        _id: "222",
-        rep: 0,
-        weight: 0,
-        rest: 0,
-      },
-      },
-    }
-  }
-  },
+// const testRoutineObjectArray: IRoutine[] = [
+//   {
+//   _id: "1",
+//   name: "1",
+//   createdAt: new Date().toISOString(),
+//   isEditing: false,
+//   exercises: {
+//     11: {
+//     _id: "11",
+//     name: "11",
+//     muscleGroups: ["11"],
+//     sets: {
+//       111: {
+//         _id: "111",
+//         rep: 0,
+//         weight: 0,
+//         rest: 0,
+//       },
+//       112: {
+//         _id: "112",
+//         rep: 0,
+//         weight: 0,
+//         rest: 0,
+//       },
+//       },
+//     }
+//   }
+//   },
+//   {
+//   _id: "2",
+//   name: "2",
+//   createdAt: new Date().toISOString(),
+//   isEditing: false,
+//   exercises: {
+//     22: {
+//     _id: "22",
+//     name: "22",
+//     muscleGroups: ["22"],
+//     sets: {
+//       212: {
+//         _id: "212",
+//         rep: 0,
+//         weight: 0,
+//         rest: 0,
+//       },
+//       222: {
+//         _id: "222",
+//         rep: 0,
+//         weight: 0,
+//         rest: 0,
+//       },
+//       },
+//     }
+//   }
+//   },
   
-]
+// ]
 
 const Routines: React.FC<{ routines: IRoutine[], setRoutines: Function }> = ({ routines, setRoutines }) => {
   return (
@@ -84,21 +84,14 @@ const Routines: React.FC<{ routines: IRoutine[], setRoutines: Function }> = ({ r
           </TableRow>
         </TableHead>
         <TableBody>
-          {routines
-            ? routines.map((routine) => (
+          {routines && routines.map((routine) => (
                 <RoutineRow
                   key={routine.name}
                   routine={routine}
                   isNew={false}
                 ></RoutineRow>
-              ))
-            : testRoutineObjectArray.map((routine) => (
-                <RoutineRow
-                  key={routine.name}
-                  routine={routine}
-                  isNew={false}
-                />
-              ))}
+            ))
+            }
         </TableBody>
       </Table>
     </TableContainer>

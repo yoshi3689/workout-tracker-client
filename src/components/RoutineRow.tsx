@@ -15,6 +15,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { IExercise, addExercise } from '../redux/slices/exerciseSlice';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { editCurrentRoutine } from '../redux/slices/currentRoutineSlice';
+import { store } from '../redux/store';
 
 // represent a whole workout routine
 const RoutineRow: React.FC<{ routine:IRoutine, isNew: boolean  }> = ({ routine, isNew }) => {
@@ -31,7 +32,7 @@ const RoutineRow: React.FC<{ routine:IRoutine, isNew: boolean  }> = ({ routine, 
   }
 
   useEffect(() => {
-    console.log(exercises);
+    // console.log(exercises);
   }, [exercises]);
 
   const dispatch = useAppDispatch();
@@ -48,10 +49,11 @@ const RoutineRow: React.FC<{ routine:IRoutine, isNew: boolean  }> = ({ routine, 
     console.log(routine);
     // assigning a new exercise 
     let tempExercises: Record<string, IExercise> = routine.exercises;
+    console.log(store.getState());
     tempExercises[newExercise._id] = newExercise;
     dispatch(editCurrentRoutine({ 
       ...routine,
-      exercises: tempExercises
+      exercises: {...tempExercises}
       }));
   };
 

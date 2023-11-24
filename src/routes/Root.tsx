@@ -25,25 +25,6 @@ const routine:IRoutine = {
   isEditing: false,
   createdAt: new Date().toISOString(),
   exercises: {
-    11: {
-      _id: "11",
-      name: "11",
-      muscleGroups: ["11"],
-      sets: {
-        111: {
-          _id: "111",
-          rep: 0,
-          weight: 0,
-          rest: 0,
-        },
-        112: {
-          _id: "112",
-          rep: 0,
-          weight: 0,
-          rest: 0,
-        },
-      },
-    }
   }
 };
 
@@ -70,7 +51,7 @@ const Root = () => {
   }
   useEffect(() => {
     fetchRoutines();
-  }, [loggedInUser, fetchRoutines]);
+  }, [loggedInUser]);
   
   return (
     <main>

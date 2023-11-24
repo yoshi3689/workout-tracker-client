@@ -18,7 +18,7 @@ import RoutineRow from "./RoutineRow";
 import { IRoutine, addRoutine } from "../redux/slices/routineSlice";
 import { useAppDispatch } from "../redux/hooks";
 
-let a:IRoutine = {
+let routineSkelton:IRoutine = {
   _id: "",
   name: "",
   isEditing: true,
@@ -61,7 +61,9 @@ const RoutineCreate: React.FC<{ routine: IRoutine, accessToken: string }> = ({ r
   // add a new workout routine to the list(probs API call to the DB)
   // reset the name
   const handleCreate = () => {
-    dispatch(addRoutine({ ...a, name: workoutName, _id: accessToken }))
+    dispatch(
+      addRoutine({ ...routineSkelton, name: workoutName, _id: accessToken })
+    );
     handleCancel();
   };
   return (
