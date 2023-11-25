@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -16,45 +16,38 @@ import TableFooter from "@mui/material/TableFooter";
 
 import RoutineRow from "./RoutineRow";
 import { IRoutine, addRoutine } from "../redux/slices/routineSlice";
-import { useAppDispatch } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { editCurrentRoutine } from "../redux/slices/currentRoutineSlice";
 
 let routineSkelton:IRoutine = {
-  _id: "",
+  _id: "1",
   name: "",
   isEditing: true,
   createdAt: new Date().toISOString(),
   exercises: []
-  // exercises: {
-  //   11: {
-  //     _id: "11",
-  //     name: "11",
-  //     muscleGroups: ["11"],
-  //     sets: {
-  //       111: {
-  //         _id: "111",
-  //         rep: 0,
-  //         weight: 0,
-  //         rest: 0,
-  //       },
-  //       112: {
-  //         _id: "112",
-  //         rep: 0,
-  //         weight: 0,
-  //         rest: 0,
-  //       },
-  //     },
-  //   }
-  // }
 };
 
-const RoutineCreate: React.FC<{ routine: IRoutine, accessToken: string }> = ({ routine, accessToken }) => {
+// const routine:IRoutine = {
+//   _id: "1",
+//   name: "1",
+//   isEditing: false,
+//   createdAt: new Date().toISOString(),
+//   exercises: []
+// };
+
+const RoutineCreate: React.FC<{ accessToken: string }> = ({ accessToken }) => {
   const [workoutName, setWorkoutName] = useState("");
 
   const dispatch = useAppDispatch();
+  const routine = useAppSelector(state => {
+    return state.persistedReducer.currentRoutine;
+  });
   
-  // set all the editing states to the initial state
+  // set all the currentRoutine states to the initial state
+  // refelect the rest on the redux store
   const handleCancel = () => {
     setWorkoutName("");
+    dispatch(editCurrentRoutine({...routineSkelton}));
   };
 
   // for now just add the new workout routine to an array
@@ -66,6 +59,16 @@ const RoutineCreate: React.FC<{ routine: IRoutine, accessToken: string }> = ({ r
     );
     handleCancel();
   };
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setWorkoutName(e.target.value);
+  }
+
+  // will be fired basically when the name changes
+  // useEffect(() => {
+  //   dispatch(editCurrentRoutine({ ...routine, name: workoutName }));
+  // },[dispatch, routine, workoutName])
+
   return (
     <TableContainer component={Paper} style={{ maxWidth: "500px" }}>
       <Table aria-label="collapsible table">
@@ -78,7 +81,7 @@ const RoutineCreate: React.FC<{ routine: IRoutine, accessToken: string }> = ({ r
                 <InputLabel htmlFor="routine_name">routine name</InputLabel>
                 <Input
                   id="routine_name"
-                  onChange={(e) => setWorkoutName(e.target.value)}
+                  onChange={handleNameChange}
                 />
               </FormControl>
             </TableCell>

@@ -12,8 +12,8 @@ import { editCurrentRoutine } from "../redux/slices/currentRoutineSlice";
 
 
 
-const ExerciseDropdown: React.FC<{exerciseId:string, currentExercise:IExercise }> = ({ exerciseId, currentExercise }) => {
-  const [exercise, setExercise] = useState<IExercise>({...currentExercise, name:exercises[0].name });
+const ExerciseDropdown: React.FC<{exerciseId:string, exercise:IExercise }> = ({ exerciseId, exercise }) => {
+  const [currentExercise, setCurrentExercise] = useState<IExercise>({...exercise, name:exercises[0].name });
   const routine = useAppSelector(state => {
     return state.persistedReducer.currentRoutine;
   });
@@ -22,8 +22,8 @@ const ExerciseDropdown: React.FC<{exerciseId:string, currentExercise:IExercise }
 
 
   const handleChange = (value: string) => {
-    setExercise({
-      ...exercise,
+    setCurrentExercise({
+      ...currentExercise,
       name: value
     });
   }
@@ -46,7 +46,7 @@ const ExerciseDropdown: React.FC<{exerciseId:string, currentExercise:IExercise }
         Exercise Name
       </InputLabel>
       <NativeSelect
-        defaultValue={currentExercise.name? currentExercise.name : exercises[0].name}
+        defaultValue={exercise.name? exercise.name : exercises[0].name}
         inputProps={{
           name:"exercise",
           id:"exercise"

@@ -17,9 +17,10 @@ import { IExercise } from "../redux/slices/exerciseSlice";
 import { editCurrentRoutine } from "../redux/slices/currentRoutineSlice";
 
 
-const SetRow: React.FC<{ set: ISet, exercise: IExercise }> = ({
-  set, exercise
+const SetRow: React.FC<{ set: ISet, exercise: IExercise, index: number }> = ({
+  set, exercise, index
 }) => {
+
   const dispatch = useAppDispatch();
   const [currentSet, setCurrentSet] = useState<ISet|null>(set);
   const [rest, setRest] = useState(set.rest);
@@ -31,7 +32,7 @@ const SetRow: React.FC<{ set: ISet, exercise: IExercise }> = ({
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement|HTMLTextAreaElement>, setState: Function) => {
-    console.log(e.currentTarget.value);
+    // console.log(e.currentTarget.value);
     setState(e.currentTarget.value);
     // dispatch(editSet({ _id: set._id ,rest, weight, rep: rep }));
   }
@@ -58,7 +59,7 @@ const SetRow: React.FC<{ set: ISet, exercise: IExercise }> = ({
           };
         else return e;
       });
-      console.log(tempExercises);
+      // console.log(tempExercises);
       dispatch(
         editCurrentRoutine({
           ...routine,
@@ -96,7 +97,12 @@ const SetRow: React.FC<{ set: ISet, exercise: IExercise }> = ({
   }, [rest, weight, rep]);
 
   return (
-    <Box display="flex" alignItems="center" className={`set`}>
+    <Box display="flex" alignItems="end" className={`set`}>
+      <Box >
+        <Typography gutterBottom >
+          {index+1}
+        </Typography>
+      </Box>
       <FormControl sx={{ m: 1 }} variant="standard">
         <InputLabel shrink={true} htmlFor="standard-adornment-rep">
           rep

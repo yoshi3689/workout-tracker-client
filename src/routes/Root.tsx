@@ -1,34 +1,18 @@
 import React, { useState, useEffect } from 'react'
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import { useLocation } from "react-router-dom"
+
 import Routines from '../components/Routines'
 import Unauthorized from '../components/Unauthorized';
-// import RoutineRow from "../components/RoutineRow";
-
-// import Table from "@mui/material/Table";
-// import TableBody from "@mui/material/TableBody";
-// import TableCell from "@mui/material/TableCell";
-// import Paper from "@mui/material/Paper";
-// import TableContainer from "@mui/material/TableContainer";
-// import TableHead from "@mui/material/TableHead";
-// import TableRow from "@mui/material/TableRow";
-// import Typography from "@mui/material/Typography";
+import RoutineCreate from '../components/RoutineCreate';
 
 import { useAppSelector } from '../redux/hooks';
 import { useAppDispatch } from '../redux/hooks';
 import { IRoutine, getRoutines } from '../redux/slices/routineSlice';
 import { checkLoginStatus } from '../redux/slices/userSlice';
-import RoutineCreate from '../components/RoutineCreate';
 
-const routine:IRoutine = {
-  _id: "1",
-  name: "1",
-  isEditing: false,
-  createdAt: new Date().toISOString(),
-  exercises: []
-};
 
 const Root = () => {
-  
+  const location = useLocation();
   const [routines, setRoutines] = useState<IRoutine[]>([]);
   const [error, setError] = useState<string>(""); 
 
@@ -50,13 +34,14 @@ const Root = () => {
   }
   useEffect(() => {
     fetchRoutines();
+    console.log(loggedInUser);
   }, [loggedInUser]);
   
   return (
     <main
     // style={{ "display": "flex", "justifyContent": "center" }}
     >
-      Welcome {loggedInUser.username}
+      Welcome {location.pathname.split("/")[2]}
       {!error ? (
         <>
           <div >
@@ -71,7 +56,6 @@ const Root = () => {
               accessToken={
                 loggedInUser.accessToken ? loggedInUser.accessToken : ""
               }
-              routine={routine}
             />
           </div>
         </>

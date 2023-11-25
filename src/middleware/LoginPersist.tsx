@@ -17,7 +17,7 @@ const LoginPersist = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    console.log("log in status changed")
+    // console.log("log in status changed")
     if (!isLoggedIn) {
       console.log("access token expired. but refresh token is probably still here");
       // how to check if the refresh token is still valid

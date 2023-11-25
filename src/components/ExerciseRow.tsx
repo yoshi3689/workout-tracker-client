@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import ExerciseDropdown from './ExerciseDropdown';
 
-import { useAppDispatch } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
@@ -17,6 +17,7 @@ import { IRoutine } from '../redux/slices/routineSlice';
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import ClearIcon from "@mui/icons-material/Clear";
 import SetRows from './SetRows';
+import { editCurrentRoutine } from '../redux/slices/currentRoutineSlice';
 
 // represent a Exercise containing info such as 
 // exercise, total reps, sets and etc
@@ -24,6 +25,25 @@ import SetRows from './SetRows';
 const ExerciseRow: React.FC<{ exercise: IExercise, routineId: string }> = ({
   exercise, routineId,
 }) => {
+  const [currentExercise, setCurrentExercise] = useState<IExercise | null>(exercise);
+  const dispatch = useAppDispatch();
+  const routine: IRoutine = useAppSelector(state => state.persistedReducer.currentRoutine);
+  // remove an exercise tuple
+  const handleDelete = () => {
+    setCurrentExercise(null);
+  };
+
+
+  useEffect(() => {
+    if (currentExercise == null) {
+      let tempExercises: IExercise[] = routine.exercises.filter(e => e._id !== exercise._id);
+      dispatch(editCurrentRoutine({
+        ...routine,
+        exercises: tempExercises
+      }));
+    }
+  }, [currentExercise]);
+
   return (
     <Box sx={{ margin: 1 }}>
       <Table size="small" aria-label="purchases">
@@ -33,10 +53,10 @@ const ExerciseRow: React.FC<{ exercise: IExercise, routineId: string }> = ({
                 <Box alignItems="center" display="flex">
                   <ExerciseDropdown
                   exerciseId={exercise._id}
-                  currentExercise={exercise}
+                  exercise={exercise}
                 />
                 <Box>
-                <IconButton color="secondary">
+                <IconButton color="secondary" onClick={handleDelete}>
                   <ClearIcon />
                 </IconButton>
               </Box>

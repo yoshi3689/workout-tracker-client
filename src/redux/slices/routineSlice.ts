@@ -27,7 +27,7 @@ export const addRoutine = createAsyncThunk(
       },
       { headers: { Authorization: `Bearer ${data._id}` } }
     );
-    console.log(response);
+    // console.log(response);
     return response.data.response;
   }
 );

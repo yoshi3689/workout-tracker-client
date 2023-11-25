@@ -16,11 +16,15 @@ import { IExercise } from '../redux/slices/exerciseSlice';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { editCurrentRoutine } from '../redux/slices/currentRoutineSlice';
 
-// represent a whole workout routine
+// represent a whole workout routine with exercises in it
 const RoutineRow: React.FC<{ routine: IRoutine, isNew: boolean }> = ({ routine, isNew }) => {
   const currentExercises = useAppSelector(state => state.persistedReducer.currentRoutine.exercises);
   const [open, setOpen] = useState(false);
   const [counter, setCounter] = useState(1);
+
+  // since the exercises brought down from the parent are set as ONLY initial
+  // they do not get updated whenever the redux state has changed
+
   const [exercises, setExercises] = useState<IExercise[]>(currentExercises);
 
 
@@ -29,17 +33,18 @@ const RoutineRow: React.FC<{ routine: IRoutine, isNew: boolean }> = ({ routine, 
 
   // add a new exercise tuple
   const handleAdd = () => {
-    const newExercise:IExercise = { _id: exercises.length+1+"", name: "", sets: [], muscleGroups: [""] };
+    const newExercise:IExercise = { _id: "exercise"+counter+"", name: "", sets: [], muscleGroups: [""] };
     setExercises([
-      ...exercises,
+      ...currentExercises,
       newExercise,
     ]);
+    setCounter(counter+1);
   };
 
   useEffect(() => {
     // assigning a new exercise to the record of exercises
     let tempExercises: IExercise[] = exercises;
-    console.log(tempExercises);
+    // console.log(tempExercises);
     dispatch(editCurrentRoutine({
       ...routine,
       exercises: [...tempExercises]
@@ -92,7 +97,7 @@ const RoutineRow: React.FC<{ routine: IRoutine, isNew: boolean }> = ({ routine, 
             </Collapse>
           ) : (
             <>
-              {currentExercises.map((exercise, i) => (
+              {routine.exercises.map((exercise, i) => (
                 <ExerciseRow
                   exercise={exercise}
                   routineId={routine._id}

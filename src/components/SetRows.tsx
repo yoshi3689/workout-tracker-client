@@ -21,6 +21,7 @@ import { editCurrentRoutine } from '../redux/slices/currentRoutineSlice';
 
 const SetRows: React.FC<{exercise: IExercise}> = ({exercise}) => {
   const [currentSets, setCurrentSets] = useState<ISet[]>(exercise.sets);
+  const [counter, setCounter] = useState<number>(1);
   const dispatch = useAppDispatch();
   const routine = useAppSelector(state => {
     return state.persistedReducer.currentRoutine;
@@ -29,12 +30,13 @@ const SetRows: React.FC<{exercise: IExercise}> = ({exercise}) => {
   const handleAdd = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     const setSkelton = {
-      _id: currentSets.length+1+"",
+      _id: counter+"",
       rep: 0,
       rest: 0,
       weight: 0,
     }
-    setCurrentSets([setSkelton, ...exercise.sets])
+    setCurrentSets([...exercise.sets, setSkelton]);
+    setCounter(counter + 1);
   }
 
   useEffect(() => {
@@ -45,7 +47,7 @@ const SetRows: React.FC<{exercise: IExercise}> = ({exercise}) => {
         };
       else return e;
     });
-    console.log(tempExercises, routine.exercises);
+    // console.log(tempExercises, routine.exercises);
     dispatch(editCurrentRoutine({
       ...routine,
       exercises: [...tempExercises]
@@ -54,13 +56,15 @@ const SetRows: React.FC<{exercise: IExercise}> = ({exercise}) => {
   return (
     <>
       <TableRow>
-          
-          <TableCell>Sets</TableCell>
-          <TableCell></TableCell>
-          <TableCell>
-            <IconButton color="primary" onClick={handleAdd}>
+        <TableCell>
+          <Box display="flex" alignItems="center">
+            <Typography component="h3">Sets</Typography>
+          <IconButton color="primary" onClick={handleAdd}>
               <AddCircleIcon />
             </IconButton>
+          </Box>
+          </TableCell>
+          <TableCell>
           </TableCell>
         </TableRow>
       <TableRow>
@@ -82,6 +86,7 @@ const SetRows: React.FC<{exercise: IExercise}> = ({exercise}) => {
                           <SetRow
                             key={"" + i + set._id+exercise._id}
                             exercise={exercise}
+                            index={i}
                             set={set}
                           />
                           ))

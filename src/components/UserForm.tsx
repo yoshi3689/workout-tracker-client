@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios';
-import { useNavigate, useLocation, redirect } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
 import { useAppDispatch } from '../redux/hooks';
 import { IUser, loginOrRegister } from '../redux/slices/userSlice';
 
@@ -64,7 +64,7 @@ const UserForm: React.FC = () => {
   const handleFormSwitch = (e:any) => {
     // setIsLogin(location.pathname === "login");
     e.preventDefault();
-    console.log(location.pathname)
+    // console.log(location.pathname)
     navigate(isLogin ? "/register" : "/login");
   }
 
