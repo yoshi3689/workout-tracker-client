@@ -34,7 +34,7 @@ const SetRows: React.FC<{exercise: IExercise}> = ({exercise}) => {
       rest: 0,
       weight: 0,
     }
-    setCurrentSets([setSkelton, ...currentSets])
+    setCurrentSets([setSkelton, ...exercise.sets])
   }
 
   useEffect(() => {
@@ -50,12 +50,11 @@ const SetRows: React.FC<{exercise: IExercise}> = ({exercise}) => {
       ...routine,
       exercises: [...tempExercises]
     }));
-    // console.log(tempExercises)
   }, [currentSets]);
   return (
     <>
       <TableRow>
-          <TableCell></TableCell>
+          
           <TableCell>Sets</TableCell>
           <TableCell></TableCell>
           <TableCell>
@@ -66,24 +65,20 @@ const SetRows: React.FC<{exercise: IExercise}> = ({exercise}) => {
         </TableRow>
       <TableRow>
         <TableCell
-          style={{ paddingBottom: 0, paddingTop: 0 }}
-          colSpan={6}
+          style={{ paddingBottom: 0, paddingTop: 0, borderBottom: "none" }}
+          colSpan={4}
           scope="row"
         >
+        {exercise.sets.length !== 0 && (
           <Collapse in={true} timeout="auto" unmountOnExit>
-            <Typography variant="h6" gutterBottom component="div"></Typography>
             <Table size="small" aria-label="purchases">
-              <TableHead>
-                <TableRow>
-
-                </TableRow>
-              </TableHead>
+              
               <TableBody>
                 <TableRow>
-                  <TableCell>
+                  <TableCell style={{borderBottom: "none"}}>
                     <Grid container>
                       <Grid item>
-                        {currentSets.map((set, i) => (
+                        {exercise.sets.map((set, i) => (
                           <SetRow
                             key={"" + i + set._id+exercise._id}
                             exercise={exercise}
@@ -96,9 +91,6 @@ const SetRows: React.FC<{exercise: IExercise}> = ({exercise}) => {
                           display={"flex"}
                           style={{ justifyContent: "end" }}
                         >
-                          {/* <IconButton color="primary" onClick={handleAdd}>
-                            <AddCircleIcon />
-                          </IconButton> */}
                         </Grid>
                       </Grid>
                     </Grid>
@@ -106,7 +98,8 @@ const SetRows: React.FC<{exercise: IExercise}> = ({exercise}) => {
                 </TableRow>
               </TableBody>
             </Table>
-          </Collapse>
+          </Collapse>  
+        )}
         </TableCell>
       </TableRow>
     </>

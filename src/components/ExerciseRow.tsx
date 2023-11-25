@@ -24,52 +24,28 @@ import SetRows from './SetRows';
 const ExerciseRow: React.FC<{ exercise: IExercise, routineId: string }> = ({
   exercise, routineId,
 }) => {
-  // build a function that modifies a routine in the list.
-  // specifically the Exercises of the routine by reflecting the state change
-  // in Exercises list
-
-  // 
-  // const handleExerciseChange = () => {
-    
-  // }
-
-  // add a new set to an exercise
-  // const handleAdd = () => {
-  //   setCurrentExercise({
-  //     ...currentExercise,
-  //     sets: {
-  //       ...currentExercise.sets, test: { _id: "test", rep: 0, rest: 0, weight: 0 }
-  //     },
-  //   });
-  // }
   return (
     <Box sx={{ margin: 1 }}>
       <Table size="small" aria-label="purchases">
-        {/* <TableHead>
-          <TableRow>
-            <TableCell component="th">
-              <Typography component="h5">Exercises</Typography>
-            </TableCell>
-          </TableRow>
-        </TableHead> */}
         <TableBody>
           <TableRow>
-            <TableCell>
-              <ExerciseDropdown
-                exerciseId={exercise._id}
-                currentExercise={exercise}
-              />
+            <TableCell >
+                <Box alignItems="center" display="flex">
+                  <ExerciseDropdown
+                  exerciseId={exercise._id}
+                  currentExercise={exercise}
+                />
+                <Box>
+                <IconButton color="secondary">
+                  <ClearIcon />
+                </IconButton>
+              </Box>
+              </Box>
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell>
+            <TableCell >
               {(exercise) && <SetRows exercise={exercise} />}
-              {/* <IconButton color="primary" onClick={handleAdd}>
-                <AddCircleIcon />
-              </IconButton>
-              <IconButton color="secondary" onClick={handleAdd}>
-                <ClearIcon />
-              </IconButton> */}
             </TableCell>
           </TableRow>
         </TableBody>

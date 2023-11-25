@@ -96,7 +96,7 @@ const SetRow: React.FC<{ set: ISet, exercise: IExercise }> = ({
   }, [rest, weight, rep]);
 
   return (
-    <Box display="flex" className={`set`}>
+    <Box display="flex" alignItems="center" className={`set`}>
       <FormControl sx={{ m: 1 }} variant="standard">
         <InputLabel shrink={true} htmlFor="standard-adornment-rep">
           rep
@@ -135,13 +135,15 @@ const SetRow: React.FC<{ set: ISet, exercise: IExercise }> = ({
           }}
         />
       </FormControl>
-      <IconButton
+      <Box>
+        <IconButton
         className="mt-1"
         color="secondary"
         onClick={handleDelete}
       >
         <ClearIcon />
       </IconButton>
+      </Box>
     </Box>
   );
 };

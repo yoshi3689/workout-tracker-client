@@ -19,18 +19,10 @@ import { editCurrentRoutine } from '../redux/slices/currentRoutineSlice';
 // represent a whole workout routine
 const RoutineRow: React.FC<{ routine: IRoutine, isNew: boolean }> = ({ routine, isNew }) => {
   const currentExercises = useAppSelector(state => state.persistedReducer.currentRoutine.exercises);
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [counter, setCounter] = useState(1);
   const [exercises, setExercises] = useState<IExercise[]>(currentExercises);
 
-  const editExercises = () => {
-    // it's good to have an id assigned to each exercise 
-    // does not have to be a proper random generated id
-    // just like 1, 2, 3
-  }
-
-  useEffect(() => {
-    // console.log(exercises);
-  }, [exercises]);
 
   const dispatch = useAppDispatch();
 
