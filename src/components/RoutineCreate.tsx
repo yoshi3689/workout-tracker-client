@@ -74,8 +74,19 @@ const RoutineCreate: React.FC<{ accessToken: string }> = ({ accessToken }) => {
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>
-            <TableCell></TableCell>
-
+            <TableCell/>
+            <TableCell>
+              <Typography component="h5">Routine</Typography>
+            </TableCell>
+            <TableCell/>
+            <TableCell/>
+            <TableCell/>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          <TableRow>
+            <TableCell/>
+            
             <TableCell>
               <FormControl fullWidth sx={{ m: 1 }} variant="standard">
                 <InputLabel htmlFor="routine_name">routine name</InputLabel>
@@ -85,11 +96,11 @@ const RoutineCreate: React.FC<{ accessToken: string }> = ({ accessToken }) => {
                 />
               </FormControl>
             </TableCell>
-            <TableCell></TableCell>
-            <TableCell></TableCell>
+            <TableCell/>
+            <TableCell/>
+            <TableCell/>
+            
           </TableRow>
-        </TableHead>
-        <TableBody>
           <RoutineRow key={routine.name} routine={routine} isNew={true} />
         </TableBody>
         <TableFooter>

@@ -104,11 +104,11 @@ const SetRow: React.FC<{ set: ISet, exercise: IExercise, index: number }> = ({
         </Typography>
       </Box>
       <FormControl sx={{ m: 1 }} variant="standard">
-        <InputLabel shrink={true} htmlFor="standard-adornment-rep">
+        <InputLabel shrink={true} htmlFor={"standard-adornment-rep"+set._id+exercise._id+routine._id}>
           rep
         </InputLabel>
         <Input
-          id="standard-adornment-rep"
+          id={"standard-adornment-rep"+set._id+exercise._id+routine._id}
           value={rep}
           onChange={(e) => {
             handleChange(e, setRep);
@@ -116,11 +116,11 @@ const SetRow: React.FC<{ set: ISet, exercise: IExercise, index: number }> = ({
         />
       </FormControl>
       <FormControl sx={{ m: 1 }} variant="standard">
-        <InputLabel shrink={true} htmlFor="standard-adornment-weight">
+        <InputLabel shrink={true} htmlFor={"standard-adornment-weight"+set._id+exercise._id+routine._id}>
           weight
         </InputLabel>
         <Input
-          id="standard-adornment-weight"
+          id={"standard-adornment-weight"+set._id+exercise._id+routine._id}
           endAdornment={<InputAdornment position="end">lbs</InputAdornment>}
           value={weight}
           onChange={(e) => {
@@ -129,11 +129,11 @@ const SetRow: React.FC<{ set: ISet, exercise: IExercise, index: number }> = ({
         />
       </FormControl>
       <FormControl sx={{ m: 1 }} variant="standard">
-        <InputLabel shrink={true} htmlFor="standard-adornment-rest">
+        <InputLabel shrink={true} htmlFor={"standard-adornment-rest"+set._id+exercise._id+routine._id}>
           rest
         </InputLabel>
         <Input
-          id="standard-adornment-rest"
+          id={"standard-adornment-rest"+set._id+exercise._id+routine._id}
           value={rest}
           endAdornment={<InputAdornment position="end">(s)</InputAdornment>}
           onChange={(e) => {

@@ -48,10 +48,11 @@ const Root = () => {
             <h3>List of routines created in the past</h3>
             <Routines routines={routines} setRoutines={setRoutines} />
           </div>
+        <br />
+        <br />
+        <br />
+      
           <div className="stick-to-bottom">
-            <h4>
-              <label htmlFor="workout-name">Name</label>
-            </h4>
             <RoutineCreate
               accessToken={
                 loggedInUser.accessToken ? loggedInUser.accessToken : ""

@@ -42,14 +42,14 @@ const ExerciseDropdown: React.FC<{exerciseId:string, exercise:IExercise }> = ({ 
   
   return (
     <FormControl>
-      <InputLabel variant="standard" htmlFor="uncontrolled-native">
+      <InputLabel variant="standard" htmlFor={exercise._id+routine._id}>
         Exercise Name
       </InputLabel>
       <NativeSelect
         defaultValue={exercise.name? exercise.name : exercises[0].name}
         inputProps={{
-          name:"exercise",
-          id:"exercise"
+          name:exercise._id+routine._id,
+          id:exercise._id+routine._id
         }}
         onChange={(e) => handleChange(e.target.value)}
       >

@@ -9,6 +9,8 @@ import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
@@ -73,17 +75,21 @@ const RoutineRow: React.FC<{ routine: IRoutine, isNew: boolean }> = ({ routine, 
       {isNew && (
         <TableRow>
           <TableCell></TableCell>
-          <TableCell>Exercises</TableCell>
-          <TableCell></TableCell>
           <TableCell>
+            <Box display="flex" alignItems="center">
+              <Typography>Exercises</Typography>
             <IconButton color="primary" onClick={handleAdd}>
               <AddCircleIcon />
             </IconButton>
+            </Box>
           </TableCell>
+          <TableCell/>
+          <TableCell/>
         </TableRow>
       )}
 
       <TableRow>
+        <TableCell/>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           {!isNew ? (
             <Collapse in={open} timeout="auto" unmountOnExit>
@@ -107,6 +113,7 @@ const RoutineRow: React.FC<{ routine: IRoutine, isNew: boolean }> = ({ routine, 
             </>
           )}
         </TableCell>
+        <TableCell/>
       </TableRow>
     </React.Fragment>
   );

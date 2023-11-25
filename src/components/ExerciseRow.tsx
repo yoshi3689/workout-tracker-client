@@ -62,6 +62,7 @@ const ExerciseRow: React.FC<{ exercise: IExercise, routineId: string }> = ({
               </Box>
               </Box>
             </TableCell>
+            
           </TableRow>
           <TableRow>
             <TableCell >
