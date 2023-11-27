@@ -115,6 +115,7 @@ const SetRow: React.FC<{ set: ISet, exercise: IExercise, index: number }> = ({
           }}
         />
       </FormControl>
+      <FormControl></FormControl>
       <FormControl sx={{ m: 1 }} variant="standard">
         <InputLabel shrink={true} htmlFor={"standard-adornment-weight"+set._id+exercise._id+routine._id}>
           weight

@@ -1,17 +1,22 @@
-import { createAsyncThunk, createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, nanoid, PayloadAction, ActionReducerMapBuilder } from "@reduxjs/toolkit";
 import { IExercise } from "./exerciseSlice";
 import axios from "axios";
 
 export interface IRoutine {
   _id: string,
+  username: string,
   name: string,
   createdAt: string,
   isEditing: boolean,
   exercises: IExercise[],
 }
 
-export const RoutineInitialState: Record<string, IRoutine> = {
-};
+export interface ICredentials {
+  accessToken: string | undefined,
+  username: string
+}
+
+export const RoutineInitialState: IRoutine[] = [];
 
 const BASE = "http://localhost:5001";
 
@@ -32,16 +37,16 @@ export const addRoutine = createAsyncThunk(
   }
 );
 export const getRoutines = createAsyncThunk<
-  Promise<IRoutine[]>,
-  string | undefined
+  IRoutine[],
+  ICredentials
 >(
   "routines/getRoutines",
-  async (accessToken: string | undefined) => {
-    const response = await axios.get(`${BASE}/api/routines`, {
-      headers: { Authorization: `Bearer ${accessToken}` },
+  async (credentials: ICredentials) => {
+    const response = await axios.get(`${BASE}/api/routines/${credentials.username}`, {
+      headers: { Authorization: `Bearer ${credentials.accessToken}` },
     });
     console.log(response);
-    return response.data.response;
+    return response.data as IRoutine[];
   }
 );
 
@@ -53,13 +58,22 @@ export const RoutineSlice = createSlice({
     //   const newId = nanoid();
     //   state[newId] = { ...action.payload, _id: newId };
     // },
-    editRoutine: (state, action: PayloadAction<IRoutine>) => {
-      state[action.payload._id] = { ...action.payload };
-    },
-    deleteRoutine: (state, action: PayloadAction<string>) => {
-      delete state[action.payload];
-    },
+    // editRoutine: (state, action: PayloadAction<IRoutine>) => {
+    //   state[action.payload._id] = { ...action.payload };
+    // },
+    // deleteRoutine: (state, action: PayloadAction<string>) => {
+    //   delete state[action.payload];
+    // },
+  },
+  extraReducers: (builder) => {
+    // Add reducers for additional action types here, and handle loading state as needed
+    builder.addCase(getRoutines.fulfilled, (state, action: PayloadAction<IRoutine[]>) => {
+      // Add user to the state array
+      console.log(action.payload)
+      state = action.payload
+      return [...action.payload];
+    })
   },
 });
 
-export const { editRoutine, deleteRoutine } = RoutineSlice.actions
+// export const { editRoutine, deleteRoutine } = RoutineSlice.actions

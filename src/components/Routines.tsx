@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import RoutineRow from './RoutineRow';
 
 import Table from "@mui/material/Table";
@@ -9,69 +9,19 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { IRoutine } from '../redux/slices/routineSlice';
+import { IRoutine, getRoutines } from '../redux/slices/routineSlice';
+import { IUser, checkLoginStatus } from '../redux/slices/userSlice';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { useLocation } from 'react-router-dom';
 
-// const testRoutineObjectArray: IRoutine[] = [
-//   {
-//   _id: "1",
-//   name: "1",
-//   createdAt: new Date().toISOString(),
-//   isEditing: false,
-//   exercises: {
-//     11: {
-//     _id: "11",
-//     name: "11",
-//     muscleGroups: ["11"],
-//     sets: {
-//       111: {
-//         _id: "111",
-//         rep: 0,
-//         weight: 0,
-//         rest: 0,
-//       },
-//       112: {
-//         _id: "112",
-//         rep: 0,
-//         weight: 0,
-//         rest: 0,
-//       },
-//       },
-//     }
-//   }
-//   },
-//   {
-//   _id: "2",
-//   name: "2",
-//   createdAt: new Date().toISOString(),
-//   isEditing: false,
-//   exercises: {
-//     22: {
-//     _id: "22",
-//     name: "22",
-//     muscleGroups: ["22"],
-//     sets: {
-//       212: {
-//         _id: "212",
-//         rep: 0,
-//         weight: 0,
-//         rest: 0,
-//       },
-//       222: {
-//         _id: "222",
-//         rep: 0,
-//         weight: 0,
-//         rest: 0,
-//       },
-//       },
-//     }
-//   }
-//   },
+const Routines: React.FC<{ loggedInUser: IUser }> = ({ loggedInUser }) => {
+  const routines = useAppSelector(state => state.persistedReducer.routines)
+  const [currentRoutines, setCurrentRoutines] = useState<IRoutine[]>([])
+  useEffect(() => {
+    console.log(routines);
+    setCurrentRoutines(routines)
+  }, [])
   
-// ]
-
-const Routines: React.FC<{ routines: IRoutine[], setRoutines: Function }> = ({ routines, setRoutines }) => {
   return (
     <TableContainer component={Paper} style={{ maxWidth: "500px" }}>
       <Table aria-label="collapsible table">
@@ -84,7 +34,7 @@ const Routines: React.FC<{ routines: IRoutine[], setRoutines: Function }> = ({ r
           </TableRow>
         </TableHead>
         <TableBody>
-          {routines && routines.map((routine) => (
+          {currentRoutines && currentRoutines.map((routine) => (
                 <RoutineRow
                   key={routine.name}
                   routine={routine}

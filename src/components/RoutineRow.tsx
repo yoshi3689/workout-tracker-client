@@ -46,6 +46,7 @@ const RoutineRow: React.FC<{ routine: IRoutine, isNew: boolean }> = ({ routine, 
   useEffect(() => {
     // assigning a new exercise to the record of exercises
     let tempExercises: IExercise[] = exercises;
+    if (!isNew) console.log("past routine load")
     // console.log(tempExercises);
     dispatch(editCurrentRoutine({
       ...routine,
@@ -72,6 +73,7 @@ const RoutineRow: React.FC<{ routine: IRoutine, isNew: boolean }> = ({ routine, 
           </TableCell>
         </TableRow>
       )}
+
       {isNew && (
         <TableRow>
           <TableCell></TableCell>

@@ -18,9 +18,11 @@ import RoutineRow from "./RoutineRow";
 import { IRoutine, addRoutine } from "../redux/slices/routineSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { editCurrentRoutine } from "../redux/slices/currentRoutineSlice";
+import { useLocation } from "react-router-dom";
 
 let routineSkelton:IRoutine = {
   _id: "1",
+  username: "",
   name: "",
   isEditing: true,
   createdAt: new Date().toISOString(),
@@ -39,6 +41,7 @@ const RoutineCreate: React.FC<{ accessToken: string }> = ({ accessToken }) => {
   const [workoutName, setWorkoutName] = useState("");
 
   const dispatch = useAppDispatch();
+  const location = useLocation();
   const routine = useAppSelector(state => {
     return state.persistedReducer.currentRoutine;
   });
@@ -55,7 +58,7 @@ const RoutineCreate: React.FC<{ accessToken: string }> = ({ accessToken }) => {
   // reset the name
   const handleCreate = () => {
     dispatch(
-      addRoutine({ ...routineSkelton, name: workoutName, _id: accessToken })
+      addRoutine({ ...routineSkelton, name: workoutName, _id: accessToken, username: location.pathname.split("/")[2]  })
     );
     handleCancel();
   };

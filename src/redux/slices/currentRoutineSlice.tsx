@@ -1,17 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IExercise } from "./exerciseSlice";
-
-export interface IRoutine {
-  _id: string,
-  name: string,
-  createdAt: string,
-  isEditing: boolean,
-  exercises: IExercise[],
-}
+import { IRoutine } from "./routineSlice";
 
 export const currentRoutineInitialState: IRoutine = {
   _id: "",
   name: "",
+  username: "",
   createdAt: new Date().toISOString(),
   isEditing: true,
   exercises: [],

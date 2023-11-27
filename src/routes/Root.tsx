@@ -5,37 +5,32 @@ import Routines from '../components/Routines'
 import Unauthorized from '../components/Unauthorized';
 import RoutineCreate from '../components/RoutineCreate';
 
-import { useAppSelector } from '../redux/hooks';
-import { useAppDispatch } from '../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { IRoutine, getRoutines } from '../redux/slices/routineSlice';
 import { checkLoginStatus } from '../redux/slices/userSlice';
 
 
 const Root = () => {
   const location = useLocation();
-  const [routines, setRoutines] = useState<IRoutine[]>([]);
+  const dispatch = useAppDispatch();
   const [error, setError] = useState<string>(""); 
+  const fetchRoutines = async () => {
+    try {
+      await dispatch(getRoutines({accessToken:loggedInUser.accessToken, username: location.pathname.split("/")[2] })).unwrap();
+    } catch (err) {
+      dispatch(checkLoginStatus({ isLoggedIn: false }));
+    }
+  }
 
   const loggedInUser = useAppSelector(state => {
     return state.persistedReducer.user;
   });
 
-  const dispatch = useAppDispatch();
-
-  const fetchRoutines = async () => {
-    try {
-      const routines = await dispatch(getRoutines(loggedInUser.accessToken)).unwrap();
-      setRoutines(routines);
-    } catch (err) {
-      dispatch(checkLoginStatus({ isLoggedIn: false }));
-      // console.error(err.message);
-      // setError(err.message);
-    }
-  }
   useEffect(() => {
     fetchRoutines();
-    console.log(loggedInUser);
   }, [loggedInUser]);
+
+  
   
   return (
     <main
@@ -46,7 +41,7 @@ const Root = () => {
         <>
           <div >
             <h3>List of routines created in the past</h3>
-            <Routines routines={routines} setRoutines={setRoutines} />
+            <Routines loggedInUser={loggedInUser} />
           </div>
         <br />
         <br />
