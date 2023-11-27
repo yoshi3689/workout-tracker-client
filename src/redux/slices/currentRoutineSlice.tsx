@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IExercise } from "./exerciseSlice";
 import { IRoutine } from "./routineSlice";
 
 export const currentRoutineInitialState: IRoutine = {

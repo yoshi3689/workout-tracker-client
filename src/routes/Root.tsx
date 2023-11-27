@@ -6,7 +6,7 @@ import Unauthorized from '../components/Unauthorized';
 import RoutineCreate from '../components/RoutineCreate';
 
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { IRoutine, getRoutines } from '../redux/slices/routineSlice';
+import { getRoutines } from '../redux/slices/routineSlice';
 import { checkLoginStatus } from '../redux/slices/userSlice';
 
 

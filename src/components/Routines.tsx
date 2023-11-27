@@ -9,10 +9,9 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import { IRoutine, getRoutines } from '../redux/slices/routineSlice';
-import { IUser, checkLoginStatus } from '../redux/slices/userSlice';
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { useLocation } from 'react-router-dom';
+import { IRoutine } from '../redux/slices/routineSlice';
+import { IUser } from '../redux/slices/userSlice';
+import { useAppSelector } from '../redux/hooks';
 
 const Routines: React.FC<{ loggedInUser: IUser }> = ({ loggedInUser }) => {
   const routines = useAppSelector(state => state.persistedReducer.routines)
