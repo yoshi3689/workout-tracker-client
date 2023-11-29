@@ -21,43 +21,12 @@ import { generateObjectId } from '../utils/idGenerator';
 
 // represent a whole workout routine with exercises in it
 const RoutineRow: React.FC<{ routine: IRoutine, isNew: boolean }> = ({ routine, isNew }) => {
-  const currentExercises = useAppSelector(state => state.persistedReducer.currentRoutine.exercises);
+  
   const [open, setOpen] = useState(false);
-  const [exerciseId, setExerciseId] = useState<string>("");
-
-  // since the exercises brought down from the parent are set as ONLY initial
-  // they do not get updated whenever the redux state has changed
-
-  const [exercises, setExercises] = useState<IExercise[]>(currentExercises);
-
-
-  const dispatch = useAppDispatch();
-
-
-  // add a new exercise tuple
-  const handleAdd = () => {
-    const newId = generateObjectId();
-    setExerciseId(newId);
-    const newExercise:IExercise = { _id: newId, name: "", sets: [], muscleGroups: [""] };
-    setExercises([
-      ...currentExercises,
-      newExercise,
-    ]);
-  };
-
-  useEffect(() => {
-    // assigning a new exercise to the record of exercises
-    let tempExercises: IExercise[] = exercises;
-    if (!isNew) console.debug("past routine load")
-    dispatch(editCurrentRoutine({
-      ...routine,
-      exercises: [...tempExercises]
-    }));
-  }, [exercises]);
+  
 
   return (
     <React.Fragment>
-      {!isNew && (
         <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
           <TableCell width="30%">
             <IconButton
@@ -68,53 +37,21 @@ const RoutineRow: React.FC<{ routine: IRoutine, isNew: boolean }> = ({ routine, 
               {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </IconButton>
           </TableCell>
-
           <TableCell align="left" component="th" scope="row">
             {routine.name}
           </TableCell>
         </TableRow>
-      )}
-
-      {isNew && (
-        <TableRow>
-          <TableCell></TableCell>
-          <TableCell>
-            <Box display="flex" alignItems="center">
-              <Typography>Exercises</Typography>
-            <IconButton color="primary" onClick={handleAdd}>
-              <AddCircleIcon />
-            </IconButton>
-            </Box>
-          </TableCell>
-          <TableCell/>
-          <TableCell/>
-        </TableRow>
-      )}
-
       <TableRow>
-        <TableCell/>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-          {!isNew ? (
-            <Collapse in={open} timeout="auto" unmountOnExit>
-              {exercises.map((exercise, i) => (
-                <ExerciseRow
-                  exercise={exercise}
-                  routineId={routine._id}
-                  key={i + "" + exercise._id}
-                />
-              ))}
-            </Collapse>
-          ) : (
-            <>
-              {routine.exercises.map((exercise, i) => (
-                <ExerciseRow
-                  exercise={exercise}
-                  routineId={routine._id}
-                  key={i + "" + routine._id}
-                />
-              ))}
-            </>
-          )}
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            {routine.exercises.map((exercise, i) => (
+              <ExerciseRow
+                exercise={exercise}
+                routineId={routine._id}
+                key={i + "" + routine._id}
+              />
+            ))}    
+          </Collapse>
         </TableCell>
         <TableCell/>
       </TableRow>

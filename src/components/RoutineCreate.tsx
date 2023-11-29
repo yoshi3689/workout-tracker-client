@@ -18,6 +18,7 @@ import { IRoutine, addRoutine } from "../redux/slices/routineSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { currentRoutineInitialState, editCurrentRoutine } from "../redux/slices/currentRoutineSlice";
 import { useLocation } from "react-router-dom";
+import ExerciseRows from "./ExerciseRows";
 
 const RoutineCreate: React.FC<{ accessToken: string }> = ({ accessToken }) => {
   const [workoutName, setWorkoutName] = useState("");
@@ -86,7 +87,7 @@ const RoutineCreate: React.FC<{ accessToken: string }> = ({ accessToken }) => {
             <TableCell/>
             
           </TableRow>
-          <RoutineRow key={routine.name} routine={routine} isNew={true} />
+          <ExerciseRows isNew={true} />
         </TableBody>
         <TableFooter>
           <TableRow>
@@ -94,10 +95,8 @@ const RoutineCreate: React.FC<{ accessToken: string }> = ({ accessToken }) => {
             <TableCell></TableCell>
             <TableCell></TableCell>
             <TableCell>
-              <div>
-                <button onClick={handleCancel}>Cancel</button>
-                <button onClick={handleCreate}>Create+</button>
-              </div>
+              <button onClick={handleCancel}>Cancel</button>
+              <button onClick={handleCreate}>Create+</button>
             </TableCell>
           </TableRow>
         </TableFooter>

@@ -18,6 +18,7 @@ const Routines: React.FC<{ loggedInUser: IUser }> = ({ loggedInUser }) => {
   const [currentRoutines, setCurrentRoutines] = useState<IRoutine[]>([])
   
   useEffect(() => {
+    console.log(routines)
     setCurrentRoutines(routines)
   }, [])
   

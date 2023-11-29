@@ -68,6 +68,7 @@ export const RoutineSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getRoutines.fulfilled, (state, action: PayloadAction<IRoutine[]>) => {
       state = action.payload
+      console.log(action.payload);
       return [...action.payload];
     })
   },

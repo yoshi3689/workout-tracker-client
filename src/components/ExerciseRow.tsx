@@ -50,6 +50,7 @@ const ExerciseRow: React.FC<{ exercise: IExercise, routineId: string }> = ({
         <TableBody>
           <TableRow>
             <TableCell >
+              <TableCell>{exercise.name}</TableCell>
                 <Box alignItems="center" display="flex">
                   <ExerciseDropdown
                   exerciseId={exercise._id}
