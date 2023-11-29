@@ -7,14 +7,7 @@ export interface ISet {
   weight: number;
 }
 
-export const SetInitialState: Record<string, ISet> = {
-  useIdHere: {
-    _id: "useIdHere",
-    rep: 0,
-    rest: 0,
-    weight: 0,
-  }
-};
+export const SetInitialState: Record<string, ISet> = {};
 
 export const SetSlice = createSlice({
   name: "Sets",

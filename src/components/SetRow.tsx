@@ -32,20 +32,14 @@ const SetRow: React.FC<{ set: ISet, exercise: IExercise, index: number }> = ({
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement|HTMLTextAreaElement>, setState: Function) => {
-    // console.log(e.currentTarget.value);
     setState(e.currentTarget.value);
-    // dispatch(editSet({ _id: set._id ,rest, weight, rep: rep }));
   }
+  
   const handleDelete = () => {
     setCurrentSet(null);
-    // dispatch(deleteSet("place ID here"));
   }
-  
-  
 
   useEffect(() => {
-    // delete routine.exercises[parseInt(exercise._id) - 1].sets[parseInt(set._id) - 1];
-    // console.log(tempExercises, routine.exercises);
     if (currentSet == null) {
       
       let tempExercises: IExercise[] = routine.exercises.map((e) => {
@@ -59,7 +53,6 @@ const SetRow: React.FC<{ set: ISet, exercise: IExercise, index: number }> = ({
           };
         else return e;
       });
-      // console.log(tempExercises);
       dispatch(
         editCurrentRoutine({
           ...routine,
@@ -82,7 +75,7 @@ const SetRow: React.FC<{ set: ISet, exercise: IExercise, index: number }> = ({
           };
         else return e;
       });
-      // console.log(tempExercises, routine.exercises);
+
       dispatch(
         editCurrentRoutine({
           ...routine,

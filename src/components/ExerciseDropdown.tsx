@@ -29,16 +29,19 @@ const ExerciseDropdown: React.FC<{exerciseId:string, exercise:IExercise }> = ({ 
   }
 
   useEffect(() => {
+    // modify the exercise array to contain the edited exercise
     let tempExercises: IExercise[] = routine.exercises.map(e => {
-      if (e._id === exerciseId) return exercise
+      if (e._id === exerciseId) return currentExercise
       else return e
     });
-    
+    console.log(tempExercises);
+
+    // send the updated state to redux
     dispatch(editCurrentRoutine({ 
       ...routine,
       exercises: tempExercises
       }));
-  },[exercise, exerciseId])
+  },[currentExercise, exerciseId])
   
   return (
     <FormControl>

@@ -33,11 +33,9 @@ export const userSlice = createSlice({
       return UserInitialState;
     },
     loginOrRegister: (state, action: PayloadAction<IUser>) => {
-      // console.log(action.payload)
       return action.payload;
     },
     checkLoginStatus: (state, action: PayloadAction<IUser>) => {
-      // console.log(action.payload)
       return { ...state, isLoggedIn: action.payload.isLoggedIn };
     },
   },

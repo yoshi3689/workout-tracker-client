@@ -17,22 +17,18 @@ const LoginPersist = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    // console.log("log in status changed")
     if (!isLoggedIn) {
-      console.log("access token expired. but refresh token is probably still here");
-      // how to check if the refresh token is still valid
       axios.defaults.withCredentials = true;
-    axios.get(`http://localhost:5001/api/refresh/`,)
-      .then((res: AxiosResponse) => {
-        console.log(res);
-        dispatch(loginOrRegister({ accessToken: res.data, isLoggedIn: true }));
-      })
-      .catch((error: AxiosError) => {
-        setError("login refresh failed. You need to log in manually");
-        console.error(error.message);
-      });
+      axios.get(`http://localhost:5001/api/refresh/`,)
+        .then((res: AxiosResponse) => {
+          dispatch(loginOrRegister({ accessToken: res.data, isLoggedIn: true }));
+        })
+        .catch((error: AxiosError) => {
+          setError("login refresh failed. You need to log in manually");
+          console.error(error.message);
+        });
     } else {
-      console.log("logged in. so no need to refresh!")
+      console.debug("logged in. so no need to refresh!")
     }
   }, [isLoggedIn, dispatch])
 

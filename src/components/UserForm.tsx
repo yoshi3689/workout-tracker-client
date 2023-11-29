@@ -62,9 +62,7 @@ const UserForm: React.FC = () => {
   }
 
   const handleFormSwitch = (e:any) => {
-    // setIsLogin(location.pathname === "login");
     e.preventDefault();
-    // console.log(location.pathname)
     navigate(isLogin ? "/register" : "/login");
   }
 

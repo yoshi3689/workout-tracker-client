@@ -51,7 +51,6 @@ const SetRows: React.FC<{exercise: IExercise}> = ({exercise}) => {
         };
       else return e;
     });
-    // console.log(tempExercises, routine.exercises);
     dispatch(editCurrentRoutine({
       ...routine,
       exercises: [...tempExercises]

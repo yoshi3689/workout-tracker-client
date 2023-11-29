@@ -16,8 +16,8 @@ import { useAppSelector } from '../redux/hooks';
 const Routines: React.FC<{ loggedInUser: IUser }> = ({ loggedInUser }) => {
   const routines = useAppSelector(state => state.persistedReducer.routines)
   const [currentRoutines, setCurrentRoutines] = useState<IRoutine[]>([])
+  
   useEffect(() => {
-    console.log(routines);
     setCurrentRoutines(routines)
   }, [])
   

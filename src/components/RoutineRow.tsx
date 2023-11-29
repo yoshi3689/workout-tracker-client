@@ -48,8 +48,7 @@ const RoutineRow: React.FC<{ routine: IRoutine, isNew: boolean }> = ({ routine, 
   useEffect(() => {
     // assigning a new exercise to the record of exercises
     let tempExercises: IExercise[] = exercises;
-    if (!isNew) console.log("past routine load")
-    // console.log(tempExercises);
+    if (!isNew) console.debug("past routine load")
     dispatch(editCurrentRoutine({
       ...routine,
       exercises: [...tempExercises]
