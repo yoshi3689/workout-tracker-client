@@ -16,25 +16,8 @@ import TableFooter from "@mui/material/TableFooter";
 import RoutineRow from "./RoutineRow";
 import { IRoutine, addRoutine } from "../redux/slices/routineSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { editCurrentRoutine } from "../redux/slices/currentRoutineSlice";
+import { currentRoutineInitialState, editCurrentRoutine } from "../redux/slices/currentRoutineSlice";
 import { useLocation } from "react-router-dom";
-
-let routineSkelton:IRoutine = {
-  _id: "1",
-  username: "",
-  name: "",
-  isEditing: true,
-  createdAt: new Date().toISOString(),
-  exercises: []
-};
-
-// const routine:IRoutine = {
-//   _id: "1",
-//   name: "1",
-//   isEditing: false,
-//   createdAt: new Date().toISOString(),
-//   exercises: []
-// };
 
 const RoutineCreate: React.FC<{ accessToken: string }> = ({ accessToken }) => {
   const [workoutName, setWorkoutName] = useState("");
@@ -49,7 +32,7 @@ const RoutineCreate: React.FC<{ accessToken: string }> = ({ accessToken }) => {
   // refelect the rest on the redux store
   const handleCancel = () => {
     setWorkoutName("");
-    dispatch(editCurrentRoutine({...routineSkelton}));
+    dispatch(editCurrentRoutine({...currentRoutineInitialState}));
   };
 
   // for now just add the new workout routine to an array
@@ -57,7 +40,7 @@ const RoutineCreate: React.FC<{ accessToken: string }> = ({ accessToken }) => {
   // reset the name
   const handleCreate = () => {
     dispatch(
-      addRoutine({ ...routineSkelton, name: workoutName, _id: accessToken, username: location.pathname.split("/")[2]  })
+      addRoutine({ ...currentRoutineInitialState, name: workoutName, _id: accessToken, username: location.pathname.split("/")[2]  })
     );
     handleCancel();
   };

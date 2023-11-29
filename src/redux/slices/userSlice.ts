@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface IUser {
-  _id?: string,
   username?: string;
   email?: string;
   accessToken?: string;
@@ -13,7 +12,6 @@ export interface IUser {
 }
 
 export const UserInitialState: IUser|null = {
-  _id: "",
   username: "",
   email: "",
   accessToken: "",

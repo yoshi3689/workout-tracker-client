@@ -18,25 +18,29 @@ import SetRow from './SetRow';
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
 import { IExercise } from '../redux/slices/exerciseSlice';
 import { editCurrentRoutine } from '../redux/slices/currentRoutineSlice';
+import { generateObjectId } from '../utils/idGenerator';
 
 const SetRows: React.FC<{exercise: IExercise}> = ({exercise}) => {
   const [currentSets, setCurrentSets] = useState<ISet[]>(exercise.sets);
-  const [counter, setCounter] = useState<number>(1);
+  const [setId, setSetId] = useState<string>("");
+
   const dispatch = useAppDispatch();
   const routine = useAppSelector(state => {
     return state.persistedReducer.currentRoutine;
   });
 
+  // add new set
   const handleAdd = (e: React.MouseEvent<HTMLElement>) => {
+    const newSetId = generateObjectId();
+    setSetId(newSetId);
     e.preventDefault();
     const setSkelton = {
-      _id: counter+"",
+      _id: newSetId,
       rep: 0,
       rest: 0,
       weight: 0,
     }
     setCurrentSets([...exercise.sets, setSkelton]);
-    setCounter(counter + 1);
   }
 
   useEffect(() => {

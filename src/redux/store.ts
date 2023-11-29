@@ -13,13 +13,14 @@ import storage from 'redux-persist/lib/storage'
 const persistConfig = {
   key: "root",
   storage,
+  blackList: ["user", "routines"]
 };
 
 const reducers = combineReducers({
+  user: userSlice.reducer,
   routines: RoutineSlice.reducer,
   exercises: ExerciseSlice.reducer,
   sets: SetSlice.reducer,
-  user: userSlice.reducer,
   currentRoutine: currentRoutineSlice.reducer
 });
 const persistedReducer = persistReducer(persistConfig, reducers);
@@ -43,4 +44,6 @@ export type RootState = ReturnType<typeof store.getState>
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch
 export const persister = persistStore(store);
+
+// The below is to manually reset the persisted states
 // persister.purge();

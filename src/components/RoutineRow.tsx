@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-// import ExerciseDropdown from './ExerciseDropdown';
+
 import ExerciseRow from './ExerciseRow';
 import { IRoutine } from '../redux/slices/routineSlice';
 
@@ -17,12 +17,13 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { IExercise } from '../redux/slices/exerciseSlice';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { editCurrentRoutine } from '../redux/slices/currentRoutineSlice';
+import { generateObjectId } from '../utils/idGenerator';
 
 // represent a whole workout routine with exercises in it
 const RoutineRow: React.FC<{ routine: IRoutine, isNew: boolean }> = ({ routine, isNew }) => {
   const currentExercises = useAppSelector(state => state.persistedReducer.currentRoutine.exercises);
   const [open, setOpen] = useState(false);
-  const [counter, setCounter] = useState(1);
+  const [exerciseId, setExerciseId] = useState<string>("");
 
   // since the exercises brought down from the parent are set as ONLY initial
   // they do not get updated whenever the redux state has changed
@@ -35,12 +36,13 @@ const RoutineRow: React.FC<{ routine: IRoutine, isNew: boolean }> = ({ routine, 
 
   // add a new exercise tuple
   const handleAdd = () => {
-    const newExercise:IExercise = { _id: "exercise"+counter+"", name: "", sets: [], muscleGroups: [""] };
+    const newId = generateObjectId();
+    setExerciseId(newId);
+    const newExercise:IExercise = { _id: newId, name: "", sets: [], muscleGroups: [""] };
     setExercises([
       ...currentExercises,
       newExercise,
     ]);
-    setCounter(counter+1);
   };
 
   useEffect(() => {
@@ -99,7 +101,7 @@ const RoutineRow: React.FC<{ routine: IRoutine, isNew: boolean }> = ({ routine, 
                 <ExerciseRow
                   exercise={exercise}
                   routineId={routine._id}
-                  key={i + "" + routine._id}
+                  key={i + "" + exercise._id}
                 />
               ))}
             </Collapse>

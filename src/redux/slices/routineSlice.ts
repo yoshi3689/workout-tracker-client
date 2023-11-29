@@ -28,7 +28,6 @@ export const addRoutine = createAsyncThunk(
       `${BASE}/api/routines`,
       {
         ...data,
-        _id: "",
       },
       { headers: { Authorization: `Bearer ${data._id}` } }
     );
