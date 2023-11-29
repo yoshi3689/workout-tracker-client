@@ -12,7 +12,7 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
-import { IExercise } from '../redux/slices/exerciseSlice';
+import { IExercise, deleteExercise } from '../redux/slices/exerciseSlice';
 import { IRoutine } from '../redux/slices/routineSlice';
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import ClearIcon from "@mui/icons-material/Clear";
@@ -22,27 +22,12 @@ import { editCurrentRoutine } from '../redux/slices/currentRoutineSlice';
 // represent a Exercise containing info such as 
 // exercise, total reps, sets and etc
 
-const ExerciseRow: React.FC<{ exercise: IExercise, routineId: string }> = ({
-  exercise, routineId,
-}) => {
-  const [currentExercise, setCurrentExercise] = useState<IExercise | null>(exercise);
+const ExerciseRow: React.FC<{ exercise: IExercise }> = ({ exercise }) => {
   const dispatch = useAppDispatch();
-  const routine: IRoutine = useAppSelector(state => state.persistedReducer.currentRoutine);
-  // remove an exercise tuple
+
   const handleDelete = () => {
-    setCurrentExercise(null);
+    dispatch(deleteExercise(exercise._id));
   };
-
-
-  useEffect(() => {
-    if (currentExercise == null) {
-      let tempExercises: IExercise[] = routine.exercises.filter(e => e._id !== exercise._id);
-      dispatch(editCurrentRoutine({
-        ...routine,
-        exercises: tempExercises
-      }));
-    }
-  }, [currentExercise]);
 
   return (
     <Box sx={{ margin: 1 }}>
@@ -53,7 +38,6 @@ const ExerciseRow: React.FC<{ exercise: IExercise, routineId: string }> = ({
               <TableCell>{exercise.name}</TableCell>
                 <Box alignItems="center" display="flex">
                   <ExerciseDropdown
-                  exerciseId={exercise._id}
                   exercise={exercise}
                 />
                 <Box>

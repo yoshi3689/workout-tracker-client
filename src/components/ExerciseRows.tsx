@@ -5,6 +5,8 @@ import { IRoutine } from '../redux/slices/routineSlice';
 
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 
+import exerciseData from "../data/exercises.json"
+
 import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
 import TableCell from "@mui/material/TableCell";
@@ -14,13 +16,13 @@ import Box from "@mui/material/Box";
 
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { IExercise } from '../redux/slices/exerciseSlice';
+import { IExercise, addExercise } from '../redux/slices/exerciseSlice';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { editCurrentRoutine } from '../redux/slices/currentRoutineSlice';
 import { generateObjectId } from '../utils/idGenerator';
 
 const ExerciseRows: React.FC<{ isNew: boolean }> = ({ isNew }) => {
-  const currentExercises = useAppSelector(state => state.persistedReducer.currentRoutine.exercises);
+  const currentExercises = useAppSelector(state => state.persistedReducer.exercises);
 
   // I should not have to fetch routine here
   // but rn I need to do so since the exercises are nested in the routine state
@@ -30,33 +32,20 @@ const ExerciseRows: React.FC<{ isNew: boolean }> = ({ isNew }) => {
   // since the exercises brought down from the parent are set as ONLY initial
   // they do not get updated whenever the redux state has changed
 
-  const [exercises, setExercises] = useState<IExercise[]>(currentExercises);
+  // const [exercises, setExercises] = useState<IExercise[]>(currentExercises);
 
 
   const dispatch = useAppDispatch();
 
-
+  console.log(currentExercises)
   // add a new exercise tuple
   const handleAdd = () => {
     const newId = generateObjectId();
     setExerciseId(newId);
-
-    const newExercise:IExercise = { _id: newId, name: "", sets: [], muscleGroups: [""] };
-    setExercises([
-      ...currentExercises,
-      newExercise,
-    ]);
+    const newExercise:IExercise = { _id: newId, name: exerciseData[0].name, sets: [], muscleGroups: [""] };
+    dispatch(addExercise(newExercise));
   };
 
-  useEffect(() => {
-    // assigning a new exercise to the record of exercises
-    let tempExercises: IExercise[] = exercises;
-    if (!isNew) console.debug("past routine load")
-    dispatch(editCurrentRoutine({
-      ...routine,
-      exercises: [...tempExercises]
-    }));
-  }, [exercises]);
   return (
     <>
       <TableRow>
@@ -72,10 +61,9 @@ const ExerciseRows: React.FC<{ isNew: boolean }> = ({ isNew }) => {
           <TableCell/>
         </TableRow>
         <TableCell/>
-        {currentExercises.map((exercise, i) => (
+        {currentExercises && Object.values(currentExercises).map((exercise, i) => (
         <ExerciseRow
           exercise={exercise}
-          routineId={exercise._id}
           key={i + "" + exercise._id}
         />
       ))}

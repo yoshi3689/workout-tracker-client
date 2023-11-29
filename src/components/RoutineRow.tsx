@@ -47,8 +47,7 @@ const RoutineRow: React.FC<{ routine: IRoutine, isNew: boolean }> = ({ routine, 
             {routine.exercises.map((exercise, i) => (
               <ExerciseRow
                 exercise={exercise}
-                routineId={routine._id}
-                key={i + "" + routine._id}
+                key={i + "" + exercise._id}
               />
             ))}    
           </Collapse>

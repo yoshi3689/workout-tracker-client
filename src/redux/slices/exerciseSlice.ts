@@ -15,7 +15,8 @@ export const ExerciseSlice = createSlice({
   initialState: ExerciseInitialState,
   reducers: {
     addExercise: (state, action: PayloadAction<IExercise>) => {
-      state[action.payload._id] = action.payload;
+      console.log(action.payload);
+      state = {...state, [action.payload._id]:action.payload};
       return state;
     },
     editExercise: (state, action: PayloadAction<IExercise>) => {
@@ -24,6 +25,7 @@ export const ExerciseSlice = createSlice({
     },
     deleteExercise: (state, action: PayloadAction<string>) => {
       delete state[action.payload];
+      return state;
     },
   },
 });

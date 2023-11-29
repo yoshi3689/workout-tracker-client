@@ -12,7 +12,7 @@ import { editCurrentRoutine } from "../redux/slices/currentRoutineSlice";
 
 
 
-const ExerciseDropdown: React.FC<{exerciseId:string, exercise:IExercise }> = ({ exerciseId, exercise }) => {
+const ExerciseDropdown: React.FC<{exercise:IExercise }> = ({ exercise }) => {
   const [currentExercise, setCurrentExercise] = useState<IExercise>({...exercise, name:exercises[0].name });
   const routine = useAppSelector(state => {
     return state.persistedReducer.currentRoutine;
@@ -31,7 +31,7 @@ const ExerciseDropdown: React.FC<{exerciseId:string, exercise:IExercise }> = ({ 
   useEffect(() => {
     // modify the exercise array to contain the edited exercise
     let tempExercises: IExercise[] = routine.exercises.map(e => {
-      if (e._id === exerciseId) return currentExercise
+      if (e._id === exercise._id) return currentExercise
       else return e
     });
     console.log(tempExercises);
@@ -41,7 +41,7 @@ const ExerciseDropdown: React.FC<{exerciseId:string, exercise:IExercise }> = ({ 
       ...routine,
       exercises: tempExercises
       }));
-  },[currentExercise, exerciseId])
+  },[currentExercise])
   
   return (
     <FormControl>
@@ -57,7 +57,7 @@ const ExerciseDropdown: React.FC<{exerciseId:string, exercise:IExercise }> = ({ 
         onChange={(e) => handleChange(e.target.value)}
       >
         {exercises.map((e, i) => (
-                <option key={e.name + exerciseId + i} value={e.name}>
+                <option key={e.name + exercise._id + i} value={e.name}>
                   {e.name}
                 </option>
               ))}
