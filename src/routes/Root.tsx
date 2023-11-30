@@ -18,7 +18,11 @@ const Root = () => {
     try {
       await dispatch(getRoutines({accessToken:loggedInUser.accessToken, username: location.pathname.split("/")[2] })).unwrap();
     } catch (err) {
-      dispatch(checkLoginStatus({ isLoggedIn: false }));
+      dispatch(checkLoginStatus({
+        isLoggedIn: false,
+        email: '',
+        accessToken: ''
+      }));
     }
   }
 
@@ -46,11 +50,7 @@ const Root = () => {
         <br />
       
           <div className="stick-to-bottom">
-            <RoutineCreate
-              accessToken={
-                loggedInUser.accessToken ? loggedInUser.accessToken : ""
-              }
-            />
+            <RoutineCreate />
           </div>
         </>
       ) : (

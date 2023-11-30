@@ -57,7 +57,10 @@ const UserForm: React.FC = () => {
       ? await axios.post("api/login", { username, password })
       : await axios.post("api/register", { username, password, email });
     const accessToken: string = res.data.accessToken
-    dispatch(loginOrRegister({username, accessToken, isLoggedIn: true}));
+    dispatch(loginOrRegister({
+      username, accessToken, isLoggedIn: true,
+      email: ''
+    }));
     navigate(`/dashboard/${username}`);
   }
 

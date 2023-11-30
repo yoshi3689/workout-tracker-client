@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -13,47 +13,55 @@ import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import TableFooter from "@mui/material/TableFooter";
 
-import RoutineRow from "./RoutineRow";
-import { IRoutine, addRoutine } from "../redux/slices/routineSlice";
+import { addRoutine } from "../redux/slices/routineSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { newRoutineInitialState, editNewRoutine } from "../redux/slices/newRoutineSlice";
+import { newRoutineInitialState, editNewRoutine, clearNewRoutine } from "../redux/slices/newRoutineSlice";
 import { useLocation } from "react-router-dom";
 import ExerciseRows from "./ExerciseRows";
 
-const RoutineCreate: React.FC<{ accessToken: string }> = ({ accessToken }) => {
+const RoutineCreate: React.FC = () => {
   const [workoutName, setWorkoutName] = useState("");
 
   const dispatch = useAppDispatch();
   const location = useLocation();
-  const routine = useAppSelector(state => {
-    return state.persistedReducer.newRoutine;
-  });
-  
-  // set all the newRoutine states to the initial state
-  // refelect the rest on the redux store
-  const handleCancel = () => {
-    setWorkoutName("");
-    dispatch(editNewRoutine({...newRoutineInitialState}));
-  };
 
-  // for now just add the new workout routine to an array
-  // add a new workout routine to the list(probs API call to the DB)
-  // reset the name
-  const handleCreate = () => {
-    dispatch(
-      addRoutine({ ...newRoutineInitialState, name: workoutName, _id: accessToken, username: location.pathname.split("/")[2]  })
-    );
-    handleCancel();
-  };
+  const { accessToken, isLoggedIn } = useAppSelector(state => {
+    return state.persistedReducer.user;
+  });
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setWorkoutName(e.target.value);
   }
 
-  // will be fired basically when the name changes
-  // useEffect(() => {
-  //   dispatch(editNewRoutine({ ...routine, name: workoutName }));
-  // },[dispatch, routine, workoutName])
+  useEffect(() => {
+    dispatch(editNewRoutine({
+      ...newRoutineInitialState,
+      name: workoutName
+    }))
+  }, [workoutName]);
+  
+  // set all the newRoutine states to the initial state
+  // refelect the rest on the redux store
+  const handleCancel = () => {
+    setWorkoutName("");
+    dispatch(clearNewRoutine());
+  };
+
+  // for now just add the new workout routine to an array
+  // add a new workout routine to the list(probs API call to the DB)
+  // reset the name
+  const handleCreateAndEdit = () => {
+    if (isLoggedIn && accessToken) {
+      dispatch(addRoutine({
+        ...newRoutineInitialState,
+        name: workoutName,
+        _id: accessToken,
+        username: location.pathname.split("/")[2],
+        createdAt: new Date().toISOString()
+      }));
+    }
+    handleCancel();
+  };
 
   return (
     <TableContainer component={Paper} style={{ maxWidth: "500px" }}>
@@ -96,7 +104,7 @@ const RoutineCreate: React.FC<{ accessToken: string }> = ({ accessToken }) => {
             <TableCell></TableCell>
             <TableCell>
               <button onClick={handleCancel}>Cancel</button>
-              <button onClick={handleCreate}>Create+</button>
+              <button onClick={handleCreateAndEdit}>Create+</button>
             </TableCell>
           </TableRow>
         </TableFooter>

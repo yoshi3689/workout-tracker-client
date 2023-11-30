@@ -5,7 +5,7 @@ export const newRoutineInitialState: IRoutine = {
   _id: "",
   name: "",
   username: "",
-  createdAt: new Date().toISOString(),
+  createdAt: "",
   isEditing: true,
   exercises: [],
 };

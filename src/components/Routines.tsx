@@ -9,7 +9,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import { IUser } from '../redux/slices/userSlice';
+
 import { useAppSelector } from '../redux/hooks';
 
 const Routines: React.FC = () => {

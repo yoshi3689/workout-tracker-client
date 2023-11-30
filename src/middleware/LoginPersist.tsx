@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Outlet } from 'react-router-dom'
 
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { jwtDecode } from 'jwt-decode';
 import Unauthorized from '../components/Unauthorized';
 import { loginOrRegister } from '../redux/slices/userSlice';
 
