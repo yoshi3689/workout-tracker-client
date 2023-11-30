@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 
 import { RoutineSlice } from './slices/routineSlice'
-import { currentRoutineSlice } from './slices/currentRoutineSlice'
+import { newRoutineSlice } from './slices/newRoutineSlice'
 import { ExerciseSlice } from './slices/exerciseSlice'
 import { SetSlice } from './slices/setsSlice'
 import { userSlice } from './slices/userSlice'
@@ -21,7 +21,7 @@ const reducers = combineReducers({
   routines: RoutineSlice.reducer,
   exercises: ExerciseSlice.reducer,
   sets: SetSlice.reducer,
-  currentRoutine: currentRoutineSlice.reducer
+  newRoutine: newRoutineSlice.reducer
 });
 const persistedReducer = persistReducer(persistConfig, reducers);
 

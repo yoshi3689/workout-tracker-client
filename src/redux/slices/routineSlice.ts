@@ -29,7 +29,7 @@ export const addRoutine = createAsyncThunk(
       const response = await axios.post(
       `${BASE}/api/routines`,
       {
-        ...state.persistedReducer.currentRoutine,
+        ...state.persistedReducer.newRoutine,
       },
       { headers: { Authorization: `Bearer ${data._id}` } }
     );

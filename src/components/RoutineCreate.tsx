@@ -16,7 +16,7 @@ import TableFooter from "@mui/material/TableFooter";
 import RoutineRow from "./RoutineRow";
 import { IRoutine, addRoutine } from "../redux/slices/routineSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { currentRoutineInitialState, editCurrentRoutine } from "../redux/slices/currentRoutineSlice";
+import { newRoutineInitialState, editNewRoutine } from "../redux/slices/newRoutineSlice";
 import { useLocation } from "react-router-dom";
 import ExerciseRows from "./ExerciseRows";
 
@@ -26,14 +26,14 @@ const RoutineCreate: React.FC<{ accessToken: string }> = ({ accessToken }) => {
   const dispatch = useAppDispatch();
   const location = useLocation();
   const routine = useAppSelector(state => {
-    return state.persistedReducer.currentRoutine;
+    return state.persistedReducer.newRoutine;
   });
   
-  // set all the currentRoutine states to the initial state
+  // set all the newRoutine states to the initial state
   // refelect the rest on the redux store
   const handleCancel = () => {
     setWorkoutName("");
-    dispatch(editCurrentRoutine({...currentRoutineInitialState}));
+    dispatch(editNewRoutine({...newRoutineInitialState}));
   };
 
   // for now just add the new workout routine to an array
@@ -41,7 +41,7 @@ const RoutineCreate: React.FC<{ accessToken: string }> = ({ accessToken }) => {
   // reset the name
   const handleCreate = () => {
     dispatch(
-      addRoutine({ ...currentRoutineInitialState, name: workoutName, _id: accessToken, username: location.pathname.split("/")[2]  })
+      addRoutine({ ...newRoutineInitialState, name: workoutName, _id: accessToken, username: location.pathname.split("/")[2]  })
     );
     handleCancel();
   };
@@ -52,7 +52,7 @@ const RoutineCreate: React.FC<{ accessToken: string }> = ({ accessToken }) => {
 
   // will be fired basically when the name changes
   // useEffect(() => {
-  //   dispatch(editCurrentRoutine({ ...routine, name: workoutName }));
+  //   dispatch(editNewRoutine({ ...routine, name: workoutName }));
   // },[dispatch, routine, workoutName])
 
   return (

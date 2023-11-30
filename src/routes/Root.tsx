@@ -33,15 +33,13 @@ const Root = () => {
   
   
   return (
-    <main
-    // style={{ "display": "flex", "justifyContent": "center" }}
-    >
+    <main>
       Welcome {location.pathname.split("/")[2]}
       {!error ? (
         <>
           <div >
             <h3>List of routines created in the past</h3>
-            <Routines loggedInUser={loggedInUser} />
+            <Routines />
           </div>
         <br />
         <br />

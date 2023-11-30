@@ -3,12 +3,9 @@ import { IExercise, editExercise } from "../redux/slices/exerciseSlice";
 import exercisesData from "../data/exercises.json";
 
 import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
 import NativeSelect from '@mui/material/NativeSelect';
-import { useAppSelector, useAppDispatch } from "../redux/hooks";
-import { editCurrentRoutine } from "../redux/slices/currentRoutineSlice";
+import { useAppDispatch } from "../redux/hooks";
 
 
 
