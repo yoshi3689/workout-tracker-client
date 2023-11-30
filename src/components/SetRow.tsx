@@ -15,79 +15,17 @@ import ClearIcon from "@mui/icons-material/Clear";
 import IconButton from "@mui/material/IconButton";
 import { IExercise } from "../redux/slices/exerciseSlice";
 import { editCurrentRoutine } from "../redux/slices/currentRoutineSlice";
+import SetEdit from "./SetEdit";
 
 
-const SetRow: React.FC<{ set: ISet, exercise: IExercise, index: number }> = ({
-  set, exercise, index
-}) => {
-
+const SetRow: React.FC<{ set: ISet, index: number }> = ({ set, index }) => {
   const dispatch = useAppDispatch();
-  const [currentSet, setCurrentSet] = useState<ISet|null>(set);
-  const [rest, setRest] = useState(set.rest);
-  const [weight, setWeight] = useState(set.weight);
-  const [rep, setRep] = useState(set.rep);
-
-  const routine = useAppSelector(state => {
-    return state.persistedReducer.currentRoutine;
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement|HTMLTextAreaElement>, setState: Function) => {
-    setState(e.currentTarget.value);
-  }
   
   const handleDelete = () => {
-    setCurrentSet(null);
+    dispatch(deleteSet(set._id));
   }
 
-  useEffect(() => {
-    if (currentSet == null) {
-      
-      let tempExercises: IExercise[] = routine.exercises.map((e) => {
-        if (e._id === exercise._id)
-          return {
-            ...exercise,
-            sets: exercise.sets.filter((s) => {
-              if (s._id === set._id) return false;
-              else return true;
-            }),
-          };
-        else return e;
-      });
-      dispatch(
-        editCurrentRoutine({
-          ...routine,
-          exercises: [...tempExercises],
-        })
-      );
-    }
-      }, [currentSet]);
   // modifies redux state
-  useEffect(() => {
-    setTimeout(() => {
-      let tempExercises: IExercise[] = routine.exercises.map((e) => {
-        if (e._id === exercise._id)
-          return {
-            ...exercise,
-            sets: exercise.sets.map((s) => {
-              if (s._id === set._id) return { ...set, rest, rep, weight };
-              else return s;
-            }),
-          };
-        else return e;
-      });
-
-      dispatch(
-        editCurrentRoutine({
-          ...routine,
-          exercises: [...tempExercises],
-        })
-      );
-    }, 2000);
-    
-    // find the exercise to modify its set
-    // modify the set array by creating a new one with a new entry to it
-    
-  }, [rest, weight, rep]);
 
   return (
     <Box display="flex" alignItems="end" className={`set`}>
@@ -96,45 +34,7 @@ const SetRow: React.FC<{ set: ISet, exercise: IExercise, index: number }> = ({
           {index+1}
         </Typography>
       </Box>
-      <FormControl sx={{ m: 1 }} variant="standard">
-        <InputLabel shrink={true} htmlFor={"standard-adornment-rep"+set._id+exercise._id+routine._id}>
-          rep
-        </InputLabel>
-        <Input
-          id={"standard-adornment-rep"+set._id+exercise._id+routine._id}
-          value={rep}
-          onChange={(e) => {
-            handleChange(e, setRep);
-          }}
-        />
-      </FormControl>
-      <FormControl></FormControl>
-      <FormControl sx={{ m: 1 }} variant="standard">
-        <InputLabel shrink={true} htmlFor={"standard-adornment-weight"+set._id+exercise._id+routine._id}>
-          weight
-        </InputLabel>
-        <Input
-          id={"standard-adornment-weight"+set._id+exercise._id+routine._id}
-          endAdornment={<InputAdornment position="end">lbs</InputAdornment>}
-          value={weight}
-          onChange={(e) => {
-            handleChange(e, setWeight);
-          }}
-        />
-      </FormControl>
-      <FormControl sx={{ m: 1 }} variant="standard">
-        <InputLabel shrink={true} htmlFor={"standard-adornment-rest"+set._id+exercise._id+routine._id}>
-          rest
-        </InputLabel>
-        <Input
-          id={"standard-adornment-rest"+set._id+exercise._id+routine._id}
-          value={rest}
-          endAdornment={<InputAdornment position="end">(s)</InputAdornment>}
-          onChange={(e) => {
-            handleChange(e, setRest);
-          }}
-        />
-      </FormControl>
+      <SetEdit set={set} />
       <Box>
         <IconButton
         className="mt-1"

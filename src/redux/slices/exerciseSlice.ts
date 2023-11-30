@@ -1,4 +1,4 @@
-import { createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ISet } from "./setsSlice";
 
 export interface IExercise {
@@ -8,6 +8,13 @@ export interface IExercise {
   sets: ISet[];
 }
 
+export const exerciseSkelton: IExercise = {
+      _id: "",
+      name: "",
+      sets: [],
+      muscleGroups: []
+    };
+
 export const ExerciseInitialState: Record<string, IExercise> = {};
 
 export const ExerciseSlice = createSlice({
@@ -15,7 +22,6 @@ export const ExerciseSlice = createSlice({
   initialState: ExerciseInitialState,
   reducers: {
     addExercise: (state, action: PayloadAction<IExercise>) => {
-      console.log(action.payload);
       state = {...state, [action.payload._id]:action.payload};
       return state;
     },

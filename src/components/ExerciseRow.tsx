@@ -13,11 +13,8 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 import { IExercise, deleteExercise } from '../redux/slices/exerciseSlice';
-import { IRoutine } from '../redux/slices/routineSlice';
-import AddCircleIcon from "@mui/icons-material/AddCircle";
 import ClearIcon from "@mui/icons-material/Clear";
 import SetRows from './SetRows';
-import { editCurrentRoutine } from '../redux/slices/currentRoutineSlice';
 
 // represent a Exercise containing info such as 
 // exercise, total reps, sets and etc
@@ -31,7 +28,7 @@ const ExerciseRow: React.FC<{ exercise: IExercise }> = ({ exercise }) => {
 
   return (
     <Box sx={{ margin: 1 }}>
-      <Table size="small" aria-label="purchases">
+      <Table size="small">
         <TableBody>
           <TableRow>
             <TableCell >
@@ -44,14 +41,14 @@ const ExerciseRow: React.FC<{ exercise: IExercise }> = ({ exercise }) => {
                 <IconButton color="secondary" onClick={handleDelete}>
                   <ClearIcon />
                 </IconButton>
-              </Box>
+                </Box>
               </Box>
             </TableCell>
             
           </TableRow>
           <TableRow>
             <TableCell >
-              {(exercise) && <SetRows exercise={exercise} />}
+              {(exercise) && <SetRows exerciseId={exercise._id} />}
             </TableCell>
           </TableRow>
         </TableBody>

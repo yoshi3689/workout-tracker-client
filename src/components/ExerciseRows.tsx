@@ -16,34 +16,40 @@ import Box from "@mui/material/Box";
 
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { IExercise, addExercise } from '../redux/slices/exerciseSlice';
+import { IExercise, addExercise, exerciseSkelton } from '../redux/slices/exerciseSlice';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { editCurrentRoutine } from '../redux/slices/currentRoutineSlice';
+
 import { generateObjectId } from '../utils/idGenerator';
+import { ISet, setSkelton, addSet } from '../redux/slices/setsSlice';
 
 const ExerciseRows: React.FC<{ isNew: boolean }> = ({ isNew }) => {
   const currentExercises = useAppSelector(state => state.persistedReducer.exercises);
 
-  // I should not have to fetch routine here
-  // but rn I need to do so since the exercises are nested in the routine state
-  const routine = useAppSelector(state => state.persistedReducer.currentRoutine);
   const [exerciseId, setExerciseId] = useState<string>("");
-
-  // since the exercises brought down from the parent are set as ONLY initial
-  // they do not get updated whenever the redux state has changed
-
-  // const [exercises, setExercises] = useState<IExercise[]>(currentExercises);
-
+  const [setId, setSetId] = useState<string>("");
 
   const dispatch = useAppDispatch();
 
-  console.log(currentExercises)
-  // add a new exercise tuple
+  // add a new exercise and a set
   const handleAdd = () => {
-    const newId = generateObjectId();
-    setExerciseId(newId);
-    const newExercise:IExercise = { _id: newId, name: exerciseData[0].name, sets: [], muscleGroups: [""] };
-    dispatch(addExercise(newExercise));
+    const newExerciseId = generateObjectId();
+    const newSetId = generateObjectId();
+
+    setExerciseId(newExerciseId);
+    setSetId(newSetId);
+
+    dispatch(addExercise({
+      ...exerciseSkelton,
+      _id: newExerciseId,
+      name: exerciseData.abdominals[0].name,
+      muscleGroups: [exerciseData.abdominals[0]['muscle group']]
+    }));
+
+    dispatch(addSet({
+      ...setSkelton,
+      _id: newSetId,
+      exerciseId: newExerciseId,
+    }));
   };
 
   return (
@@ -58,6 +64,7 @@ const ExerciseRows: React.FC<{ isNew: boolean }> = ({ isNew }) => {
             </IconButton>
             </Box>
           </TableCell>
+          <TableCell/>
           <TableCell/>
         </TableRow>
         <TableCell/>
