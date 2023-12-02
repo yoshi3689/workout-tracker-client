@@ -27,33 +27,26 @@ const ExerciseRow: React.FC<{ exercise: IExercise }> = ({ exercise }) => {
   };
 
   return (
-    <Box sx={{ margin: 1 }}>
-      <Table size="small">
-        <TableBody>
-          <TableRow>
-            <TableCell >
-              <TableCell>{exercise.name}</TableCell>
-                <Box alignItems="center" display="flex">
-                  <ExerciseDropdown
-                  exercise={exercise}
-                />
-                <Box>
-                <IconButton color="secondary" onClick={handleDelete}>
-                  <ClearIcon />
-                </IconButton>
-                </Box>
-              </Box>
-            </TableCell>
-            
-          </TableRow>
-          <TableRow>
+    // <Box sx={{ margin: 1 }}>
+      
+    // </Box>
+    <Table style={{"paddingTop":"16px"}} >
+      <TableBody>
+        <TableRow>
+          <ExerciseDropdown exercise={exercise} />
+          <Box component={"td"} >
+            <IconButton color="secondary" onClick={handleDelete}>
+              <ClearIcon />
+            </IconButton>
+          </Box>
+        </TableRow>
+        <TableRow>
             <TableCell >
               {(exercise) && <SetRows exerciseId={exercise._id} />}
             </TableCell>
           </TableRow>
         </TableBody>
       </Table>
-    </Box>
   );
 };
 

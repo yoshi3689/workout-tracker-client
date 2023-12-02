@@ -35,7 +35,7 @@ const ExerciseDropdown: React.FC<{ exercise: IExercise }> = ({ exercise }) => {
   
   return (
     <>
-      <FormControl>
+      <FormControl component={"td"} >
       <InputLabel variant="standard" htmlFor={exercise._id}>
         Muscle Group
       </InputLabel>
@@ -55,7 +55,7 @@ const ExerciseDropdown: React.FC<{ exercise: IExercise }> = ({ exercise }) => {
       </NativeSelect>
       </FormControl>
 
-      <FormControl>
+      <FormControl component={"td"} style={{"maxWidth":"180px"}}>
       <InputLabel variant="standard" htmlFor={exercise._id}>
         Exercise Name
       </InputLabel>

@@ -70,11 +70,8 @@ const RoutineCreate: React.FC = () => {
           <TableRow>
             <TableCell/>
             <TableCell>
-              <Typography component="h5">Routine</Typography>
+              <Typography component="h5">Create/Edit Routine</Typography>
             </TableCell>
-            <TableCell/>
-            <TableCell/>
-            <TableCell/>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -91,16 +88,11 @@ const RoutineCreate: React.FC = () => {
               </FormControl>
             </TableCell>
             <TableCell/>
-            <TableCell/>
-            <TableCell/>
-            
           </TableRow>
           <ExerciseRows isNew={true} />
         </TableBody>
         <TableFooter>
           <TableRow>
-            <TableCell></TableCell>
-            <TableCell></TableCell>
             <TableCell></TableCell>
             <TableCell>
               <button onClick={handleCancel}>Cancel</button>

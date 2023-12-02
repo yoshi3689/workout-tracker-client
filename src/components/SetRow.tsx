@@ -14,24 +14,25 @@ import FormControl from "@mui/material/FormControl";
 import ClearIcon from "@mui/icons-material/Clear";
 import IconButton from "@mui/material/IconButton";
 import SetEdit from "./SetEdit";
+import { TableCell, TableRow } from "@mui/material";
 
 
-const SetRow: React.FC<{ set: ISet, index: number }> = ({ set, index }) => {
+const SetRow: React.FC<{ set: ISet, index: number, exerciseId: string }> = ({ set, index, exerciseId }) => {
   const dispatch = useAppDispatch();
   
   const handleDelete = () => {
-    dispatch(deleteSet(set._id));
+    dispatch(deleteSet({setId: set._id, exerciseId}));
   }
 
   return (
-    <Box display="flex" alignItems="end" className={`set`}>
-      <Box >
+    <TableRow >
+      <TableCell  >
         <Typography gutterBottom >
           {index+1}
         </Typography>
-      </Box>
-      <SetEdit set={set} />
-      <Box>
+      </TableCell>
+      <SetEdit exerciseId={exerciseId} set={set} />
+      <TableCell>
         <IconButton
         className="mt-1"
         color="secondary"
@@ -39,8 +40,8 @@ const SetRow: React.FC<{ set: ISet, index: number }> = ({ set, index }) => {
       >
         <ClearIcon />
       </IconButton>
-      </Box>
-    </Box>
+      </TableCell>
+    </TableRow>
   );
 };
 

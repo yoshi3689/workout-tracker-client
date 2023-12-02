@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { ISet, addSet, setSkelton } from "../redux/slices/setsSlice";
+import { ISet, addSet, editSet, setSkelton } from "../redux/slices/setsSlice";
 
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -18,36 +18,35 @@ import SetRow from './SetRow';
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
 
 import { generateObjectId } from '../utils/idGenerator';
+import { IExercise, editExercise } from '../redux/slices/exerciseSlice';
 
 const SetRows: React.FC<{exerciseId: string}> = ({exerciseId}) => {
-  const [setId, setSetId] = useState<string>("");
 
   const dispatch = useAppDispatch();
 
-  const sets: ISet[] = useAppSelector(state => Object.values(state.persistedReducer.sets).filter(s => s.exerciseId === exerciseId));
-
+  const sets: Record<string, ISet> = useAppSelector(state => state.persistedReducer.sets[exerciseId]);
+  console.log(sets);
   // add new set
   const handleAdd = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    const newSetId = generateObjectId();
-    setSetId(newSetId);
-    dispatch(addSet({...setSkelton, _id: newSetId, exerciseId}));
+    dispatch(addSet({
+      set: {
+        ...setSkelton
+      },
+      exerciseId
+    }));
   }
 
   return (
     <>
-      <TableRow>
-        <TableCell>
-          <Box display="flex" alignItems="center">
-            <Typography component="h3">Sets</Typography>
-          <IconButton color="primary" onClick={handleAdd}>
-              <AddCircleIcon />
-            </IconButton>
-          </Box>
-          </TableCell>
-          <TableCell>
-          </TableCell>
-        </TableRow>
+      <TableHead component={"tr"} >
+        <TableCell colSpan={10} >
+          <Typography component="h3">Sets</Typography>
+        </TableCell>
+        <IconButton color="primary" onClick={handleAdd}>
+          <AddCircleIcon />
+        </IconButton>
+      </TableHead>
       <TableRow>
         <TableCell
           style={{ paddingBottom: 0, paddingTop: 0, borderBottom: "none" }}
@@ -56,30 +55,18 @@ const SetRows: React.FC<{exerciseId: string}> = ({exerciseId}) => {
         >
         {sets && (
           <Collapse in={true} timeout="auto" unmountOnExit>
-            <Table size="small" aria-label="purchases">
-              
+            <Table aria-label="purchases">
               <TableBody>
                 <TableRow>
-                  <TableCell style={{borderBottom: "none"}}>
-                    <Grid container>
-                      <Grid item>
-                        {sets.map((set, i) => (
+                  {Object.values(sets).map((set, i) => (
                           <SetRow
-                            key={"" + i + set._id+exerciseId}
+                            key={"" + i + set._id + exerciseId}
+                            exerciseId={exerciseId}
                             index={i}
                             set={set}
                           />
                           ))
                         }
-                        <Grid
-                          item
-                          display={"flex"}
-                          style={{ justifyContent: "end" }}
-                        >
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                  </TableCell>
                 </TableRow>
               </TableBody>
             </Table>

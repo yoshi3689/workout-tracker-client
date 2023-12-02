@@ -46,4 +46,4 @@ export type AppDispatch = typeof store.dispatch
 export const persister = persistStore(store);
 
 // The below is to manually reset the persisted states
-// persister.purge();
+persister.purge();

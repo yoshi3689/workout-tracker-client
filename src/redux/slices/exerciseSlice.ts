@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ISet } from "./setsSlice";
+import { generateObjectId } from "../../utils/idGenerator";
 
 export interface IExercise {
   _id: string;
@@ -9,11 +10,11 @@ export interface IExercise {
 }
 
 export const exerciseSkelton: IExercise = {
-      _id: "",
-      name: "",
-      sets: [],
-      muscleGroups: []
-    };
+  _id: "",
+  name: "",
+  sets: [],
+  muscleGroups: []
+};
 
 export const ExerciseInitialState: Record<string, IExercise> = {};
 
@@ -22,7 +23,9 @@ export const ExerciseSlice = createSlice({
   initialState: ExerciseInitialState,
   reducers: {
     addExercise: (state, action: PayloadAction<IExercise>) => {
-      state = {...state, [action.payload._id]:action.payload};
+      const id = generateObjectId();
+      action.payload._id = id;
+      state = {...state, [id]:{...action.payload}};
       return state;
     },
     editExercise: (state, action: PayloadAction<IExercise>) => {

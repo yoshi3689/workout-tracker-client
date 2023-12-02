@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { ISet, editSet, deleteSet } from '../redux/slices/setsSlice';
+import { ISet, addSet, editSet } from '../redux/slices/setsSlice';
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 
 import Box from "@mui/material/Box";
@@ -11,7 +11,9 @@ import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 
-const SetEdit: React.FC<{ set: ISet }> = ({ set }) => {
+const SetEdit: React.FC<{ set: ISet, exerciseId: string }> = ({ set, exerciseId }) => {
+  // const currentSet = useAppSelector(state => state.persistedReducer.sets[exerciseId][set._id]);
+
   const [rest, setRest] = useState(set.rest);
   const [weight, setWeight] = useState(set.weight);
   const [rep, setRep] = useState(set.rep);
@@ -25,35 +27,43 @@ const SetEdit: React.FC<{ set: ISet }> = ({ set }) => {
   }
 
   useEffect(() => {
-    dispatch(editSet({
-      ...set,
-      rest,
-      weight,
-      rep
+    dispatch(
+      editSet({
+      set: {
+        ...set,
+        rest,
+        weight,
+        rep
+      },
+      exerciseId
     }));
-  }, [rest, weight, rep])
+  }, [rest, weight, rep]
+  )
 
   return (
     <>
-      <FormControl sx={{ m: 1 }} variant="standard">
-        <InputLabel shrink={true} htmlFor={"standard-adornment-rep-"+set._id+set.exerciseId}>
+      <FormControl component={"td"} variant="standard">
+        <InputLabel shrink={true} htmlFor={"standard-adornment-rep-"+set._id+exerciseId}>
           rep
         </InputLabel>
         <Input
-          id={"standard-adornment-rep-"+set._id+set.exerciseId}
+          
+          type="number"
+          id={"standard-adornment-rep-"+set._id+exerciseId}
           value={rep}
           onChange={(e) => {
             handleChange(e, setRep);
           }}
         />
       </FormControl>
-      <FormControl></FormControl>
-      <FormControl sx={{ m: 1 }} variant="standard">
-        <InputLabel shrink={true} htmlFor={"standard-adornment-weight-"+set._id+set.exerciseId}>
+      
+      <FormControl component={"td"} variant="standard">
+        <InputLabel shrink={true} htmlFor={"standard-adornment-weight-"+set._id+exerciseId}>
           weight
         </InputLabel>
         <Input
-          id={"standard-adornment-weight-"+set._id+set.exerciseId}
+        type="number"
+          id={"standard-adornment-weight-"+set._id+exerciseId}
           endAdornment={<InputAdornment position="end">lbs</InputAdornment>}
           value={weight}
           onChange={(e) => {
@@ -61,12 +71,13 @@ const SetEdit: React.FC<{ set: ISet }> = ({ set }) => {
           }}
         />
       </FormControl>
-      <FormControl sx={{ m: 1 }} variant="standard">
-        <InputLabel shrink={true} htmlFor={"standard-adornment-rest-"+set._id+set.exerciseId}>
+      <FormControl component={"td"} variant="standard">
+        <InputLabel shrink={true} htmlFor={"standard-adornment-rest-"+set._id+exerciseId}>
           rest
         </InputLabel>
         <Input
-          id={"standard-adornment-rest-"+set._id+set.exerciseId}
+        type="number"
+          id={"standard-adornment-rest-"+set._id+exerciseId}
           value={rest}
           endAdornment={<InputAdornment position="end">(s)</InputAdornment>}
           onChange={(e) => {

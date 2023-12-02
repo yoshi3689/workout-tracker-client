@@ -23,57 +23,53 @@ import { generateObjectId } from '../utils/idGenerator';
 import { ISet, setSkelton, addSet } from '../redux/slices/setsSlice';
 
 const ExerciseRows: React.FC<{ isNew: boolean }> = ({ isNew }) => {
-  const currentExercises = useAppSelector(state => state.persistedReducer.exercises);
-
-  const [exerciseId, setExerciseId] = useState<string>("");
-  const [setId, setSetId] = useState<string>("");
-
+  const exercises = useAppSelector(state => state.persistedReducer.exercises);
+  console.log(exercises)
   const dispatch = useAppDispatch();
 
   // add a new exercise and a set
   const handleAdd = () => {
-    const newExerciseId = generateObjectId();
-    const newSetId = generateObjectId();
 
-    setExerciseId(newExerciseId);
-    setSetId(newSetId);
-
-    dispatch(addExercise({
+    const exercisesAdded: {payload: IExercise, type: string} = dispatch(addExercise({
       ...exerciseSkelton,
-      _id: newExerciseId,
       name: exerciseData.abdominals[0].name,
-      muscleGroups: [exerciseData.abdominals[0]['muscle group']]
+      muscleGroups: [exerciseData.abdominals[0]['muscle group']],
     }));
 
     dispatch(addSet({
-      ...setSkelton,
-      _id: newSetId,
-      exerciseId: newExerciseId,
+      set: {
+        ...setSkelton
+      },
+      exerciseId: exercisesAdded.payload._id
     }));
-  };
+  }; 
 
   return (
     <>
-      <TableRow>
-        <TableCell/>
-          <TableCell>
-            <Box display="flex" alignItems="center">
-              <Typography>Exercises</Typography>
-            <IconButton color="primary" onClick={handleAdd}>
+      <TableRow style={{"marginBottom":"16px"}} >
+        <TableCell />
+        <TableCell>
+          <Typography>Exercises</Typography>    
+        </TableCell>
+        <TableCell>
+          <IconButton color="primary" onClick={handleAdd}>
               <AddCircleIcon />
             </IconButton>
-            </Box>
-          </TableCell>
-          <TableCell/>
-          <TableCell/>
-        </TableRow>
+        </TableCell>
         <TableCell/>
-        {currentExercises && Object.values(currentExercises).map((exercise, i) => (
+      </TableRow>
+      <TableRow>
+        <TableCell />
+        <TableCell>
+              {exercises && Object.values(exercises).map((exercise, i) => (
         <ExerciseRow
           exercise={exercise}
           key={i + "" + exercise._id}
         />
       ))}
+        </TableCell>
+        
+      </TableRow>
     </>
   )
 }
