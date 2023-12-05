@@ -17,7 +17,7 @@ import SetEdit from "./SetEdit";
 import { TableCell, TableRow } from "@mui/material";
 
 
-const SetRow: React.FC<{ set: ISet, index: number, exerciseId: string }> = ({ set, index, exerciseId }) => {
+const SetRow: React.FC<{ set: ISet, index: number, exerciseId: string, isNew: boolean }> = ({ set, index, exerciseId, isNew }) => {
   const dispatch = useAppDispatch();
   
   const [width, setWidth] = useState<number>(window.innerWidth);
@@ -47,7 +47,8 @@ const SetRow: React.FC<{ set: ISet, index: number, exerciseId: string }> = ({ se
       </TableCell>
       <SetEdit exerciseId={exerciseId} set={set} />
       {!isMobile && <><TableCell /><TableCell /></>}
-      <TableCell sx={{paddingInline: 0}} >
+
+      {isNew && <TableCell sx={{paddingInline: 0}} >
         <IconButton
         className="mt-1"
         color="secondary"
@@ -55,7 +56,7 @@ const SetRow: React.FC<{ set: ISet, index: number, exerciseId: string }> = ({ se
       >
         <ClearIcon />
       </IconButton>
-      </TableCell>
+      </TableCell>}
     </TableRow>
   );
 };

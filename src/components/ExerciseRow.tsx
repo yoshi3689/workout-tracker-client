@@ -23,7 +23,7 @@ import { Collapse } from '@mui/material';
 // represent a Exercise containing info such as 
 // exercise, total reps, sets and etc
 
-const ExerciseRow: React.FC<{ exercise: IExercise }> = ({ exercise }) => {
+const ExerciseRow: React.FC<{ exercise: IExercise, isNew: boolean }> = ({ exercise, isNew }) => {
   const dispatch = useAppDispatch();
 
   const [open, setOpen] = React.useState(true);
@@ -45,20 +45,23 @@ const ExerciseRow: React.FC<{ exercise: IExercise }> = ({ exercise }) => {
         </IconButton>
       </TableCell>
         
-      <ExerciseDropdown exercise={exercise} />
+      <ExerciseDropdown exercise={exercise}/>
         
-      <TableCell component={"td"} >
+      {isNew && <TableCell >
         <IconButton color="secondary" onClick={handleDelete}>
           <ClearIcon />
         </IconButton>
-      </TableCell>
+      </TableCell>}
+        
     </TableRow>
       
       <TableRow>
         <TableCell colSpan={4} sx={{padding:0}}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ paddingBottom: 0, borderBottom: 0 }} >
-                  {(exercise) && <SetRows exerciseId={exercise._id} />}
+
+              {(exercise) && <SetRows exercise={exercise} isNew={isNew} />}
+              
             </Box>
           </Collapse>
         </TableCell>  

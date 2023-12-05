@@ -10,9 +10,11 @@ import TableRow from "@mui/material/TableRow";
 
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { Edit } from '@mui/icons-material';
 
 // represent a whole workout routine with exercises in it
 const RoutineRow: React.FC<{ routine: IRoutine, isNew: boolean }> = ({ routine, isNew }) => {
+  console.log(routine)
   const [open, setOpen] = useState(false);
 
   return (
@@ -27,22 +29,34 @@ const RoutineRow: React.FC<{ routine: IRoutine, isNew: boolean }> = ({ routine, 
               {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </IconButton>
           </TableCell>
+        
           <TableCell align="left" component="th" scope="row">
             {routine.name}
           </TableCell>
+          {!isNew && 
+            (
+            <TableCell>
+            <IconButton>
+              <Edit />
+              </IconButton>
+            </TableCell>
+          )
+          }
         </TableRow>
       <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={3}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             {routine.exercises.map((exercise, i) => (
               <ExerciseRow
                 exercise={exercise}
                 key={i + "" + exercise._id}
+                isNew={isNew}
               />
             ))}    
           </Collapse>
         </TableCell>
-        <TableCell/>
+        <TableCell />
+        
       </TableRow>
     </React.Fragment>
   );

@@ -8,6 +8,7 @@ import RoutineCreate from '../components/RoutineCreate';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { getRoutines } from '../redux/slices/routineSlice';
 import { checkLoginStatus } from '../redux/slices/userSlice';
+import WithAppBar from './WithAppBar';
 
 
 const Root = () => {
@@ -56,6 +57,7 @@ const Root = () => {
       ) : (
         <Unauthorized error={error} />
       )}
+      <WithAppBar />
     </main>
   );
 }

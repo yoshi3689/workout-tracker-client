@@ -1,17 +1,11 @@
 import React, { useState, useEffect } from "react";
 
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
 import Paper from "@mui/material/Paper";
 import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 import Input from "@mui/material/Input";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
-import TableFooter from "@mui/material/TableFooter";
 
 import { addRoutine } from "../redux/slices/routineSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
@@ -53,19 +47,13 @@ const RoutineCreate: React.FC = () => {
   // reset the name
   const handleCreateAndEdit = () => {
     if (isLoggedIn && accessToken) {
-      dispatch(addRoutine({
-        ...newRoutineInitialState,
-        name: workoutName,
-        _id: accessToken,
-        username: location.pathname.split("/")[2],
-        createdAt: new Date().toISOString()
-      }));
+      dispatch(addRoutine(location.pathname.split("/")[2]));
     }
     handleCancel();
   };
 
   return (
-    <Container component={Paper} sx={{paddingBlock: "24px"}}>
+    <Container component={Paper} sx={{paddingBlock: "24px", marginBottom: "100px"}}>
       <Box>
         <Typography variant="h5">Create/Edit Routine</Typography>
       </Box>

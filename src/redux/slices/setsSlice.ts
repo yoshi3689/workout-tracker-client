@@ -23,7 +23,6 @@ export const SetSlice = createSlice({
   reducers: {
     addSet: (state, action: PayloadAction<{ set: ISet, exerciseId: string }>) => {
       const { set, exerciseId } = action.payload
-      // console.log(set, exerciseId)
       const id = generateObjectId();
       set._id = id;
       state = {

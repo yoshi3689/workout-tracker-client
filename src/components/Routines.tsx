@@ -16,7 +16,7 @@ const Routines: React.FC = () => {
   const routines = useAppSelector(state => state.persistedReducer.routines)
   
   return (
-    <TableContainer component={Paper} style={{ maxWidth: "500px" }}>
+    <TableContainer component={Paper} >
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>
@@ -24,6 +24,7 @@ const Routines: React.FC = () => {
             <TableCell>
               <Typography component="h4">Routines</Typography>
             </TableCell>
+            <TableCell></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

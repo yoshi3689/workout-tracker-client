@@ -17,21 +17,35 @@ export interface ICredentials {
   username: string
 }
 
+export interface ICredentials {
+  accessToken: string | undefined,
+  username: string
+}
+
 export const RoutineInitialState: IRoutine[] = [];
 
 const BASE = "http://localhost:5001";
 
 export const addRoutine = createAsyncThunk(
   "routines/addRoutine",
-  async (data: IRoutine, thunkAPI) => {
+  async (data: string, thunkAPI) => {
     const state = thunkAPI.getState() as RootState;
-    if (state.persistedReducer.user.isLoggedIn) {
+    const { newRoutine, user, exercises, sets } = state.persistedReducer;
+    if (user.isLoggedIn) {
+      const reqBody: IRoutine = {
+        ...newRoutine,
+        username: data,
+        createdAt: new Date().toISOString(),
+        isEditing: false,
+        exercises: Object.values(exercises).map(e => {
+          return {...e, sets: Object.values(sets[e._id])}
+        })
+      }
+      console.log(reqBody);
       const response = await axios.post(
       `${BASE}/api/routines`,
-      {
-        ...state.persistedReducer.newRoutine,
-      },
-      { headers: { Authorization: `Bearer ${data._id}` } }
+      reqBody,
+      { headers: { Authorization: `Bearer ${user.accessToken}` } }
     );
     return response.data.response;
     } else {
@@ -56,15 +70,7 @@ export const getRoutines = createAsyncThunk<
 export const RoutineSlice = createSlice({
   name: "routines",
   initialState: RoutineInitialState,
-  reducers: {
-    
-    // editRoutine: (state, action: PayloadAction<IRoutine>) => {
-    //   state[action.payload._id] = { ...action.payload };
-    // },
-    // deleteRoutine: (state, action: PayloadAction<string>) => {
-    //   delete state[action.payload];
-    // },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getRoutines.fulfilled, (state, action: PayloadAction<IRoutine[]>) => {
       state = action.payload

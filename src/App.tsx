@@ -41,9 +41,6 @@ function App() {
       <div className="App">
         <RouterProvider router={router} />
       </div>
-      <footer>
-        <h1>Some Bottom Content</h1>
-      </footer>
     </>
   );
 }

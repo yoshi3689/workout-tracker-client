@@ -16,16 +16,15 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import IconButton from "@mui/material/IconButton";
 import SetRow from './SetRow';
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
+import { IExercise } from '../redux/slices/exerciseSlice';
 
-import { generateObjectId } from '../utils/idGenerator';
-import { IExercise, editExercise } from '../redux/slices/exerciseSlice';
-
-const SetRows: React.FC<{exerciseId: string}> = ({exerciseId}) => {
-
+const SetRows: React.FC<{ exercise: IExercise, isNew: boolean }> = ({ exercise, isNew }) => {
+  
   const dispatch = useAppDispatch();
 
-  const sets: Record<string, ISet> = useAppSelector(state => state.persistedReducer.sets[exerciseId]);
-  console.log(sets);
+  let sets = useAppSelector(state => state.persistedReducer.sets[exercise._id]);
+
+  console.log(exercise._id, sets)
   // add new set
   const handleAdd = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
@@ -33,7 +32,7 @@ const SetRows: React.FC<{exerciseId: string}> = ({exerciseId}) => {
       set: {
         ...setSkelton
       },
-      exerciseId
+      exerciseId: exercise._id
     }));
   }
 
@@ -45,11 +44,13 @@ const SetRows: React.FC<{exerciseId: string}> = ({exerciseId}) => {
           <TableCell>
             <Typography component="h3">Sets</Typography>
           </TableCell>
-          <TableCell>
+          {isNew && (
+            <TableCell>
             <IconButton color="primary" onClick={handleAdd}>
             <AddCircleIcon />
             </IconButton>
           </TableCell>
+          )}
         </TableRow>
       </TableHead>
       <TableBody>
@@ -60,14 +61,25 @@ const SetRows: React.FC<{exerciseId: string}> = ({exerciseId}) => {
           >
             <Table size="small">
               <TableBody>
-                  {Object.values(sets).map((set, i) => (
+                {isNew ?
+                  sets && Object.values(sets).map((set, i) => (
                     <SetRow
-                      key={"" + i + set._id + exerciseId}
-                      exerciseId={exerciseId}
+                      key={"" + i + set._id + exercise._id}
+                      exerciseId={exercise._id}
                       index={i}
                       set={set}
+                      isNew={isNew}
                     />
-                    ))
+                   ))
+                  : exercise.sets.map((set, i) => (
+                    <SetRow
+                      key={"" + i + set._id + exercise._id}
+                      exerciseId={exercise._id}
+                      index={i}
+                      set={set}
+                      isNew={isNew}
+                    />
+                   ))
                   }
               </TableBody>
             </Table>
