@@ -71,51 +71,6 @@ const UserForm: React.FC = () => {
 
   return (
     <div>
-      {/* <div className="container">
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            flexDirection: "column",
-          }}
-        >
-          <input
-            type="text"
-            onChange={(e) => setUsername(e.target.value)}
-            name="username"
-            placeholder="username"
-            id="username"
-          />
-          <input
-            type="text"
-            onChange={(e) => setPassword(e.target.value)}
-            name="password"
-            placeholder="password"
-            id="password"
-          />
-          {!isLogin && (
-            <input
-              type="text"
-              onChange={(e) => setEmail(e.target.value)}
-              name="email"
-              placeholder="email"
-              id="email"
-            />
-          )}
-          <button
-            style={{ width: "60px", margin: "auto" }}
-            type="submit"
-            onClick={handleSubmit}
-          >
-            {isLogin ? "login" : "Register"}
-          </button>
-
-          <button style={{ margin: "auto" }} onClick={handleFormSwitch}>
-            {isLogin ? "Don't have account?" : "Already have account"}
-          </button>
-        </div>
-      </div> */}
-
       <ThemeProvider theme={defaultTheme}>
         <Container component="main" maxWidth="xs">
           <CssBaseline />

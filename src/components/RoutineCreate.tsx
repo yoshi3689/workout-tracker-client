@@ -18,6 +18,7 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { newRoutineInitialState, editNewRoutine, clearNewRoutine } from "../redux/slices/newRoutineSlice";
 import { useLocation } from "react-router-dom";
 import ExerciseRows from "./ExerciseRows";
+import { Box, Button, Container } from "@mui/material";
 
 const RoutineCreate: React.FC = () => {
   const [workoutName, setWorkoutName] = useState("");
@@ -64,44 +65,40 @@ const RoutineCreate: React.FC = () => {
   };
 
   return (
-    <TableContainer component={Paper} style={{ maxWidth: "500px" }}>
-      <Table aria-label="collapsible table">
-        <TableHead>
-          <TableRow>
-            <TableCell/>
-            <TableCell>
-              <Typography component="h5">Create/Edit Routine</Typography>
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          <TableRow>
-            <TableCell/>
-            
-            <TableCell>
-              <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-                <InputLabel htmlFor="routine_name">routine name</InputLabel>
-                <Input
-                  id="routine_name"
-                  onChange={handleNameChange}
-                />
-              </FormControl>
-            </TableCell>
-            <TableCell/>
-          </TableRow>
-          <ExerciseRows isNew={true} />
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TableCell></TableCell>
-            <TableCell>
-              <button onClick={handleCancel}>Cancel</button>
-              <button onClick={handleCreateAndEdit}>Create+</button>
-            </TableCell>
-          </TableRow>
-        </TableFooter>
-      </Table>
-    </TableContainer>
+    <Container component={Paper} sx={{paddingBlock: "24px"}}>
+      <Box>
+        <Typography variant="h5">Create/Edit Routine</Typography>
+      </Box>
+      <FormControl sx={{ m: 1 }} variant="standard">
+          <InputLabel htmlFor="routine_name">routine name</InputLabel>
+          <Input
+            id="routine_name"
+            onChange={handleNameChange}
+          />
+        </FormControl>
+      <Box sx={{paddingBottom: "24px"}}>
+        
+      </Box>
+      <TableContainer component={Paper} >
+        <ExerciseRows isNew={true} />
+      </TableContainer>
+      
+      <Box paddingTop={"24px"} display={"flex"} justifyContent={"end"} >
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleCreateAndEdit}
+          style={{"marginRight":"8px"}}>Create+
+          
+        </Button>
+        <Button
+          color="inherit"
+          onClick={handleCancel}>RESET
+        </Button>
+        
+      </Box>
+    </Container>
+    
   );
 };
 

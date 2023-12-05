@@ -11,8 +11,9 @@ import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
 import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
 
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
@@ -21,6 +22,8 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 import { generateObjectId } from '../utils/idGenerator';
 import { ISet, setSkelton, addSet } from '../redux/slices/setsSlice';
+import { TableHead } from '@mui/material';
+
 
 const ExerciseRows: React.FC<{ isNew: boolean }> = ({ isNew }) => {
   const exercises = useAppSelector(state => state.persistedReducer.exercises);
@@ -45,32 +48,30 @@ const ExerciseRows: React.FC<{ isNew: boolean }> = ({ isNew }) => {
   }; 
 
   return (
-    <>
-      <TableRow style={{"marginBottom":"16px"}} >
-        <TableCell />
-        <TableCell>
-          <Typography>Exercises</Typography>    
-        </TableCell>
-        <TableCell>
-          <IconButton color="primary" onClick={handleAdd}>
+    <Table>
+      <TableHead>
+        <TableRow>
+          <TableCell />
+          <TableCell >
+            <Typography >Exercises</Typography>      
+          </TableCell>
+          
+          <TableCell>
+            <IconButton color="primary" onClick={handleAdd}>
               <AddCircleIcon />
-            </IconButton>
-        </TableCell>
-        <TableCell/>
-      </TableRow>
-      <TableRow>
-        <TableCell />
-        <TableCell>
-              {exercises && Object.values(exercises).map((exercise, i) => (
-        <ExerciseRow
-          exercise={exercise}
-          key={i + "" + exercise._id}
-        />
-      ))}
-        </TableCell>
-        
-      </TableRow>
-    </>
+            </IconButton>  
+          </TableCell>
+        </TableRow> 
+      </TableHead>
+      <TableBody>
+        {exercises && Object.values(exercises).map((exercise, i) => (
+          <ExerciseRow
+            exercise={exercise}
+            key={i + "" + exercise._id}
+          />
+        ))}
+        </TableBody>
+      </Table>
   )
 }
 

@@ -38,43 +38,43 @@ const SetRows: React.FC<{exerciseId: string}> = ({exerciseId}) => {
   }
 
   return (
-    <>
-      <TableHead component={"tr"} >
-        <TableCell colSpan={10} >
-          <Typography component="h3">Sets</Typography>
-        </TableCell>
-        <IconButton color="primary" onClick={handleAdd}>
-          <AddCircleIcon />
-        </IconButton>
+    <Table size='small'>
+      <TableHead>
+        <TableRow >
+          <TableCell />
+          <TableCell>
+            <Typography component="h3">Sets</Typography>
+          </TableCell>
+          <TableCell>
+            <IconButton color="primary" onClick={handleAdd}>
+            <AddCircleIcon />
+            </IconButton>
+          </TableCell>
+        </TableRow>
       </TableHead>
-      <TableRow>
+      <TableBody>
+        <TableRow>
         <TableCell
-          style={{ paddingBottom: 0, paddingTop: 0, borderBottom: "none" }}
-          colSpan={4}
-          scope="row"
-        >
-        {sets && (
-          <Collapse in={true} timeout="auto" unmountOnExit>
-            <Table aria-label="purchases">
+            style={{ padding: 0, borderBottom: "none" }}
+            colSpan={3}
+          >
+            <Table size="small">
               <TableBody>
-                <TableRow>
                   {Object.values(sets).map((set, i) => (
-                          <SetRow
-                            key={"" + i + set._id + exerciseId}
-                            exerciseId={exerciseId}
-                            index={i}
-                            set={set}
-                          />
-                          ))
-                        }
-                </TableRow>
+                    <SetRow
+                      key={"" + i + set._id + exerciseId}
+                      exerciseId={exerciseId}
+                      index={i}
+                      set={set}
+                    />
+                    ))
+                  }
               </TableBody>
             </Table>
-          </Collapse>  
-        )}
         </TableCell>
       </TableRow>
-    </>
+      </TableBody>
+    </Table>
   )
 }
 

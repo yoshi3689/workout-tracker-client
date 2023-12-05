@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { ISet, deleteSet } from '../redux/slices/setsSlice';
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
@@ -20,19 +20,34 @@ import { TableCell, TableRow } from "@mui/material";
 const SetRow: React.FC<{ set: ISet, index: number, exerciseId: string }> = ({ set, index, exerciseId }) => {
   const dispatch = useAppDispatch();
   
+  const [width, setWidth] = useState<number>(window.innerWidth);
+
+  function handleWindowSizeChange() {
+      setWidth(window.innerWidth);
+  }
+  useEffect(() => {
+      window.addEventListener('resize', handleWindowSizeChange);
+      return () => {
+          window.removeEventListener('resize', handleWindowSizeChange);
+      }
+  }, []);
+
+  const isMobile = width <= 768;
+
   const handleDelete = () => {
     dispatch(deleteSet({setId: set._id, exerciseId}));
   }
 
   return (
     <TableRow >
-      <TableCell  >
-        <Typography gutterBottom >
+      <TableCell>
+        <Typography sx={{textAlign:"center"}} gutterBottom >
           {index+1}
         </Typography>
       </TableCell>
       <SetEdit exerciseId={exerciseId} set={set} />
-      <TableCell>
+      {!isMobile && <><TableCell /><TableCell /></>}
+      <TableCell sx={{paddingInline: 0}} >
         <IconButton
         className="mt-1"
         color="secondary"

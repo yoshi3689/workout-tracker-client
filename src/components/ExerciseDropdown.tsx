@@ -6,8 +6,20 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import NativeSelect from '@mui/material/NativeSelect';
 import { useAppDispatch } from "../redux/hooks";
+import { TableCell } from "@mui/material";
 
 
+export const formControlStyle = {
+    display: "inline-flex",
+    flexDirection: "column",
+    position: "relative",
+  minWidth: "0",
+  padding: "0",
+  margin: "0",
+  border: "0",
+    verticalAlign: "top",
+  marginRight: "20px"
+  }
 
 const ExerciseDropdown: React.FC<{ exercise: IExercise }> = ({ exercise }) => {
   const [MuscleGroup, setMuscleGroup] = useState<string>(exercise.muscleGroups[0]?exercise.muscleGroups[0]:"abdominals");
@@ -31,11 +43,14 @@ const ExerciseDropdown: React.FC<{ exercise: IExercise }> = ({ exercise }) => {
       name: ExerciseName,
       muscleGroups: [MuscleGroup]
     }));
-  },[ExerciseName])
+  }, [ExerciseName])
+  
+  
   
   return (
     <>
-      <FormControl component={"td"} >
+      <TableCell sx={{paddingInline:0}} >
+        <FormControl sx={formControlStyle}  >
       <InputLabel variant="standard" htmlFor={exercise._id}>
         Muscle Group
       </InputLabel>
@@ -53,9 +68,8 @@ const ExerciseDropdown: React.FC<{ exercise: IExercise }> = ({ exercise }) => {
                 </option>
               ))}
       </NativeSelect>
-      </FormControl>
-
-      <FormControl component={"td"} style={{"maxWidth":"180px"}}>
+        </FormControl>
+        <FormControl sx={formControlStyle} style={{"maxWidth":"180px"}}>
       <InputLabel variant="standard" htmlFor={exercise._id}>
         Exercise Name
       </InputLabel>
@@ -74,6 +88,7 @@ const ExerciseDropdown: React.FC<{ exercise: IExercise }> = ({ exercise }) => {
               ))}
       </NativeSelect>
     </FormControl>
+      </TableCell>
     </>
   );
 }

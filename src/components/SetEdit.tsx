@@ -3,13 +3,17 @@ import React, { useState, useEffect } from "react";
 import { ISet, addSet, editSet } from '../redux/slices/setsSlice';
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+import weights from "../data/weights.json"
+import rests from "../data/rests.json"
+import reps from "../data/reps.json"
+
 
 import Input from "@mui/material/Input";
 import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
+import { NativeSelect, TableCell, Typography } from "@mui/material";
+import { formControlStyle } from "./ExerciseDropdown";
 
 const SetEdit: React.FC<{ set: ISet, exerciseId: string }> = ({ set, exerciseId }) => {
   // const currentSet = useAppSelector(state => state.persistedReducer.sets[exerciseId][set._id]);
@@ -21,7 +25,7 @@ const SetEdit: React.FC<{ set: ISet, exerciseId: string }> = ({ set, exerciseId 
   const dispatch = useAppDispatch();
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLSelectElement>,
     setState: Function) => {
     setState(e.currentTarget.value);
   }
@@ -40,52 +44,77 @@ const SetEdit: React.FC<{ set: ISet, exerciseId: string }> = ({ set, exerciseId 
   }, [rest, weight, rep]
   )
 
+  
+
   return (
-    <>
-      <FormControl component={"td"} variant="standard">
-        <InputLabel shrink={true} htmlFor={"standard-adornment-rep-"+set._id+exerciseId}>
-          rep
-        </InputLabel>
-        <Input
-          
-          type="number"
-          id={"standard-adornment-rep-"+set._id+exerciseId}
-          value={rep}
-          onChange={(e) => {
-            handleChange(e, setRep);
-          }}
-        />
-      </FormControl>
-      
-      <FormControl component={"td"} variant="standard">
-        <InputLabel shrink={true} htmlFor={"standard-adornment-weight-"+set._id+exerciseId}>
+    <TableCell sx={{display:"flex", justifyContent:"space-between", paddingRight: 0}} >
+      <FormControl sx={formControlStyle} style={{"marginRight":"8px"}} >
+      <InputLabel variant="standard"  htmlFor={"weight-"+set._id+exerciseId}>
           weight
         </InputLabel>
-        <Input
-        type="number"
-          id={"standard-adornment-weight-"+set._id+exerciseId}
-          endAdornment={<InputAdornment position="end">lbs</InputAdornment>}
-          value={weight}
-          onChange={(e) => {
+      <NativeSelect
+        defaultValue={weights[0]}
+        inputProps={{
+          name:"weight-"+set._id+exerciseId,
+          id:"weight-"+set._id+exerciseId
+        }}
+        onChange={(e) => {
             handleChange(e, setWeight);
           }}
-        />
-      </FormControl>
-      <FormControl component={"td"} variant="standard">
-        <InputLabel shrink={true} htmlFor={"standard-adornment-rest-"+set._id+exerciseId}>
+      >
+        {weights.map((m, i) => (
+                <option key={m + set._id} value={m}>
+                  {m}
+                </option>
+              ))}
+      </NativeSelect>
+        </FormControl>
+
+      <FormControl sx={formControlStyle} style={{"marginRight":"8px"}}  >
+      <InputLabel variant="standard" htmlFor={"rep-"+set._id+exerciseId}>
+          rep
+        </InputLabel>
+      <NativeSelect
+        defaultValue={reps[0]}
+        inputProps={{
+          name:"rep-"+set._id+exerciseId,
+          id:"rep-"+set._id+exerciseId
+        }}
+        onChange={(e) => {
+            handleChange(e, setRep);
+          }}
+      >
+        {reps.map((m, i) => (
+                <option key={m + set._id} value={m}>
+                  {m}
+                </option>
+              ))}
+      </NativeSelect>
+        </FormControl>
+      
+      <FormControl sx={formControlStyle} style={{"marginRight":"8px"}} >
+      <InputLabel variant="standard" htmlFor={"rep-"+set._id+exerciseId}>
           rest
         </InputLabel>
-        <Input
-        type="number"
-          id={"standard-adornment-rest-"+set._id+exerciseId}
-          value={rest}
-          endAdornment={<InputAdornment position="end">(s)</InputAdornment>}
-          onChange={(e) => {
+      <NativeSelect
+        defaultValue={rests[0]}
+        inputProps={{
+          name:"rep-"+set._id+exerciseId,
+          id:"rep-"+set._id+exerciseId
+        }}
+        onChange={(e) => {
             handleChange(e, setRest);
           }}
-        />
-      </FormControl>
-    </>
+      >
+        {rests.map((m, i) => (
+                <option key={m + set._id} value={m}>
+                  {m}
+                </option>
+              ))}
+      </NativeSelect>
+        </FormControl>
+    
+    </TableCell>
   )
 }
 

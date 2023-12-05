@@ -12,9 +12,13 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+
 import { IExercise, deleteExercise } from '../redux/slices/exerciseSlice';
 import ClearIcon from "@mui/icons-material/Clear";
 import SetRows from './SetRows';
+import { Collapse } from '@mui/material';
 
 // represent a Exercise containing info such as 
 // exercise, total reps, sets and etc
@@ -22,31 +26,44 @@ import SetRows from './SetRows';
 const ExerciseRow: React.FC<{ exercise: IExercise }> = ({ exercise }) => {
   const dispatch = useAppDispatch();
 
+  const [open, setOpen] = React.useState(true);
+  
   const handleDelete = () => {
     dispatch(deleteExercise(exercise._id));
   };
 
   return (
-    // <Box sx={{ margin: 1 }}>
+    <>
+    <TableRow>
+      <TableCell >
+        <IconButton
+          aria-label="expand row"
+          size="small"
+          onClick={() => setOpen(!open)}
+        >
+          {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+        </IconButton>
+      </TableCell>
+        
+      <ExerciseDropdown exercise={exercise} />
+        
+      <TableCell component={"td"} >
+        <IconButton color="secondary" onClick={handleDelete}>
+          <ClearIcon />
+        </IconButton>
+      </TableCell>
+    </TableRow>
       
-    // </Box>
-    <Table style={{"paddingTop":"16px"}} >
-      <TableBody>
-        <TableRow>
-          <ExerciseDropdown exercise={exercise} />
-          <Box component={"td"} >
-            <IconButton color="secondary" onClick={handleDelete}>
-              <ClearIcon />
-            </IconButton>
-          </Box>
-        </TableRow>
-        <TableRow>
-            <TableCell >
-              {(exercise) && <SetRows exerciseId={exercise._id} />}
-            </TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
+      <TableRow>
+        <TableCell colSpan={4} sx={{padding:0}}>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <Box sx={{ paddingBottom: 0, borderBottom: 0 }} >
+                  {(exercise) && <SetRows exerciseId={exercise._id} />}
+            </Box>
+          </Collapse>
+        </TableCell>  
+    </TableRow>
+    </>
   );
 };
 
