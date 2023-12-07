@@ -45,26 +45,28 @@ const ExerciseRows: React.FC<{ isNew: boolean }> = ({ isNew }) => {
     <Table>
       <TableHead>
         <TableRow>
-          <TableCell />
-          <TableCell >
-            <Typography >Exercises</Typography>      
-          </TableCell>
-          <TableCell>
+          <TableCell width="25%" >
             <IconButton color="primary" onClick={handleAdd}>
               <AddCircleIcon />
             </IconButton>  
           </TableCell>
+          <TableCell align='left' >
+            <Typography variant='h6' sx={{paddingLeft:0}} >Exercises</Typography>      
+          </TableCell>
+          
         </TableRow> 
       </TableHead>
-      <TableBody>
-        {exercises && Object.values(exercises).map((exercise, i) => (
-          <ExerciseRow
-            isNew={isNew}
-            exercise={exercise}
-            key={i + "" + exercise._id}
-          />
-        ))}
+      {(isNew && Object.values(exercises).length !== 0) &&
+        <TableBody>
+          {Object.values(exercises).map((exercise, i) => (
+            <ExerciseRow
+              isNew={isNew}
+              exercise={exercise}
+              key={i + "" + exercise._id}
+            />
+          ))}
         </TableBody>
+      }
       </Table>
   )
 }

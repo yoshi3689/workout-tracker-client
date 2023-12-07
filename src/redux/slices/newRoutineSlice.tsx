@@ -14,8 +14,7 @@ export const newRoutineSlice = createSlice({
   name: "newRoutine",
   initialState: newRoutineInitialState,
   reducers: {
-    clearNewRoutine: (state) => {
-      state = newRoutineInitialState;
+    clearNewRoutine: () => {
       return newRoutineInitialState;
     },
     editNewRoutine: (state, action: PayloadAction<IRoutine>) => {

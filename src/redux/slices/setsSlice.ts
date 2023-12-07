@@ -21,6 +21,10 @@ export const SetSlice = createSlice({
   name: "Sets",
   initialState: SetInitialState,
   reducers: {
+    loadSets: (state, action: PayloadAction<Record<string, Record<string, ISet>>>) => {
+      state = {...action.payload};
+      return state;
+    },
     addSet: (state, action: PayloadAction<{ set: ISet, exerciseId: string }>) => {
       const { set, exerciseId } = action.payload
       const id = generateObjectId();
@@ -52,7 +56,10 @@ export const SetSlice = createSlice({
     deleteSets: (state, action: PayloadAction<{exerciseId:string}>) => {
       delete state[action.payload.exerciseId]
     },
+    clearSets: () => {
+      return SetInitialState
+    },
   },
 });
 
-export const { addSet, editSet, deleteSet } = SetSlice.actions
+export const { addSet, editSet, deleteSet, loadSets, clearSets } = SetSlice.actions

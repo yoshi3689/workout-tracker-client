@@ -7,18 +7,21 @@ import Input from "@mui/material/Input";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 
-import { addRoutine } from "../redux/slices/routineSlice";
+import { addRoutine, modifyRoutine } from "../redux/slices/routineSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { newRoutineInitialState, editNewRoutine, clearNewRoutine } from "../redux/slices/newRoutineSlice";
 import { useLocation } from "react-router-dom";
 import ExerciseRows from "./ExerciseRows";
 import { Box, Button, Container } from "@mui/material";
+import { clearExercises } from "../redux/slices/exerciseSlice";
+import { clearSets } from "../redux/slices/setsSlice";
 
 const RoutineCreate: React.FC = () => {
-  const [workoutName, setWorkoutName] = useState("");
-
   const dispatch = useAppDispatch();
+  const routine = useAppSelector(state => state.persistedReducer.newRoutine);
   const location = useLocation();
+  console.log(routine)
+  const [workoutName, setWorkoutName] = useState(routine.name ? routine.name : "");
 
   const { accessToken, isLoggedIn } = useAppSelector(state => {
     return state.persistedReducer.user;
@@ -30,7 +33,7 @@ const RoutineCreate: React.FC = () => {
 
   useEffect(() => {
     dispatch(editNewRoutine({
-      ...newRoutineInitialState,
+      ...routine,
       name: workoutName
     }))
   }, [workoutName]);
@@ -40,17 +43,26 @@ const RoutineCreate: React.FC = () => {
   const handleCancel = () => {
     setWorkoutName("");
     dispatch(clearNewRoutine());
+    dispatch(clearExercises())
+    dispatch(clearSets())
   };
 
   // for now just add the new workout routine to an array
   // add a new workout routine to the list(probs API call to the DB)
   // reset the name
-  const handleCreateAndEdit = () => {
+  const handleCreateAndModify = () => {
     if (isLoggedIn && accessToken) {
-      dispatch(addRoutine(location.pathname.split("/")[2]));
+      if (routine._id) {
+        console.log("trying to modify the routine", routine._id);
+        dispatch(modifyRoutine(location.pathname.split("/")[2]));
+      } else {
+        console.log("trying to add the routine", routine._id);
+        // dispatch(addRoutine(location.pathname.split("/")[2]));
+      }
     }
     handleCancel();
   };
+
 
   return (
     <Container component={Paper} sx={{paddingBlock: "24px", marginBottom: "100px"}}>
@@ -61,6 +73,7 @@ const RoutineCreate: React.FC = () => {
           <InputLabel htmlFor="routine_name">routine name</InputLabel>
           <Input
             id="routine_name"
+            value={routine.name}
             onChange={handleNameChange}
           />
         </FormControl>
@@ -75,7 +88,7 @@ const RoutineCreate: React.FC = () => {
         <Button
           variant="contained"
           color="primary"
-          onClick={handleCreateAndEdit}
+          onClick={handleCreateAndModify}
           style={{"marginRight":"8px"}}>Create+
           
         </Button>

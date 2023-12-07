@@ -22,6 +22,10 @@ export const ExerciseSlice = createSlice({
   name: "Exercises",
   initialState: ExerciseInitialState,
   reducers: {
+    loadExercises: (state, action: PayloadAction<Record<string, IExercise>>) => {
+      state = {...action.payload};
+      return state;
+    },
     addExercise: (state, action: PayloadAction<IExercise>) => {
       const id = generateObjectId();
       action.payload._id = id;
@@ -36,7 +40,10 @@ export const ExerciseSlice = createSlice({
       delete state[action.payload];
       return state;
     },
+    clearExercises: () => {
+      return ExerciseInitialState;
+    },
   },
 });
 
-export const { addExercise, editExercise, deleteExercise } = ExerciseSlice.actions
+export const { addExercise, editExercise, deleteExercise, loadExercises, clearExercises } = ExerciseSlice.actions

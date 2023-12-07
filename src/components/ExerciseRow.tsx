@@ -18,7 +18,8 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { IExercise, deleteExercise } from '../redux/slices/exerciseSlice';
 import ClearIcon from "@mui/icons-material/Clear";
 import SetRows from './SetRows';
-import { Collapse } from '@mui/material';
+import { Collapse, FormControl, Input } from '@mui/material';
+import SetRow from './SetRow';
 
 // represent a Exercise containing info such as 
 // exercise, total reps, sets and etc
@@ -27,7 +28,7 @@ const ExerciseRow: React.FC<{ exercise: IExercise, isNew: boolean }> = ({ exerci
   const dispatch = useAppDispatch();
 
   const [open, setOpen] = React.useState(true);
-  
+
   const handleDelete = () => {
     dispatch(deleteExercise(exercise._id));
   };
@@ -35,36 +36,84 @@ const ExerciseRow: React.FC<{ exercise: IExercise, isNew: boolean }> = ({ exerci
   return (
     <>
     <TableRow>
-      <TableCell >
+      <TableCell width={"20%"} >
+        {isNew &&
+        <IconButton color="error" onClick={handleDelete}>
+          <ClearIcon />
+        </IconButton>}
         <IconButton
-          aria-label="expand row"
-          size="small"
           onClick={() => setOpen(!open)}
         >
-          {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-        </IconButton>
+            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+          </IconButton>
+          
       </TableCell>
         
-      <ExerciseDropdown exercise={exercise}/>
-        
-      {isNew && <TableCell >
-        <IconButton color="secondary" onClick={handleDelete}>
-          <ClearIcon />
-        </IconButton>
-      </TableCell>}
-        
+        {isNew
+          ? (
+            <ExerciseDropdown exercise={exercise}/>  
+          ) :
+          (
+            <TableCell >
+              {exercise.name}
+            </TableCell>
+          )
+      }
     </TableRow>
-      
       <TableRow>
-        <TableCell colSpan={4} sx={{padding:0}}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ paddingBottom: 0, borderBottom: 0 }} >
-
-              {(exercise) && <SetRows exercise={exercise} isNew={isNew} />}
-              
-            </Box>
-          </Collapse>
-        </TableCell>  
+      <TableCell colSpan={2} sx={{padding:0}}>
+      {isNew ? (
+        <Collapse in={open} timeout="auto" unmountOnExit>
+          <Box sx={{ paddingBottom: 0, borderBottom: 0 }} >
+            {(exercise) && <SetRows exercise={exercise} isNew={isNew} />}
+          </Box>
+        </Collapse>
+      
+          ) : (
+              <Collapse in={open} timeout="auto" unmountOnExit>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>
+                #        
+              </TableCell>
+              <TableCell>
+                weight
+              </TableCell>
+              <TableCell>
+                rep
+              </TableCell>
+              <TableCell>
+                rest
+              </TableCell>
+            </TableRow>      
+          </TableHead>
+                <TableBody>
+                  {/* set={set}
+                index={i}
+                exerciseId={exercise._id}
+                isNew={isNew} */}
+            {exercise.sets.map((set,i) => (
+              <TableRow key={set._id}>
+                <TableCell>
+                  {i+1}
+                </TableCell>
+              <TableCell>
+                {set.weight}
+              </TableCell>
+              <TableCell>
+                {set.rep}
+              </TableCell>
+              <TableCell>
+                {set.rest}
+              </TableCell>
+              </TableRow>  
+            ))}    
+          </TableBody>
+                </Table>  
+                </Collapse>
+      )}
+      </TableCell>  
     </TableRow>
     </>
   );

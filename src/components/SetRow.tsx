@@ -40,23 +40,36 @@ const SetRow: React.FC<{ set: ISet, index: number, exerciseId: string, isNew: bo
 
   return (
     <TableRow >
-      <TableCell>
-        <Typography sx={{textAlign:"center"}} gutterBottom >
-          {index+1}
-        </Typography>
-      </TableCell>
-      <SetEdit exerciseId={exerciseId} set={set} />
-      {!isMobile && <><TableCell /><TableCell /></>}
-
-      {isNew && <TableCell sx={{paddingInline: 0}} >
+      <TableCell width={"25%"}>
+        {isNew ?
         <IconButton
         className="mt-1"
-        color="secondary"
+        color="error"
         onClick={handleDelete}
       >
         <ClearIcon />
-      </IconButton>
-      </TableCell>}
+          </IconButton>
+          : <Typography alignSelf={"center"}>{index}</Typography>
+        }
+        
+      </TableCell>
+      {isNew ?
+        <SetEdit exerciseId={exerciseId} set={set} />
+        : <TableCell>
+          <TableCell>
+              <FormControl>
+                <Input disabled={true} value={set.rep} />
+              </FormControl>
+              <FormControl>
+                <Input disabled={true} value={set.rest} />
+              </FormControl>
+              <FormControl>
+                <Input disabled={true} value={set.weight} />
+              </FormControl>
+            </TableCell>
+        </TableCell>
+      }
+      {!isMobile && <><TableCell /><TableCell /></>}
     </TableRow>
   );
 };

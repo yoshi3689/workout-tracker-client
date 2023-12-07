@@ -41,8 +41,36 @@ export const addRoutine = createAsyncThunk(
           return {...e, sets: Object.values(sets[e._id])}
         })
       }
-      console.log(reqBody);
+      
       const response = await axios.post(
+      `${BASE}/api/routines`,
+      reqBody,
+      { headers: { Authorization: `Bearer ${user.accessToken}` } }
+    );
+    return response.data.response;
+    } else {
+      return {};
+    }
+  }
+);
+
+export const modifyRoutine = createAsyncThunk(
+  "routines/modifyRoutine",
+  async (data: string, thunkAPI) => {
+    const state = thunkAPI.getState() as RootState;
+    const { newRoutine, user, exercises, sets } = state.persistedReducer;
+    if (user.isLoggedIn) {
+      const reqBody: IRoutine = {
+        ...newRoutine,
+        username: data,
+        createdAt: new Date().toISOString(),
+        isEditing: false,
+        exercises: Object.values(exercises).map(e => {
+          return {...e, sets: Object.values(sets[e._id])}
+        })
+      }
+      
+      const response = await axios.patch(
       `${BASE}/api/routines`,
       reqBody,
       { headers: { Authorization: `Bearer ${user.accessToken}` } }

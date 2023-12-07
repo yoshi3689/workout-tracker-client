@@ -53,7 +53,7 @@ const SetEdit: React.FC<{ set: ISet, exerciseId: string }> = ({ set, exerciseId 
           weight
         </InputLabel>
       <NativeSelect
-        defaultValue={weights[0]}
+        defaultValue={set.weight}
         inputProps={{
           name:"weight-"+set._id+exerciseId,
           id:"weight-"+set._id+exerciseId
@@ -75,7 +75,7 @@ const SetEdit: React.FC<{ set: ISet, exerciseId: string }> = ({ set, exerciseId 
           rep
         </InputLabel>
       <NativeSelect
-        defaultValue={reps[0]}
+        defaultValue={set.rep}
         inputProps={{
           name:"rep-"+set._id+exerciseId,
           id:"rep-"+set._id+exerciseId
@@ -97,7 +97,7 @@ const SetEdit: React.FC<{ set: ISet, exerciseId: string }> = ({ set, exerciseId 
           rest
         </InputLabel>
       <NativeSelect
-        defaultValue={rests[0]}
+        defaultValue={set.rest}
         inputProps={{
           name:"rep-"+set._id+exerciseId,
           id:"rep-"+set._id+exerciseId

@@ -24,7 +24,6 @@ const SetRows: React.FC<{ exercise: IExercise, isNew: boolean }> = ({ exercise, 
 
   let sets = useAppSelector(state => state.persistedReducer.sets[exercise._id]);
 
-  console.log(exercise._id, sets)
   // add new set
   const handleAdd = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
@@ -40,17 +39,18 @@ const SetRows: React.FC<{ exercise: IExercise, isNew: boolean }> = ({ exercise, 
     <Table size='small'>
       <TableHead>
         <TableRow >
-          <TableCell />
-          <TableCell>
-            <Typography component="h3">Sets</Typography>
-          </TableCell>
           {isNew && (
-            <TableCell>
+            <TableCell width="25%">
             <IconButton color="primary" onClick={handleAdd}>
             <AddCircleIcon />
             </IconButton>
           </TableCell>
           )}
+          <TableCell>
+            <Typography variant="subtitle1">Sets</Typography>
+          </TableCell>
+          <TableCell/>
+          
         </TableRow>
       </TableHead>
       <TableBody>
@@ -61,17 +61,7 @@ const SetRows: React.FC<{ exercise: IExercise, isNew: boolean }> = ({ exercise, 
           >
             <Table size="small">
               <TableBody>
-                {isNew ?
-                  sets && Object.values(sets).map((set, i) => (
-                    <SetRow
-                      key={"" + i + set._id + exercise._id}
-                      exerciseId={exercise._id}
-                      index={i}
-                      set={set}
-                      isNew={isNew}
-                    />
-                   ))
-                  : exercise.sets.map((set, i) => (
+                {isNew && Object.values(sets).map((set, i) => (
                     <SetRow
                       key={"" + i + set._id + exercise._id}
                       exerciseId={exercise._id}

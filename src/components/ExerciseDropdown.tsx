@@ -48,7 +48,6 @@ const ExerciseDropdown: React.FC<{ exercise: IExercise }> = ({ exercise }) => {
   
   
   return (
-    <>
       <TableCell sx={{paddingInline:0}} >
         <FormControl sx={formControlStyle}  >
       <InputLabel variant="standard" htmlFor={exercise._id}>
@@ -89,7 +88,6 @@ const ExerciseDropdown: React.FC<{ exercise: IExercise }> = ({ exercise }) => {
       </NativeSelect>
     </FormControl>
       </TableCell>
-    </>
   );
 }
 
