@@ -18,7 +18,7 @@ import { IExercise, loadExercises } from '../redux/slices/exerciseSlice';
 import { ISet, loadSets } from '../redux/slices/setsSlice';
 
 // represent a whole workout routine with exercises in it
-const RoutineRow: React.FC<{ routine: IRoutine, isNew: boolean }> = ({ routine, isNew }) => {
+const RoutineRow: React.FC<{ routine: IRoutine, isNew: boolean, navigateToLog: Function }> = ({ routine, isNew, navigateToLog }) => {
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
   
@@ -39,6 +39,7 @@ const RoutineRow: React.FC<{ routine: IRoutine, isNew: boolean }> = ({ routine, 
           })
     });
     dispatch(loadSets(sets))
+    navigateToLog();
   }
   // console.log(isEditing, routineInForm)
   const rowContent = <>

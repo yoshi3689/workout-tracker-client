@@ -3,8 +3,12 @@ import Root from "./routes/Root";
 import Login from "./routes/Login";
 import Register from "./routes/Register";
 import Home from "./routes/Home";
+import CreateOrEdit from "./routes/CreateOrEdit";
 
 import LoginPersist from "./middleware/LoginPersist"
+import NavBar from "./components/NavBar";
+import { Toolbar } from "@mui/material";
+import { isMobile } from "react-device-detect";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +31,10 @@ const router = createBrowserRouter([
         path: "/dashboard/:username",
         element: <Root />,
       },
+      {
+        path: "/dashboard/:username/log",
+        element: <CreateOrEdit />,
+      },
     ],
   },
 ]);
@@ -35,12 +43,15 @@ function App() {
   return (
     <>
       <header>
-        <h1>Some top content</h1>
+        <NavBar />
+        {!isMobile && <Toolbar />}
       </header>
-      <nav></nav>
-      <div className="App">
-        <RouterProvider router={router} />
-      </div>
+      <RouterProvider router={router} />
+      <footer>
+        {!isMobile && <Toolbar />}
+        <NavBar />
+        
+      </footer>
     </>
   );
 }

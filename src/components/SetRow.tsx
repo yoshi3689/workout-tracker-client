@@ -16,23 +16,13 @@ import IconButton from "@mui/material/IconButton";
 import SetEdit from "./SetEdit";
 import { TableCell, TableRow } from "@mui/material";
 
+import { isMobile } from "react-device-detect";
+
 
 const SetRow: React.FC<{ set: ISet, index: number, exerciseId: string, isNew: boolean }> = ({ set, index, exerciseId, isNew }) => {
   const dispatch = useAppDispatch();
   
-  const [width, setWidth] = useState<number>(window.innerWidth);
-
-  function handleWindowSizeChange() {
-      setWidth(window.innerWidth);
-  }
-  useEffect(() => {
-      window.addEventListener('resize', handleWindowSizeChange);
-      return () => {
-          window.removeEventListener('resize', handleWindowSizeChange);
-      }
-  }, []);
-
-  const isMobile = width <= 768;
+  
 
   const handleDelete = () => {
     dispatch(deleteSet({setId: set._id, exerciseId}));

@@ -11,21 +11,21 @@ import { addRoutine, modifyRoutine } from "../redux/slices/routineSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { newRoutineInitialState, editNewRoutine, clearNewRoutine } from "../redux/slices/newRoutineSlice";
 import { useLocation } from "react-router-dom";
-import ExerciseRows from "./ExerciseRows";
+import ExerciseRows from "../components/ExerciseRows";
 import { Box, Button, Container } from "@mui/material";
 import { clearExercises } from "../redux/slices/exerciseSlice";
 import { clearSets } from "../redux/slices/setsSlice";
 
-const RoutineCreate: React.FC = () => {
+const CreateOrEdit: React.FC = () => {
   const dispatch = useAppDispatch();
   const routine = useAppSelector(state => state.persistedReducer.newRoutine);
   const location = useLocation();
-  console.log(routine)
-  const [workoutName, setWorkoutName] = useState(routine.name ? routine.name : "");
 
   const { accessToken, isLoggedIn } = useAppSelector(state => {
     return state.persistedReducer.user;
   });
+
+  const [workoutName, setWorkoutName] = useState(routine.name ? routine.name : "");
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setWorkoutName(e.target.value);
@@ -53,11 +53,13 @@ const RoutineCreate: React.FC = () => {
   const handleCreateAndModify = () => {
     if (isLoggedIn && accessToken) {
       if (routine._id) {
-        console.log("trying to modify the routine", routine._id);
         dispatch(modifyRoutine(location.pathname.split("/")[2]));
-      } else {
-        console.log("trying to add the routine", routine._id);
-        // dispatch(addRoutine(location.pathname.split("/")[2]));
+        // i feel i shouldnot have to make the routine have a name
+      } else if (!workoutName) {
+        console.error("add name!")
+      }
+      else {
+        dispatch(addRoutine(location.pathname.split("/")[2]));
       }
     }
     handleCancel();
@@ -65,9 +67,10 @@ const RoutineCreate: React.FC = () => {
 
 
   return (
-    <Container component={Paper} sx={{paddingBlock: "24px", marginBottom: "100px"}}>
+    <main>
+      <Container component={Paper} sx={{paddingBlock: "24px", marginBottom: "100px"}}>
       <Box>
-        <Typography variant="h5">Create/Edit Routine</Typography>
+        <Typography variant="h5">Log Workout</Typography>
       </Box>
       <FormControl sx={{ m: 1 }} variant="standard">
           <InputLabel htmlFor="routine_name">routine name</InputLabel>
@@ -99,8 +102,8 @@ const RoutineCreate: React.FC = () => {
         
       </Box>
     </Container>
-    
+    </main>
   );
 };
 
-export default RoutineCreate;
+export default CreateOrEdit;

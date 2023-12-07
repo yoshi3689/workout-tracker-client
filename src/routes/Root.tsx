@@ -3,12 +3,13 @@ import { useLocation } from "react-router-dom"
 
 import Routines from '../components/Routines'
 import Unauthorized from '../components/Unauthorized';
-import RoutineCreate from '../components/RoutineCreate';
+import RoutineCreate from './CreateOrEdit';
 
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { getRoutines } from '../redux/slices/routineSlice';
 import { checkLoginStatus } from '../redux/slices/userSlice';
-import WithAppBar from './WithAppBar';
+import WithAppBar from '../components/NavBar';
+import { Box, Container, Typography } from '@mui/material';
 
 
 const Root = () => {
@@ -38,27 +39,13 @@ const Root = () => {
   
   
   return (
-    <main>
-      Welcome {location.pathname.split("/")[2]}
+    <Box component={"main"}>
       {!error ? (
-        <>
-          <div >
-            <h3>List of routines created in the past</h3>
-            <Routines />
-          </div>
-        <br />
-        <br />
-        <br />
-      
-          <div className="stick-to-bottom">
-            <RoutineCreate />
-          </div>
-        </>
+        <Routines />
       ) : (
         <Unauthorized error={error} />
       )}
-      <WithAppBar />
-    </main>
+    </Box>
   );
 }
 
