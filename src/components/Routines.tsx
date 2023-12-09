@@ -22,8 +22,8 @@ import { clearSets } from '../redux/slices/setsSlice';
 
 const StyledFab = styled(Fab)({
   zIndex: 10000,
-  bottom: 100,
-  right: 100,
+  // bottom: 100,
+  // right: 100,
   margin: '0 0 auto 0',
   position: "fixed"
 });

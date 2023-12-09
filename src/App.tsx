@@ -43,13 +43,22 @@ function App() {
   return (
     <>
       <header>
-        <NavBar />
-        {!isMobile && <Toolbar />}
+        {!isMobile &&
+          <>
+            <NavBar />
+            <Toolbar />
+          </>
+        }
       </header>
       <RouterProvider router={router} />
       <footer>
-        {!isMobile && <Toolbar />}
-        <NavBar />
+        {isMobile &&
+          <>
+            <Toolbar />
+            <NavBar />
+          </>
+        }
+        
         
       </footer>
     </>

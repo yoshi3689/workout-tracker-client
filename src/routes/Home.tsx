@@ -1,14 +1,43 @@
+import { Box, Button, Container, Stack, Typography } from '@mui/material'
 import React from 'react'
 import { Link } from 'react-router-dom'
 
 const Home = () => {
   return (
-    <div>
-      <div>
-        <Link to={"/login"}>login</Link>
-        <Link to={"/register"}>register</Link>
-      </div>
-    </div>
+    <Box
+          sx={{
+            bgcolor: 'background.paper',
+            pt: 8,
+            pb: 6,
+          }}
+        >
+          <Container maxWidth="sm">
+            <Typography
+              component="h1"
+              variant="h3"
+              align="center"
+              color="text.primary"
+              gutterBottom
+            >
+              Sweat Snap
+            </Typography>
+            <Typography variant="h6" align="center" color="text.secondary" paragraph>
+              Are you tired of beating yourself up internally for dissatisfied results at the gym?
+            </Typography>
+            <Typography variant="h6" align="center" color="text.secondary" paragraph>
+              This could happen due to unawareness of your past records. Let's log that sweaty gym effort and enjoy the process with us.
+            </Typography>
+            <Stack
+              sx={{ pt: 4 }}
+              direction="row"
+              spacing={3}
+              justifyContent="center"
+            >
+              <Button component={Link} to={"/login"} variant="contained">login</Button>
+              <Button component={Link} to={"/register"} variant="outlined">Sweat With Us</Button>
+            </Stack>
+          </Container>
+        </Box>
   )
 }
 

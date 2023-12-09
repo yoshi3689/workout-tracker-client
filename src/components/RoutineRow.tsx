@@ -44,7 +44,7 @@ const RoutineRow: React.FC<{ routine: IRoutine, isNew: boolean, navigateToLog: F
   // console.log(isEditing, routineInForm)
   const rowContent = <>
     <TableCell sx={{display:"flex"}} >
-          <IconButton size="small" onClick={onEditClick}>
+          <IconButton title="Edit Routine" size="small" onClick={onEditClick}>
             <Edit />
           </IconButton>
           <IconButton
@@ -57,7 +57,7 @@ const RoutineRow: React.FC<{ routine: IRoutine, isNew: boolean, navigateToLog: F
         </TableCell>
           <TableCell >
           <Box display={"flex"} justifyContent={"space-between"}>
-            <Typography>{routine.name}</Typography>
+            {RoutineRow.name && <Typography>{routine.name}</Typography>}
             <Typography>{routine.createdAt.split("T")[0].replaceAll("-", "/")}</Typography>
             </Box>
           </TableCell>
