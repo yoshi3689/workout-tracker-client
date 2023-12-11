@@ -62,6 +62,7 @@ const UserForm: React.FC = () => {
       username, accessToken, isLoggedIn: true,
       email: ''
     }));
+    console.log(res)
     navigate(`/dashboard/${username}`);
   }
 

@@ -6,6 +6,7 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import Unauthorized from '../components/Unauthorized';
 import { loginOrRegister } from '../redux/slices/userSlice';
 import { request } from '../axios/axios';
+import { Box, CircularProgress } from '@mui/material';
 
 const LoginPersist = () => {
   const [error, setError] = useState("");
@@ -19,7 +20,6 @@ const LoginPersist = () => {
   useEffect(() => {
     if (!isLoggedIn) {
       request.get("api/refresh/", {
-        withCredentials: true,
       })
         .then((res: AxiosResponse) => {
           dispatch(loginOrRegister({ accessToken: res.data, isLoggedIn: true }));
@@ -33,11 +33,13 @@ const LoginPersist = () => {
     }
   }, [isLoggedIn, dispatch])
 
+  const component = isLoggedIn ? (<Outlet />) :
+    (!error && !isLoggedIn) ? (<Box sx={{ display: 'flex' }}><CircularProgress /></Box>)
+           : (<Unauthorized error='access token expired' />)  
   return (
     <>
-      {isLoggedIn
-        ?(<Outlet />)
-        :(<Unauthorized error='access token expired' />)
+      {
+        component
       }
     </>
   )
