@@ -90,6 +90,7 @@ export const getRoutines = createAsyncThunk<
   async (credentials: ICredentials) => {
     const response = await axios.get(`${BASE}/api/routines/${credentials.username}`, {
       headers: { Authorization: `Bearer ${credentials.accessToken}` },
+      withCredentials: true,
     });
     return response.data as IRoutine[];
   }

@@ -17,8 +17,9 @@ const LoginPersist = () => {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      axios.defaults.withCredentials = true;
-      axios.get(`http://localhost:5001/api/refresh/`,)
+      axios.get(`http://localhost:5001/api/refresh/`, {
+        withCredentials: true,
+      })
         .then((res: AxiosResponse) => {
           dispatch(loginOrRegister({ accessToken: res.data, isLoggedIn: true }));
         })
