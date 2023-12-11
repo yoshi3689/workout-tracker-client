@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, nanoid, PayloadAction, ActionReducerMapB
 import { IExercise } from "./exerciseSlice";
 import axios from "axios";
 import { RootState } from "../store";
-import { authRequest } from "../../axios/axios";
+import { request } from "../../axios/axios";
 
 export interface IRoutine {
   _id: string,
@@ -25,8 +25,6 @@ export interface ICredentials {
 
 export const RoutineInitialState: IRoutine[] = [];
 
-const BASE = "http://localhost:5001";
-
 export const addRoutine = createAsyncThunk(
   "routines/addRoutine",
   async (data: string, thunkAPI) => {
@@ -43,9 +41,10 @@ export const addRoutine = createAsyncThunk(
         })
       }
       
-      const response = await authRequest.post(
-        `${BASE}/api/routines`,
-        reqBody
+      const response = await request.post(
+      `api/routines`,
+      reqBody,
+      { headers: { Authorization: `Bearer ${user.accessToken}` } }
     );
     return response.data.response;
     } else {
@@ -70,10 +69,15 @@ export const modifyRoutine = createAsyncThunk(
         })
       }
       
-      const response = await axios.patch(
-      `${BASE}/api/routines`,
+      const response = await request.patch(
+      `api/routines`,
       reqBody,
-      { headers: { Authorization: `Bearer ${user.accessToken}` } }
+        {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`
+          },
+          withCredentials: true
+        }
     );
     return response.data.response;
     } else {
@@ -88,7 +92,8 @@ export const getRoutines = createAsyncThunk<
 >(
   "routines/getRoutines",
   async (credentials: ICredentials) => {
-    const response = await authRequest.get(`${BASE}/api/routines/${credentials.username}`, {
+    const response = await request.get(`api/routines/${credentials.username}`, {
+      headers: { Authorization: `Bearer ${credentials.accessToken}` },
       withCredentials: true,
     });
     return response.data as IRoutine[];
