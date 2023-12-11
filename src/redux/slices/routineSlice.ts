@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, nanoid, PayloadAction, ActionReducerMapB
 import { IExercise } from "./exerciseSlice";
 import axios from "axios";
 import { RootState } from "../store";
+import { authRequest } from "../../axios/axios";
 
 export interface IRoutine {
   _id: string,
@@ -42,10 +43,9 @@ export const addRoutine = createAsyncThunk(
         })
       }
       
-      const response = await axios.post(
-      `${BASE}/api/routines`,
-      reqBody,
-      { headers: { Authorization: `Bearer ${user.accessToken}` } }
+      const response = await authRequest.post(
+        `${BASE}/api/routines`,
+        reqBody
     );
     return response.data.response;
     } else {
@@ -88,8 +88,7 @@ export const getRoutines = createAsyncThunk<
 >(
   "routines/getRoutines",
   async (credentials: ICredentials) => {
-    const response = await axios.get(`${BASE}/api/routines/${credentials.username}`, {
-      headers: { Authorization: `Bearer ${credentials.accessToken}` },
+    const response = await authRequest.get(`${BASE}/api/routines/${credentials.username}`, {
       withCredentials: true,
     });
     return response.data as IRoutine[];

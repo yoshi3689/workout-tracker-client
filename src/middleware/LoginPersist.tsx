@@ -5,6 +5,7 @@ import { useAppSelector, useAppDispatch } from "../redux/hooks";
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import Unauthorized from '../components/Unauthorized';
 import { loginOrRegister } from '../redux/slices/userSlice';
+import { authRequest, publicRequest } from '../axios/axios';
 
 const LoginPersist = () => {
   const [error, setError] = useState("");
@@ -17,9 +18,7 @@ const LoginPersist = () => {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      axios.get(`http://localhost:5001/api/refresh/`, {
-        withCredentials: true,
-      })
+      authRequest.get(`/api/refresh/`)
         .then((res: AxiosResponse) => {
           dispatch(loginOrRegister({ accessToken: res.data, isLoggedIn: true }));
         })

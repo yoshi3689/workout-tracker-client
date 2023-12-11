@@ -17,6 +17,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { publicRequest } from '../axios/axios';
 
 function Copyright(props: any) {
   return (
@@ -54,8 +55,8 @@ const UserForm: React.FC = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     const res = isLogin
-      ? await axios.post("api/login", { username, password })
-      : await axios.post("api/register", { username, password, email });
+      ? await publicRequest.post("api/login", { username, password })
+      : await publicRequest.post("api/register", { username, password, email });
     const accessToken: string = res.data.accessToken
     dispatch(loginOrRegister({
       username, accessToken, isLoggedIn: true,
