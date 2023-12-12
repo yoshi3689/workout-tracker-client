@@ -1,9 +1,9 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import Root from "./routes/Root";
+import Root from "./routes/UserHome";
 import Signin from "./routes/Signin";
 import Home from "./routes/Home";
 import Signup from "./routes/Signup";
-import CreateOrEdit from "./routes/CreateOrEdit";
+import CreateOrEdit from "./routes/UserCreateEditLog";
 
 import { PATHNAMES } from "./utils/pathnames";
 
@@ -11,6 +11,7 @@ import SigninPersist from "./middleware/SigninPersist"
 import NavBar from "./components/NavBar";
 import { Toolbar } from "@mui/material";
 import { isMobile } from "react-device-detect";
+import EmailVerify from "./routes/EmailVerify";
 
 
 const router = createBrowserRouter([
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
   {
     path: PATHNAMES.SIGNUP,
     element: <Signup />,
+  },
+  {
+    path: PATHNAMES.EMAIL_VERIFY,
+    element: <EmailVerify/>,
   },
   {
     path: PATHNAMES.HOME,

@@ -10,6 +10,7 @@ export const PATHNAMES = {
   SIGNUP: "/signup",
   USER_HOME: "/dashboard/:username",
   USER_EDIT_ADD_LOG: "/dashboard/:username/log",
+  EMAIL_VERIFY: "/verify-email/:usernameEncoded/",
 };
 
 export const defineUserPath = (username: string, path: string): string => {

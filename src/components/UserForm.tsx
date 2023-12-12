@@ -50,6 +50,8 @@ const UserForm: React.FC = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
+  const [isSignedUp, setIsSignedUp] = useState(false)
+
   const dispatch = useAppDispatch();
 
   const signIn = () => {
@@ -61,12 +63,16 @@ const UserForm: React.FC = () => {
         setError(error.message);
         console.error(error.message);
       });
+    navigate(`/dashboard/${username}`);
   }
 
 const signUp = () => {
-  request.post("api/signup", { username, password, email })
+   request.post("api/user/signup", { username, password, email })
     .then((res: AxiosResponse) => {
       return res.data;
+    })
+     .then((res) => {
+      if (res) setIsSignedUp(true)
     })
       .catch((error: AxiosError) => {
         setError(error.message);
@@ -76,7 +82,7 @@ const signUp = () => {
 
   const handleSubmit = async () => {
     isSignin ? signIn() : signUp();
-    navigate(`/dashboard/${username}`);
+    
   }
 
   const handleFormSwitch = (e:any) => {

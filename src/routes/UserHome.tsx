@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom"
 
 import Routines from '../components/Routines'
 import Unauthorized from '../components/Unauthorized';
-import RoutineCreate from './CreateOrEdit';
+import RoutineCreate from './UserCreateEditLog';
 
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { getRoutines } from '../redux/slices/routineSlice';

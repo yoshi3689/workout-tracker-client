@@ -6,11 +6,11 @@ const Home = () => {
   return (
     <Box
           sx={{
-            bgcolor: 'background.paper',
+            background: `url(${process.env.PUBLIC_URL}/landing_bg.jpg)`,
             pt: 8,
             pb: 6,
           }}
-        >
+          >
           <Container maxWidth="sm">
             <Typography
               component="h1"
