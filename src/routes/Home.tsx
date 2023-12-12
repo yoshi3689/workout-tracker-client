@@ -33,8 +33,8 @@ const Home = () => {
               spacing={3}
               justifyContent="center"
             >
-              <Button component={Link} to={"/login"} variant="contained">login</Button>
-              <Button component={Link} to={"/register"} variant="outlined">Sweat With Us</Button>
+              <Button component={Link} to={"/signin"} variant="contained">sign in</Button>
+              <Button component={Link} to={"/signup"} variant="outlined">sweat with us</Button>
             </Stack>
           </Container>
         </Box>

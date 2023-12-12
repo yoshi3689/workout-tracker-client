@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react'
 import { Outlet } from 'react-router-dom'
 
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 import Unauthorized from '../components/Unauthorized';
-import { loginOrRegister } from '../redux/slices/userSlice';
+import { signin } from '../redux/slices/userSlice';
 import { request } from '../axios/axios';
 import { Box, CircularProgress } from '@mui/material';
 
-const LoginPersist = () => {
+const SigninPersist = () => {
   const [error, setError] = useState("");
   // get the user state to know when the access token expires
   const isLoggedIn = useAppSelector(state => {
@@ -22,10 +22,10 @@ const LoginPersist = () => {
       request.get("api/refresh/", {
       })
         .then((res: AxiosResponse) => {
-          dispatch(loginOrRegister({ accessToken: res.data, isLoggedIn: true }));
+          dispatch(signin({ accessToken: res.data, isLoggedIn: true }));
         })
         .catch((error: AxiosError) => {
-          setError("login refresh failed. You need to log in manually");
+          setError("Signin refresh failed. You need to sign in manually");
           console.error(error.message);
         });
     } else {
@@ -45,4 +45,4 @@ const LoginPersist = () => {
   )
 }
 
-export default LoginPersist
+export default SigninPersist

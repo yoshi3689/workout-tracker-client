@@ -7,7 +7,7 @@ import RoutineCreate from './CreateOrEdit';
 
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { getRoutines } from '../redux/slices/routineSlice';
-import { checkLoginStatus } from '../redux/slices/userSlice';
+import { checkSigninStatus } from '../redux/slices/userSlice';
 import WithAppBar from '../components/NavBar';
 import { Box, Container, Typography } from '@mui/material';
 
@@ -20,7 +20,7 @@ const Root = () => {
     try {
       await dispatch(getRoutines({accessToken:loggedInUser.accessToken, username: location.pathname.split("/")[2] })).unwrap();
     } catch (err) {
-      dispatch(checkLoginStatus({
+      dispatch(checkSigninStatus({
         isLoggedIn: false,
         email: '',
         accessToken: ''

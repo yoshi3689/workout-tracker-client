@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import axios from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 import { useNavigate, useLocation } from "react-router-dom"
 import { useAppDispatch } from '../redux/hooks';
-import { IUser, loginOrRegister } from '../redux/slices/userSlice';
+import { signin } from '../redux/slices/userSlice';
 
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -29,7 +29,7 @@ function Copyright(props: any) {
     >
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        Sweat Snap
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -44,31 +44,44 @@ const UserForm: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const isLogin = location.pathname === "/login"
-  // const [isLogin, setIsLogin] = useState(location.pathname === "login");
+  const isSignin = location.pathname === "/signin"
+  const [error, setError] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
   const dispatch = useAppDispatch();
 
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    const res = isLogin
-      ? await request.post("api/login", { username, password })
-      : await request.post("api/register", { username, password, email });
-    const accessToken: string = res.data.accessToken
-    dispatch(loginOrRegister({
-      username, accessToken, isLoggedIn: true,
-      email: ''
-    }));
-    console.log(res)
+  const signIn = () => {
+    request.post("api/signin", { username, password })
+      .then((res: AxiosResponse) => {
+          dispatch(signin({ accessToken: res.data, isLoggedIn: true }));
+        })
+      .catch((error: AxiosError) => {
+        setError(error.message);
+        console.error(error.message);
+      });
+  }
+
+const signUp = () => {
+  request.post("api/signup", { username, password, email })
+    .then((res: AxiosResponse) => {
+      return res.data;
+    })
+      .catch((error: AxiosError) => {
+        setError(error.message);
+        console.error(error.message);
+      });
+  }
+
+  const handleSubmit = async () => {
+    isSignin ? signIn() : signUp();
     navigate(`/dashboard/${username}`);
   }
 
   const handleFormSwitch = (e:any) => {
     e.preventDefault();
-    navigate(isLogin ? "/register" : "/login");
+    navigate(isSignin ? "/signup" : "/signin");
   }
 
   return (
@@ -88,11 +101,10 @@ const UserForm: React.FC = () => {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              {isLogin ? "Sign in" : "Sign up"}
+              {isSignin ? "Sign in" : "Sign up"}
             </Typography>
             <Box
               component="form"
-              onSubmit={handleSubmit}
               noValidate
               sx={{ mt: 1 }}
             >
@@ -107,7 +119,7 @@ const UserForm: React.FC = () => {
                 autoFocus
                 onChange={(e) => setUsername(e.target.value)}
               />
-              {!isLogin && (
+              {!isSignin && (
                 <TextField
                   margin="normal"
                   required
@@ -140,17 +152,17 @@ const UserForm: React.FC = () => {
                 onClick={handleSubmit}
                 sx={{ mt: 3, mb: 2 }}
               >
-                {isLogin ? "Sign in" : "Sign up"}
+                {isSignin ? "Sign in" : "Sign up"}
               </Button>
               <Grid container>
-                {isLogin && (
+                {isSignin && (
                   <Grid item xs>
                     <Link variant="body2">Forgot password?</Link>
                   </Grid>
                 )}
                 <Grid item>
                   <Link variant="body2" onClick={handleFormSwitch}>
-                    {isLogin ? "Don't have account?" : "Already have account"}
+                    {isSignin ? "Don't have account?" : "Already have account"}
                   </Link>
                 </Grid>
               </Grid>

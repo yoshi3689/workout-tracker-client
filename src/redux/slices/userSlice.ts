@@ -32,13 +32,13 @@ export const userSlice = createSlice({
     logout: (state) => {
       return UserInitialState;
     },
-    loginOrRegister: (state, action: PayloadAction<IUser>) => {
+    signin: (state, action: PayloadAction<IUser>) => {
       return action.payload;
     },
-    checkLoginStatus: (state, action: PayloadAction<IUser>) => {
+    checkSigninStatus: (state, action: PayloadAction<IUser>) => {
       return { ...state, isLoggedIn: action.payload.isLoggedIn };
     },
   },
 });
 
-export const { editUser, logout, loginOrRegister, checkLoginStatus } = userSlice.actions
+export const { editUser, logout, signin, checkSigninStatus } = userSlice.actions

@@ -1,38 +1,41 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Root from "./routes/Root";
-import Login from "./routes/Login";
-import Register from "./routes/Register";
+import Signin from "./routes/Signin";
 import Home from "./routes/Home";
+import Signup from "./routes/Signup";
 import CreateOrEdit from "./routes/CreateOrEdit";
 
-import LoginPersist from "./middleware/LoginPersist"
+import { PATHNAMES } from "./utils/pathnames";
+
+import SigninPersist from "./middleware/SigninPersist"
 import NavBar from "./components/NavBar";
 import { Toolbar } from "@mui/material";
 import { isMobile } from "react-device-detect";
 
+
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: PATHNAMES.HOME,
     element: <Home />,
   },
   {
-    path: "/login",
-    element: <Login />,
+    path: PATHNAMES.SIGNIN,
+    element: <Signin />,
   },
   {
-    path: "/register",
-    element: <Register />,
+    path: PATHNAMES.SIGNUP,
+    element: <Signup />,
   },
   {
-    path: "/",
-    element: <LoginPersist />,
+    path: PATHNAMES.HOME,
+    element: <SigninPersist />,
     children: [
       {
-        path: "/dashboard/:username",
+        path: PATHNAMES.USER_HOME,
         element: <Root />,
       },
       {
-        path: "/dashboard/:username/log",
+        path: PATHNAMES.USER_EDIT_ADD_LOG,
         element: <CreateOrEdit />,
       },
     ],

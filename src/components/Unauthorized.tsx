@@ -6,9 +6,9 @@ const Unauthorized: React.FC<{ error: string }> = ({ error }) => {
     <div>
       <h1>Unauthorized</h1>
       {error}
-      <h3>Need to log in to access this content</h3>
-      <Link to={"/login"}>Log in</Link>
-      <Link to={"/register"}>Don't have an account?</Link>
+      <h3>Need to sign in to access this content</h3>
+      <Link to={"/signin"}>sign in</Link>
+      <Link to={"/signup"}>Don't have an account yet?</Link>
     </div>
   )
 }
