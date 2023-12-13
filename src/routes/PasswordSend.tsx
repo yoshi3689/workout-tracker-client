@@ -6,44 +6,37 @@ import UserForm, { ILinkProp, ITextFieldProp } from '../components/UserForm';
 import { PATHNAMES } from '../utils/pathnames';
 import { AxiosError, AxiosResponse } from 'axios';
 
-const VerifyEmail: React.FC = () => {
+const PasswordSend: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [code, setCode] = useState("");
+  const [email, setEmail] = useState("");
   const [error, setError] = useState("");
 
   const goToSignin = () => {
     navigate(PATHNAMES.SIGNIN);
   }
 
-  const goToSendEmail = () => {
-    navigate(PATHNAMES.SIGNUP);
-  }
-
   const textFieldProps: ITextFieldProp[] = [
   {
-    name: "username",
-    changeHandler: setCode,
-    fieldState: code,
-    customFieldLabel: "Verification Code"
+    name: "email",
+    changeHandler: setEmail,
+    fieldState: email,
+    customFieldLabel: "Email Address"
   },
   ]
 
   const linkProps: ILinkProp[] = [
     {
-      linkText: "Already Verified?",
+      linkText: "Sign in",
       clickHandler: goToSignin,
-    },
-    {
-      linkText: "Did Not Get Email?",
-      clickHandler: goToSendEmail,
     }
   ];
 
   // send code to the BE and see if the email is decoded 
   // from the last segment of the request URL
-  const verifyEmail = async() => {
-    request.post(`api/user/verify-email/${location.pathname.split("/")[2]}/`, { code })
+  const sendPassword = async() => {
+    request.post(`api/user/send-password/${location.pathname.split("/")[2]}/`, { code })
       .then((res: AxiosResponse)  => {
         if (res.data.isVerfied) navigate("/signin")
       })
@@ -58,7 +51,7 @@ const VerifyEmail: React.FC = () => {
       <UserForm
         formTitle={"Verify Email"}
         textFieldProps={textFieldProps}
-        handleSubmit={verifyEmail}
+        handleSubmit={sendPassword}
         buttonText={"Verify"}
         bottomLinkProps={linkProps}
       />
@@ -67,4 +60,4 @@ const VerifyEmail: React.FC = () => {
   );
 }
 
-export default VerifyEmail
+export default PasswordSend

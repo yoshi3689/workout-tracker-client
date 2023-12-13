@@ -9,10 +9,29 @@ import { PATHNAMES } from "./utils/pathnames";
 
 import SigninPersist from "./middleware/SigninPersist"
 import NavBar from "./components/NavBar";
-import { Toolbar } from "@mui/material";
+import { Link, Toolbar, Typography } from "@mui/material";
 import { isMobile } from "react-device-detect";
 import EmailVerify from "./routes/EmailVerify";
 
+
+
+function Copyright(props: any) {
+  return (
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
+      <Link color="inherit" href="https://mui.com/">
+        Sweat Snap
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
+  );
+}
 
 const router = createBrowserRouter([
   {
@@ -66,7 +85,7 @@ function App() {
             <NavBar />
           </>
         }
-        
+        <Copyright sx={{ mt: 8, mb: 4 }} />
         
       </footer>
     </>

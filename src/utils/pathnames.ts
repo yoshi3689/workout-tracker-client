@@ -11,8 +11,9 @@ export const PATHNAMES = {
   USER_HOME: "/dashboard/:username",
   USER_EDIT_ADD_LOG: "/dashboard/:username/log",
   EMAIL_VERIFY: "/verify-email/:usernameEncoded/",
+  PASSWORD_SEND: "/send-password/:username/",
 };
 
 export const defineUserPath = (username: string, path: string): string => {
-  return path.replace(":username", username);
+  return path.replace(/:username(?:Encoded)?/, username);
 }
