@@ -1,4 +1,4 @@
-import React, { Dispatch, MouseEventHandler, SetStateAction } from 'react'
+import React, { Dispatch, MouseEventHandler, PropsWithChildren, ReactElement, SetStateAction, useState } from 'react'
 
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -11,8 +11,8 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { Alert, AlertTitle } from '@mui/material';
 
-// TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export interface ILinkProp {
@@ -29,27 +29,24 @@ export interface ITextFieldProp {
 
 const BottomLinks = (bottomLinkProps: ILinkProp[]) => {
   return (
-    <Grid container>
+    <Grid justifyContent="space-around" container>
       {bottomLinkProps.map(l => (
-          <Grid item>
-            {/* <Link variant="body2" onClick={handleFormSwitch}>
-            {isSignin ? "Don't have account?" : "Already have account"}
-            </Link> */}
-          
-            <Link variant="body2" component={"a"} onClick={l.clickHandler}>
-              {l.linkText}
-            </Link>
-          </Grid>
+        <Grid item key={l.linkText}>
+          <Link variant="body2" component={"button"} onClick={l.clickHandler}>
+            {l.linkText}
+          </Link>
+        </Grid>
       )) }
-      
     </Grid> 
   )
 }
+
 const TextFields = (textFieldProps: ITextFieldProp[]) => {
   return (
     <>
-      {textFieldProps.map(tf => (
+      {textFieldProps.map((tf, i) => (
         <TextField
+          key={tf.name}
           margin="normal"
           required
           fullWidth
@@ -57,7 +54,7 @@ const TextFields = (textFieldProps: ITextFieldProp[]) => {
           label={tf.customFieldLabel ? tf.customFieldLabel : tf.name}
           name={tf.name}
           autoComplete={tf.name}
-          autoFocus
+          autoFocus={i===0}
           onChange={(e) => tf.changeHandler(e.target.value)}
         />
       ))
@@ -66,15 +63,24 @@ const TextFields = (textFieldProps: ITextFieldProp[]) => {
   )
 }
 
-const UserForm: React.FC<{
+const UserForm: React.FC<PropsWithChildren<{
   bottomLinkProps?: ILinkProp[],
   formTitle: string,
   handleSubmit: MouseEventHandler,
-  textFieldProps: ITextFieldProp[],
-  buttonText: string
-}> = ({
-  bottomLinkProps, formTitle, handleSubmit, textFieldProps, buttonText
+  textFieldProps?: ITextFieldProp[],
+  buttonText: string,
+  children?: ReactElement<any, any>,
+  error?: string
+}>> = ({
+  bottomLinkProps, formTitle, handleSubmit, textFieldProps, buttonText, children, error
 }) => {
+
+  const errorPopup = (
+    <Alert severity="error">
+      <AlertTitle>Error</AlertTitle>
+      {error} <strong>check it out!</strong>
+    </Alert >
+  )
 
   return (
     <div>
@@ -96,12 +102,14 @@ const UserForm: React.FC<{
             <Typography component="h1" variant="h5">
               {formTitle}
             </Typography>
+            {error && errorPopup}
+            {children && children}
             <Box
               component="form"
               noValidate
               sx={{ mt: 1 }}
             >
-              {TextFields(textFieldProps)}
+              {textFieldProps && TextFields(textFieldProps)}
               <Button
                 fullWidth
                 variant="contained"

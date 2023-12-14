@@ -17,7 +17,7 @@ const VerifyEmail: React.FC = () => {
   }
 
   const goToSendEmail = () => {
-    navigate(PATHNAMES.SIGNUP);
+    navigate(PATHNAMES.EMAIL_RESEND);
   }
 
   const textFieldProps: ITextFieldProp[] = [
@@ -31,7 +31,7 @@ const VerifyEmail: React.FC = () => {
 
   const linkProps: ILinkProp[] = [
     {
-      linkText: "Already Verified?",
+      linkText: "Sign In",
       clickHandler: goToSignin,
     },
     {
@@ -42,7 +42,7 @@ const VerifyEmail: React.FC = () => {
 
   // send code to the BE and see if the email is decoded 
   // from the last segment of the request URL
-  const verifyEmail = async() => {
+  const verifyEmail = () => {
     request.post(`api/user/verify-email/${location.pathname.split("/")[2]}/`, { code })
       .then((res: AxiosResponse)  => {
         if (res.data.isVerfied) navigate("/signin")
@@ -61,8 +61,9 @@ const VerifyEmail: React.FC = () => {
         handleSubmit={verifyEmail}
         buttonText={"Verify"}
         bottomLinkProps={linkProps}
+        error={error}
       />
-      {error}
+      
     </>
   );
 }

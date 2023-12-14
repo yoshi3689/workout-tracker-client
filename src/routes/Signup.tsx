@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { request } from '../axios/axios';
 import { PATHNAMES } from '../utils/pathnames';
 import { Box, Typography } from '@mui/material';
+import BeforeSignin from '../pageBase/PageBase';
 
 const Signup: React.FC = () => {
   const location = useLocation();
@@ -23,7 +24,7 @@ const Signup: React.FC = () => {
   }
 
   const goToSendPassword = () => {
-    navigate(PATHNAMES.SIGNUP);
+    navigate(PATHNAMES.PASSWORD_SEND);
   }
 
   const linkProps: ILinkProp[] = [
@@ -73,19 +74,29 @@ const Signup: React.FC = () => {
   return (
     <>
       {isSignedUp ? (
-        <Box>
-          <Typography>
-            Verification email was sent to {email}.
-            In order to sign in, you need to verify your email. 
-          </Typography>
-        </Box>
+        <UserForm
+          formTitle={"You are signed up!"}
+          handleSubmit={goToSignin}
+          buttonText={"Sign In"}
+          children={
+            <>
+              <Typography>
+                Verification email was sent to {email}.
+              </Typography>
+              <Typography>
+                Please verify your email before signing in. 
+              </Typography>
+            </>}
+          error={error}
+        />
       ) : (
       <UserForm
         formTitle={"Create Account"}
         textFieldProps={textFieldProps}
         handleSubmit={signUp}
         buttonText={"Sign Up"}
-        bottomLinkProps={linkProps}
+            bottomLinkProps={linkProps}
+            error={error}
       />
       )
     }

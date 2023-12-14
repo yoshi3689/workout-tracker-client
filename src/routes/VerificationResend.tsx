@@ -7,10 +7,9 @@ import { PATHNAMES } from '../utils/pathnames';
 import { AxiosError, AxiosResponse } from 'axios';
 import { Typography } from '@mui/material';
 
-const PasswordSend: React.FC = () => {
+const VerificationResend: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [code, setCode] = useState("");
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [isSent, setIsSent] = useState(false);
@@ -18,6 +17,10 @@ const PasswordSend: React.FC = () => {
   const goToSignin = () => {
     navigate(PATHNAMES.SIGNIN);
   }
+
+  // const goToSendEmail = () => {
+  //   navigate(PATHNAMES.SIGNUP);
+  // }
 
   const textFieldProps: ITextFieldProp[] = [
   {
@@ -37,8 +40,8 @@ const PasswordSend: React.FC = () => {
 
   // send code to the BE and see if the email is decoded 
   // from the last segment of the request URL
-  const sendPassword = () => {
-    request.post('api/user/send-password/')
+  const resendEmail = () => {
+    request.post('api/user/resend-email', { email })
       .then((res: AxiosResponse)  => {
         if (res.data) setIsSent(true);
       })
@@ -50,30 +53,37 @@ const PasswordSend: React.FC = () => {
   
   return (
     <>
-      {isSent && (
-        <UserForm
-          formTitle={"Password Sent!"}
+      {isSent ? (
+        <>
+          <UserForm
+          formTitle={"Verification Email sent!"}
           handleSubmit={goToSignin}
           buttonText={"Sign In"}
           children={
             <>
               <Typography>
-                Your password was sent to {email}.
+                Verification email was sent to {email}.
+              </Typography>
+              <Typography>
+                Please verify your email before signing in. 
               </Typography>
             </>}
-          error={error}
+            error={error}
         />
-      )}
-      <UserForm
-        formTitle={"Send Password"}
+        </>
+      ) : (
+          <UserForm
+        formTitle={"Send Verification"}
         textFieldProps={textFieldProps}
-        handleSubmit={sendPassword}
-        buttonText={"Send"}
+        handleSubmit={resendEmail}
+        buttonText={"send"}
         bottomLinkProps={linkProps}
         error={error}
       />
+      )
+    }
     </>
   );
 }
 
-export default PasswordSend
+export default VerificationResend

@@ -8,7 +8,6 @@ import RoutineCreate from './UserCreateEditLog';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { getRoutines } from '../redux/slices/routineSlice';
 import { checkSigninStatus } from '../redux/slices/userSlice';
-import WithAppBar from '../components/NavBar';
 import { Box, Container, Typography } from '@mui/material';
 
 

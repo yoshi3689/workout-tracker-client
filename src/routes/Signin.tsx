@@ -26,8 +26,9 @@ const Signin: React.FC = () => {
       .catch((error: AxiosError) => {
         setError(error.message);
         console.error(error.message);
+        throw new Error(error.message);
       });
-    navigate(defineUserPath(username, PATHNAMES.USER_HOME));
+      navigate(defineUserPath(username, PATHNAMES.USER_HOME));
   }
 
   const goToSignup = () => {
@@ -73,9 +74,9 @@ const Signin: React.FC = () => {
           bottomLinkProps={linkProps}
           formTitle={"Sign In"}
           handleSubmit={signIn}
-          buttonText={"Sign In"}
+            buttonText={"Sign In"}
+            error={error}
           />
-      {error}
         </>
         :<>
           <UserForm
@@ -83,9 +84,9 @@ const Signin: React.FC = () => {
           bottomLinkProps={linkProps}
           formTitle={"Sign In"}
           handleSubmit={signIn}
-          buttonText={"Sign In"}
+            buttonText={"Sign In"}
+            error={error}
           />
-          {error}
         </>
       }
     </>
