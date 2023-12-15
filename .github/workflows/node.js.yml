@@ -3,7 +3,6 @@ name: Push-to-EC2
 on:
   push:
     branches: [ "production" ]
-
 jobs:
   deploy:
     name: Push to EC2 Instance
