@@ -3,6 +3,7 @@ name: Push-to-EC2
 on:
   push:
     branches: [ "production" ]
+
 jobs:
   deploy:
     name: Push to EC2 Instance
@@ -10,11 +11,12 @@ jobs:
     strategy:
       matrix:
         node-version: [18.x]
+
     steps:
     - name: check out
       uses: actions/checkout@v3
 
-    - name: Create a prod build by Node.js ${{ matrix.node-version }}
+    - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
@@ -28,9 +30,11 @@ jobs:
 
     - name: Deploy the prod build to my EC2 instance
       uses: easingthemes/ssh-deploy@main
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
-        SOURCE: ${{ secrets.SOURCE }}
+      with:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+        SOURCE: ${{ secrets.SOURCE }}
         REMOTE_USER: ${{ secrets.REMOTE_USER }}
         TARGET: ${{ secrets.REMOTE_TARGET }}
+        SCRIPT_AFTER: |
+          sudo systemctl restart
