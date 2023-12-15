@@ -12,15 +12,6 @@ jobs:
       matrix:
         node-version: [18.x]
     steps:
-    - name: test env var
-      env:
-        EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
-      run: |
-        echo $EC2_SSH_KEY
-    - name: checkout
-      uses: actions/checkout@v3
-
-
     - name: Create a prod build by Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
@@ -28,12 +19,11 @@ jobs:
         cache: 'npm'
     - run: npm i
     - run: npm run build
-
     - name: Deploy to my EC2 instance
       uses: easingthemes/ssh-deploy@main
       env:
         SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
-        SOURCE: "./build"
-        REMOTE_HOST: "ec2-3-145-80-9.us-east-2.compute.amazonaws.com"
-        REMOTE_USER: "ubuntu"
-        TARGET: "/home/ubuntu/"
+        SOURCE: ${{ secrets.SOURCE }}
+        REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+        REMOTE_USER: ${{ secrets.REMOTE_USER }}
+        TARGET: ${{ secrets.REMOTE_TARGET }}
