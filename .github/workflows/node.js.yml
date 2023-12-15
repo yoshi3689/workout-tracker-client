@@ -11,14 +11,22 @@ jobs:
       matrix:
         node-version: [18.x]
     steps:
+    - name: check out
+      uses: actions/checkout@v3
+
     - name: Create a prod build by Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm i
-    - run: npm run build
-    - name: Deploy to my EC2 instance
+
+    - name: Install Dependencies
+      run: npm ci
+
+    - name: Create a production build
+      run: npm run build
+
+    - name: Deploy the prod build to my EC2 instance
       uses: easingthemes/ssh-deploy@main
       env:
         SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
