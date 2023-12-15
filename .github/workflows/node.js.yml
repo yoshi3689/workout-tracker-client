@@ -1,24 +1,33 @@
-name: Node.js CI
+name: Push-to-EC2
 
 on:
   push:
     branches: [ "production" ]
 
 jobs:
-  build:
-
-    runs-on: self-hosted
+  deploy:
+    name: Push to EC2 Instance
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
         node-version: [18.x]
     steps:
     - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
+
+    - name: Create a prod build by Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm i
     - run: npm run build
-    - run: sudo systemctl restart nginx
+
+    - name: Deploy to my EC2 instance
+      uses: easingthemes/ssh-deploy@main
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+        SOURCE: "./build"
+        REMOTE_HOST: "ec2-3-145-80-9.us-east-2.compute.amazonaws.com"
+        REMOTE_USER: "ubuntu"
+        TARGET: "/home/ubuntu/"
