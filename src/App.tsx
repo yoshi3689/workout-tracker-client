@@ -12,32 +12,32 @@ import { PATHNAMES } from "./utils/pathnames";
 
 import SigninPersist from "./middleware/SigninPersist"
 
-import BeforeSignin from "./pageBase/PageBase";
+import PageBase from "./pageBase/PageBase";
 
 const router = createBrowserRouter([
   {
     path: PATHNAMES.HOME,
-    element: <BeforeSignin><Home /></BeforeSignin>,
+    element: <PageBase><Home /></PageBase>,
   },
   {
     path: PATHNAMES.SIGNIN,
-    element: <Signin />,
+    element:<PageBase><Signin /></PageBase>,
   },
   {
     path: PATHNAMES.SIGNUP,
-    element: <BeforeSignin><Signup/></BeforeSignin>,
+    element: <PageBase><Signup/></PageBase>,
   },
   {
     path: PATHNAMES.EMAIL_VERIFY,
-    element: <EmailVerify/>,
+    element: <PageBase><EmailVerify/></PageBase>,
   },
   {
     path: PATHNAMES.PASSWORD_SEND,
-    element: <PasswordSend />,
+    element: <PageBase><PasswordSend /></PageBase>,
   },
   {
     path: PATHNAMES.EMAIL_RESEND,
-    element: <VerificationResend/>,
+    element: <PageBase><VerificationResend/></PageBase>,
   },
   {
     path: PATHNAMES.HOME,
@@ -45,11 +45,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: PATHNAMES.USER_HOME,
-        element: <Root />,
+        element: <PageBase><Root /></PageBase>,
       },
       {
         path: PATHNAMES.USER_EDIT_ADD_LOG,
-        element: <CreateOrEdit />,
+        element: <PageBase><CreateOrEdit /></PageBase>,
       },
     ],
   },

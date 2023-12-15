@@ -102,13 +102,14 @@ const UserForm: React.FC<PropsWithChildren<{
             <Typography component="h1" variant="h5">
               {formTitle}
             </Typography>
-            {error && errorPopup}
-            {children && children}
+            
             <Box
               component="form"
               noValidate
               sx={{ mt: 1 }}
             >
+              {children && children}
+              {error && errorPopup}
               {textFieldProps && TextFields(textFieldProps)}
               <Button
                 fullWidth

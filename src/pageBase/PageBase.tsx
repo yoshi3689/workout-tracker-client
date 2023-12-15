@@ -23,7 +23,7 @@ const Copyright = (props: any) => {
   );
 }
 
-const BeforeSignin: FunctionComponent<PropsWithChildren> = ({ children }) => {
+const PageBase: FunctionComponent<PropsWithChildren> = ({ children }) => {
   return (
     <>
       <Box component={"header"} >
@@ -39,4 +39,4 @@ const BeforeSignin: FunctionComponent<PropsWithChildren> = ({ children }) => {
   )
 }
 
-export default BeforeSignin
+export default PageBase
