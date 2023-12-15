@@ -8,12 +8,18 @@ jobs:
   deploy:
     name: Push to EC2 Instance
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [18.x]
     steps:
-    - uses: actions/checkout@v3
+    - name: test env var
+      env:
+        EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
+      run: |
+        echo $EC2_SSH_KEY
+    - name: checkout
+      uses: actions/checkout@v3
+
 
     - name: Create a prod build by Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
