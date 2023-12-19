@@ -20,6 +20,11 @@ import ClearIcon from "@mui/icons-material/Clear";
 import SetRows from './SetRows';
 import { Collapse, FormControl, Input } from '@mui/material';
 import SetRow from './SetRow';
+import { isMobile } from 'react-device-detect';
+import ReadOnlySetRows from './ReadOnlySetRows';
+import '../styles/tableCell.css';
+
+const iconCell = "iconCell";
 
 // represent a Exercise containing info such as 
 // exercise, total reps, sets and etc
@@ -36,83 +41,34 @@ const ExerciseRow: React.FC<{ exercise: IExercise, isNew: boolean }> = ({ exerci
   return (
     <>
     <TableRow>
-      <TableCell width={"20%"} >
+      <TableCell size='small' className={iconCell}>
         {isNew &&
-        <IconButton color="error" onClick={handleDelete}>
-          <ClearIcon />
-        </IconButton>}
-        <IconButton
-          onClick={() => setOpen(!open)}
-        >
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+          <IconButton size='small' color="error" onClick={handleDelete}>
+            <ClearIcon />
           </IconButton>
-          
+          }
+        <IconButton onClick={() => setOpen(!open)} size='small' >
+          {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+        </IconButton>
       </TableCell>
-        
         {isNew
-          ? (
-            <ExerciseDropdown exercise={exercise}/>  
-          ) :
-          (
-            <TableCell >
-              {exercise.name}
-            </TableCell>
+          ? (<ExerciseDropdown exercise={exercise} />
+          ) : (
+          <TableCell className={iconCell} >
+            <Typography>{exercise.name}</Typography>
+          </TableCell>
           )
       }
-    </TableRow>
-      <TableRow>
-      <TableCell colSpan={2} sx={{padding:0}}>
-      {isNew ? (
+  </TableRow>
+    <TableRow>
+      <TableCell colSpan={2} sx={{ padding: 0 }}>
         <Collapse in={open} timeout="auto" unmountOnExit>
-          <Box sx={{ paddingBottom: 0, borderBottom: 0 }} >
-            {(exercise) && <SetRows exercise={exercise} isNew={isNew} />}
-          </Box>
+      {isNew ? (
+        <Box sx={{ paddingBottom: 0, borderBottom: 0 }} >
+          {(exercise) && <SetRows exercise={exercise} isNew={isNew} />}
+        </Box>
+        ) : (<ReadOnlySetRows sets={exercise.sets} /> )}
         </Collapse>
-      
-          ) : (
-              <Collapse in={open} timeout="auto" unmountOnExit>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>
-                #        
-              </TableCell>
-              <TableCell>
-                weight
-              </TableCell>
-              <TableCell>
-                rep
-              </TableCell>
-              <TableCell>
-                rest
-              </TableCell>
-            </TableRow>      
-          </TableHead>
-                <TableBody>
-                  {/* set={set}
-                index={i}
-                exerciseId={exercise._id}
-                isNew={isNew} */}
-            {exercise.sets.map((set,i) => (
-              <TableRow key={set._id}>
-                <TableCell>
-                  {i+1}
-                </TableCell>
-              <TableCell>
-                {set.weight}
-              </TableCell>
-              <TableCell>
-                {set.rep}
-              </TableCell>
-              <TableCell>
-                {set.rest}
-              </TableCell>
-              </TableRow>  
-            ))}    
-          </TableBody>
-                </Table>  
-                </Collapse>
-      )}
       </TableCell>  
     </TableRow>
     </>

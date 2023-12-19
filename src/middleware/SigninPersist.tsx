@@ -7,6 +7,7 @@ import Unauthorized from '../components/Unauthorized';
 import { signin } from '../redux/slices/userSlice';
 import { request } from '../axios/axios';
 import { Box, CircularProgress } from '@mui/material';
+import { PATHNAMES, REQUEST_A_R_PREFIX } from '../utils/pathnames';
 
 const SigninPersist = () => {
   const [error, setError] = useState("");
@@ -19,7 +20,7 @@ const SigninPersist = () => {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      request.get("api/refresh/", {
+      request.get(REQUEST_A_R_PREFIX + PATHNAMES.REFRESH, {
       })
         .then((res: AxiosResponse) => {
           dispatch(signin({ accessToken: res.data, isLoggedIn: true }));

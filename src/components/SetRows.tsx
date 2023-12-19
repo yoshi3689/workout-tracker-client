@@ -2,9 +2,6 @@ import React, { useState } from 'react'
 
 import { ISet, addSet, editSet, setSkelton } from "../redux/slices/setsSlice";
 
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Collapse from "@mui/material/Collapse";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -12,11 +9,14 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 
-import AddCircleIcon from "@mui/icons-material/AddCircle";
+import AddIcon from "@mui/icons-material/Add";
 import IconButton from "@mui/material/IconButton";
 import SetRow from './SetRow';
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
 import { IExercise } from '../redux/slices/exerciseSlice';
+
+const iconCell = "iconCell"
+const cellNoILPadding = "cellNoILPadding";
 
 const SetRows: React.FC<{ exercise: IExercise, isNew: boolean }> = ({ exercise, isNew }) => {
   
@@ -27,9 +27,12 @@ const SetRows: React.FC<{ exercise: IExercise, isNew: boolean }> = ({ exercise, 
   // add new set
   const handleAdd = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
+    const setArr = Object.values(sets);
+    const setArrLen = setArr.length;
+
     dispatch(addSet({
       set: {
-        ...setSkelton
+        ...setArr[setArrLen-1]
       },
       exerciseId: exercise._id
     }));
@@ -40,16 +43,15 @@ const SetRows: React.FC<{ exercise: IExercise, isNew: boolean }> = ({ exercise, 
       <TableHead>
         <TableRow >
           {isNew && (
-            <TableCell width="25%">
-            <IconButton color="primary" onClick={handleAdd}>
-            <AddCircleIcon />
+            <TableCell className={iconCell}>
+            <IconButton size='small' color="primary" onClick={handleAdd}>
+            <AddIcon />
             </IconButton>
           </TableCell>
           )}
-          <TableCell>
+          <TableCell className={cellNoILPadding}>
             <Typography variant="subtitle1">Sets</Typography>
           </TableCell>
-          <TableCell/>
           
         </TableRow>
       </TableHead>

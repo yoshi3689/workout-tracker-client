@@ -1,0 +1,11 @@
+.iconCell {
+  padding-inline: 4px !important;
+  width: 40%;
+}
+.iconSetCell {
+  padding-inline: 4px !important;
+}
+
+.cellNoILPadding {
+  padding-inline: 0px !important;
+}

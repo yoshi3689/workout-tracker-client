@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import { ISet, deleteSet } from '../redux/slices/setsSlice';
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { useAppDispatch } from "../redux/hooks";
 
-import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
 import Input from "@mui/material/Input";
@@ -17,25 +16,26 @@ import SetEdit from "./SetEdit";
 import { TableCell, TableRow } from "@mui/material";
 
 import { isMobile } from "react-device-detect";
+import "../styles/tableCell.css"
 
+const iconSetCell = "iconSetCell"
 
 const SetRow: React.FC<{ set: ISet, index: number, exerciseId: string, isNew: boolean }> = ({ set, index, exerciseId, isNew }) => {
   const dispatch = useAppDispatch();
   
-  
-
   const handleDelete = () => {
     dispatch(deleteSet({setId: set._id, exerciseId}));
   }
 
   return (
     <TableRow >
-      <TableCell width={"25%"}>
+      <TableCell className={iconSetCell} width="20%">
         {isNew ?
         <IconButton
-        className="mt-1"
-        color="error"
-        onClick={handleDelete}
+          className="mt-1"
+          color="error"
+          onClick={handleDelete}
+          size="small"  
       >
         <ClearIcon />
           </IconButton>

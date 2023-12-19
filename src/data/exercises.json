@@ -237,6 +237,10 @@
       "muscle group": "abdominals"
     },
     {
+      "name": "plank with twist",
+      "muscle group": "abdominals"
+    },
+    {
       "name": "press sit-up",
       "muscle group": "abdominals"
     },
@@ -3491,14 +3495,6 @@
     {
       "name": "weighted bench dip",
       "muscle group": "triceps"
-    }
-  ],
-  "undefined": [
-    {
-      "name": "hip crossover"
-    },
-    {
-      "name": "plank with twist"
     }
   ]
 }

@@ -10,16 +10,16 @@ import { TableCell } from "@mui/material";
 
 
 export const formControlStyle = {
-    display: "inline-flex",
-    flexDirection: "column",
-    position: "relative",
+  display: "inline-flex",
+  flexDirection: "column",
+  position: "relative",
   minWidth: "0",
   padding: "0",
   margin: "0",
   border: "0",
-    verticalAlign: "top",
+  verticalAlign: "top",
   marginRight: "20px"
-  }
+}
 
 const ExerciseDropdown: React.FC<{ exercise: IExercise }> = ({ exercise }) => {
   const [MuscleGroup, setMuscleGroup] = useState<string>(exercise.muscleGroups[0]?exercise.muscleGroups[0]:"abdominals");

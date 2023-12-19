@@ -1,6 +1,7 @@
 import { Box, Button, Container, Stack, Typography } from '@mui/material'
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { PATHNAMES } from '../utils/pathnames'
 
 const Home = () => {
   return (
@@ -33,8 +34,8 @@ const Home = () => {
               spacing={3}
               justifyContent="center"
             >
-              <Button component={Link} to={"/signin"} variant="contained">sign in</Button>
-              <Button component={Link} to={"/signup"} variant="outlined">sweat with us</Button>
+              <Button component={Link} to={PATHNAMES.SIGNIN} variant="contained">sign in</Button>
+              <Button component={Link} to={PATHNAMES.SIGNUP} variant="outlined">sweat with us</Button>
             </Stack>
           </Container>
         </Box>

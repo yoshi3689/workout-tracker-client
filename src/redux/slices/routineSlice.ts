@@ -42,7 +42,7 @@ export const addRoutine = createAsyncThunk(
       }
       
       const response = await request.post(
-      `api/routines`,
+      `routines`,
       reqBody,
       { headers: { Authorization: `Bearer ${user.accessToken}` } }
     );
@@ -70,7 +70,7 @@ export const modifyRoutine = createAsyncThunk(
       }
       
       const response = await request.patch(
-      `api/routines`,
+      `routines`,
       reqBody,
         { headers: {
             Authorization: `Bearer ${user.accessToken}`
@@ -90,7 +90,7 @@ export const getRoutines = createAsyncThunk<
 >(
   "routines/getRoutines",
   async (credentials: ICredentials) => {
-    const response = await request.get(`api/routines/${credentials.username}`, {
+    const response = await request.get(`routines/${credentials.username}`, {
       headers: { Authorization: `Bearer ${credentials.accessToken}` }
     });
     return response.data as IRoutine[];

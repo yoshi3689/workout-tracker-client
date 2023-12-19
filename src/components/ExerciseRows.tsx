@@ -12,11 +12,15 @@ import TableRow from "@mui/material/TableRow";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import Typography from "@mui/material/Typography";
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+import AddIcon from '@mui/icons-material/Add';
 import TableHead from '@mui/material/TableHead';
 
 import { IExercise, addExercise, exerciseSkelton } from '../redux/slices/exerciseSlice';
 import { setSkelton, addSet } from '../redux/slices/setsSlice';
+import '../styles/tableCell.css';
+
+const iconCell = "iconCell";
+const cellNoILPadding = "cellNoILPadding";
 
 
 
@@ -45,12 +49,12 @@ const ExerciseRows: React.FC<{ isNew: boolean }> = ({ isNew }) => {
     <Table>
       <TableHead>
         <TableRow>
-          <TableCell width="25%" >
+          <TableCell className={iconCell} >
             <IconButton color="primary" onClick={handleAdd}>
-              <AddCircleIcon />
+              <AddIcon />
             </IconButton>  
           </TableCell>
-          <TableCell align='left' >
+          <TableCell className={cellNoILPadding} >
             <Typography variant='h6' sx={{paddingLeft:0}} >Exercises</Typography>      
           </TableCell>
           

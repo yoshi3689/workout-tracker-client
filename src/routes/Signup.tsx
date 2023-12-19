@@ -4,7 +4,7 @@ import UserForm, { ILinkProp, ITextFieldProp } from "../components/UserForm";
 import { AxiosError, AxiosResponse } from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { request } from '../axios/axios';
-import { PATHNAMES } from '../utils/pathnames';
+import { PATHNAMES, REQUEST_U_R_PREFIX } from '../utils/pathnames';
 import { Box, Typography } from '@mui/material';
 import BeforeSignin from '../pageBase/PageBase';
 
@@ -60,7 +60,7 @@ const Signup: React.FC = () => {
   ]
 
   const signUp = () => { 
-    request.post("api/user/signup", { username, password, email })
+    request.post(REQUEST_U_R_PREFIX+ PATHNAMES.SIGNUP, { username, password, email })
       .then(res => {
         if (res.data) setIsSignedUp(true);
       })

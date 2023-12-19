@@ -6,7 +6,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { request } from '../axios/axios';
 import { signin } from '../redux/slices/userSlice';
 import { useAppDispatch } from '../redux/hooks';
-import { PATHNAMES, defineUserPath } from '../utils/pathnames';
+import { PATHNAMES, REQUEST_A_R_PREFIX, REQUEST_U_R_PREFIX, defineUserPath } from '../utils/pathnames';
+import { getErrorMessage } from '../utils/getErrorMessage';
 
 const Signin: React.FC = () => {
   const location = useLocation();
@@ -19,16 +20,15 @@ const Signin: React.FC = () => {
   const [isForgotPassword, setIsForgotPassword] = useState(false);
 
   const signIn = () => {
-    request.post("api/signin", { username, password })
+    request.post(REQUEST_A_R_PREFIX+PATHNAMES.SIGNIN, { username, password })
       .then((res: AxiosResponse) => {
-          dispatch(signin({ accessToken: res.data, isLoggedIn: true }));
+        dispatch(signin({ accessToken: res.data, isLoggedIn: true }));
+        navigate(defineUserPath(username, PATHNAMES.USER_HOME));
         })
       .catch((error: AxiosError) => {
-        setError(error.message);
+        if (error) setError(getErrorMessage(error));
         console.error(error.message);
-        throw new Error(error.message);
       });
-      navigate(defineUserPath(username, PATHNAMES.USER_HOME));
   }
 
   const goToSignup = () => {

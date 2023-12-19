@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { request } from '../axios/axios';
 
 import UserForm, { ILinkProp, ITextFieldProp } from '../components/UserForm';
-import { PATHNAMES } from '../utils/pathnames';
+import { PATHNAMES, REQUEST_U_R_PREFIX } from '../utils/pathnames';
 import { AxiosError, AxiosResponse } from 'axios';
 import { Typography } from '@mui/material';
 
@@ -38,7 +38,7 @@ const PasswordSend: React.FC = () => {
   // send code to the BE and see if the email is decoded 
   // from the last segment of the request URL
   const sendPassword = () => {
-    request.post('api/user/send-password/')
+    request.post(REQUEST_U_R_PREFIX+PATHNAMES.PASSWORD_SEND)
       .then((res: AxiosResponse)  => {
         if (res.data) setIsSent(true);
       })

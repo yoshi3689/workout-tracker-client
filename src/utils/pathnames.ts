@@ -1,12 +1,13 @@
-export const COMMON_PREFIX = "/api";
+export const REQUEST_COMMON_PREFIX = "/api";
 
-export const U_R_PREFIX = "/user";
-export const R_R_PREFIX = "/routines";
-export const A_R_PREFIX = "/auth";
+export const REQUEST_U_R_PREFIX = "/user";
+export const REQUEST_R_R_PREFIX = "/routines";
+export const REQUEST_A_R_PREFIX = "/auth";
 
 export const PATHNAMES = {
   HOME: "/",
   SIGNIN: "/signin",
+  REFRESH: "/refresh",
   SIGNUP: "/signup",
   EMAIL_VERIFY: "/verify-email/:usernameEncoded/",
   PASSWORD_SEND: "/send-password",

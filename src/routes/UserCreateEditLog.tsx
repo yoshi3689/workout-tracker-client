@@ -67,21 +67,19 @@ const CreateOrEdit: React.FC = () => {
 
 
   return (
-    <main>
       <Container component={Paper} sx={{paddingBlock: "24px", marginBottom: "100px"}}>
       <Box>
-        <Typography variant="h5">Log Workout</Typography>
+        <Typography gutterBottom variant="h5">Log Workout</Typography>
       </Box>
-      <FormControl sx={{ m: 1 }} variant="standard">
+      {/* <FormControl sx={{ m: 1 }} variant="standard">
           <InputLabel htmlFor="routine_name">routine name</InputLabel>
           <Input
             id="routine_name"
             value={routine.name}
             onChange={handleNameChange}
           />
-        </FormControl>
+        </FormControl> */}
       <Box sx={{paddingBottom: "24px"}}>
-        
       </Box>
       <TableContainer component={Paper} >
         <ExerciseRows isNew={true} />
@@ -102,7 +100,6 @@ const CreateOrEdit: React.FC = () => {
         
       </Box>
     </Container>
-    </main>
   );
 };
 
