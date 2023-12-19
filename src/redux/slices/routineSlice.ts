@@ -3,6 +3,7 @@ import { IExercise } from "./exerciseSlice";
 import axios from "axios";
 import { RootState } from "../store";
 import { request } from "../../axios/axios";
+import { ISet } from "./setsSlice";
 
 export interface IRoutine {
   _id: string,
@@ -11,6 +12,7 @@ export interface IRoutine {
   createdAt: string,
   isEditing: boolean,
   exercises: IExercise[],
+  muscleGroups: Set<string>,
 }
 
 export interface ICredentials {
@@ -25,25 +27,31 @@ export interface ICredentials {
 
 export const RoutineInitialState: IRoutine[] = [];
 
+const createReqBody = (
+  newRoutine: IRoutine, 
+  exercises: Record<string, IExercise>,
+  sets: Record<string, Record<string, ISet>>
+) : IRoutine => {
+  return {
+    ...newRoutine,
+    isEditing: false,
+    exercises: Object.values(exercises).map(e => {
+      newRoutine.muscleGroups.add(e.muscleGroups[0]);
+      return {...e, sets: Object.values(sets[e._id])}
+    }),
+  }
+}
+
 export const addRoutine = createAsyncThunk(
   "routines/addRoutine",
   async (data: string, thunkAPI) => {
     const state = thunkAPI.getState() as RootState;
     const { newRoutine, user, exercises, sets } = state.persistedReducer;
     if (user.isLoggedIn) {
-      const reqBody: IRoutine = {
-        ...newRoutine,
-        username: data,
-        createdAt: new Date().toISOString(),
-        isEditing: false,
-        exercises: Object.values(exercises).map(e => {
-          return {...e, sets: Object.values(sets[e._id])}
-        })
-      }
-      
-      const response = await request.post(
-      `routines`,
-      reqBody,
+      const reqBody: IRoutine = createReqBody(newRoutine, exercises, sets);
+      reqBody.username = data;
+      reqBody.createdAt = new Date().toISOString();
+      const response = await request.post(`routines`, reqBody,
       { headers: { Authorization: `Bearer ${user.accessToken}` } }
     );
     return response.data.response;
@@ -59,23 +67,9 @@ export const modifyRoutine = createAsyncThunk(
     const state = thunkAPI.getState() as RootState;
     const { newRoutine, user, exercises, sets } = state.persistedReducer;
     if (user.isLoggedIn) {
-      const reqBody: IRoutine = {
-        ...newRoutine,
-        username: data,
-        createdAt: new Date().toISOString(),
-        isEditing: false,
-        exercises: Object.values(exercises).map(e => {
-          return {...e, sets: Object.values(sets[e._id])}
-        })
-      }
-      
-      const response = await request.patch(
-      `routines`,
-      reqBody,
-        { headers: {
-            Authorization: `Bearer ${user.accessToken}`
-          }
-        }
+      const reqBody: IRoutine = createReqBody(newRoutine, exercises, sets);
+      const response = await request.patch(`routines`, reqBody,
+        { headers: { Authorization: `Bearer ${user.accessToken}` } }
     );
     return response.data.response;
     } else {

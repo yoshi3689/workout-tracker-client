@@ -8,6 +8,7 @@ export const newRoutineInitialState: IRoutine = {
   createdAt: "",
   isEditing: true,
   exercises: [],
+  muscleGroups: new Set(),
 };
 
 export const newRoutineSlice = createSlice({

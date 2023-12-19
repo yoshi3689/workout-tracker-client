@@ -1,9 +1,4 @@
 import React from 'react'
-import RoutineRow from './RoutineRow';
-
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableContainer from "@mui/material/TableContainer";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Fab from '@mui/material/Fab';
@@ -20,6 +15,7 @@ import { clearNewRoutine } from '../redux/slices/newRoutineSlice';
 import { clearExercises } from '../redux/slices/exerciseSlice';
 import { clearSets } from '../redux/slices/setsSlice';
 import { colors } from '../utils/useColors';
+import RoutinesListView from './RoutinesListView';
 
 
 const StyledFab = styled(Fab)({
@@ -29,14 +25,23 @@ const StyledFab = styled(Fab)({
   position: "fixed"
 });
 
-export const filters = [
-  { muscle: "abs", color: colors["abs"] },
-  { muscle: "chest", color: colors["chest"] },
-  { muscle: "legs", color: colors["legs"] },
-  { muscle: "shoulders", color: colors["shoulders"] },
-  { muscle: "back", color: colors["back"] },
-  { muscle: "arms", color: colors["arms"] },
+export const muscleGroups: string[] = [
+  "abs",
+  "chest",
+  "legs",
+  "shoulders",
+  "back",
+  "arms",
 ];
+
+// export const muscleColors = [
+//   color: colors["abs"]
+// color: colors["chest"]
+// color: colors["legs"]
+// color: colors["shoulders"]
+// color: colors["back"]
+// color: colors["arms"]
+// ]
 
 export const Dot = (color: string) => (
   <CircleIcon sx={{ color: color, height: "10px", width: "10px" }} />
@@ -44,11 +49,11 @@ export const Dot = (color: string) => (
 
 const Dots = (
   <Box sx={{marginBottom: "16px"}}>
-    {filters.map(f => (
+    {muscleGroups.map(mg => (
       <IconButton sx={{marginLeft: "4px"}} >
-          {Dot(f.color)}
+          {Dot(colors[mg])}
         <Typography alignSelf="center" textAlign="center" variant='caption'>
-          {f.muscle}
+          {mg}
         </Typography>
       </IconButton>
     ))}
@@ -88,35 +93,14 @@ const Routines: React.FC = () => {
           </Collapse>
           
           <CssBaseline />
-        </Box>
-    <TableContainer component={Paper} >
-      <Table aria-label="collapsible table">
-        {/* <TableHead>
-          <TableRow>
-            <TableCell colSpan={2}>
-              <Typography textAlign={"center"} component="h4">Routines</Typography>
-            </TableCell>
-          </TableRow>
-        </TableHead> */}
-        <TableBody>
-          {routines && routines.map((routine) => (
-                <RoutineRow
-                  key={routine._id}
-                  routine={routine}
-                  isNew={false}
-                  navigateToLog={navigateToLog}
-                ></RoutineRow>
-            ))
-            }
-          </TableBody>
-        </Table>
-        
-        </TableContainer>
-          <Box display={"flex"} justifyContent={"end"} position={"sticky"}>
-        <StyledFab color="secondary" onClick={() => onFabClick()}>
+      </Box>
+      <RoutinesListView
+        routines={routines}
+        navigateToLog={navigateToLog}
+      />
+      <StyledFab color="secondary" onClick={() => onFabClick()}>
               <AddIcon />
             </StyledFab>
-      </Box>
       </Container>
   );
 };

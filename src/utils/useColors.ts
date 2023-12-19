@@ -5,7 +5,7 @@ import { blue } from '@mui/material/colors';
 import { teal } from '@mui/material/colors';
 import { lime } from '@mui/material/colors';
 
-export const colors = {
+export const colors: Record<string, string> = {
   abs: red[500],
   chest: deepPurple[700],
   legs: indigo[700],
