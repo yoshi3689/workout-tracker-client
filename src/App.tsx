@@ -1,18 +1,19 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import Root from "./routes/UserHome";
-import Signin from "./routes/Signin";
-import Home from "./routes/Home";
-import Signup from "./routes/Signup";
-import EmailVerify from "./routes/EmailVerify";
-import PasswordSend from "./routes/PasswordSend";
-import VerificationResend from "./routes/VerificationResend";
-import CreateOrEdit from "./routes/UserCreateEditLog";
+import Root from "./routes/post-signin/History";
+import Signin from "./routes/pre-signin/Signin";
+import Home from "./routes/pre-signin/Home";
+import Signup from "./routes/pre-signin/Signup";
+import EmailVerify from "./routes/pre-signin/EmailVerify";
+import PasswordSend from "./routes/pre-signin/PasswordSend";
+import VerificationResend from "./routes/pre-signin/VerificationResend";
+import CreateOrEdit from "./routes/post-signin/RoutineCreateEditLog";
 
 import { PATHNAMES } from "./utils/pathnames";
 
 import SigninPersist from "./middleware/SigninPersist"
 
 import PageBase from "./pageBase/PageBase";
+import UserEdit from "./routes/post-signin/UserEdit";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
       {
         path: PATHNAMES.USER_EDIT_ADD_LOG,
         element: <PageBase><CreateOrEdit /></PageBase>,
+      },
+      {
+        path: PATHNAMES.USER_ACCOUNT_EDIT,
+        element: <PageBase><UserEdit /></PageBase>,
       },
     ],
   },

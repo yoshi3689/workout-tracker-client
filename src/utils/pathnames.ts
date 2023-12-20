@@ -14,7 +14,7 @@ export const PATHNAMES = {
   EMAIL_RESEND: "/resend-email",
   USER_HOME: "/dashboard/:username",
   USER_EDIT_ADD_LOG: "/dashboard/:username/log",
-  USER_ACCOUNT_EDIT: "/dashboard/:username/edit-account",
+  USER_ACCOUNT_EDIT: "/dashboard/:username/account",
 };
 
 export const defineUserPath = (username: string, path: string): string => {

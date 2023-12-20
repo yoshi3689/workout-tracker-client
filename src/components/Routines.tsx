@@ -23,7 +23,7 @@ import { IRoutine } from '../redux/slices/routineSlice';
 const StyledFab = styled(Fab)({
   zIndex: 10000,
   top: "50%",
-  right: 100,
+  right: 50,
   margin: '0 0 auto 0',
   position: "fixed"
 });

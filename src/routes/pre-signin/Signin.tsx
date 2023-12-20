@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 
-import UserForm, { ILinkProp, ITextFieldProp } from "../components/UserForm";
+import UserForm, { ILinkProp, ITextFieldProp } from "../../components/UserForm";
 import { AxiosError, AxiosResponse } from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { request } from '../axios/axios';
-import { signin } from '../redux/slices/userSlice';
-import { useAppDispatch } from '../redux/hooks';
-import { PATHNAMES, REQUEST_A_R_PREFIX, REQUEST_U_R_PREFIX, defineUserPath } from '../utils/pathnames';
-import { getErrorMessage } from '../utils/getErrorMessage';
+import { request } from '../../axios/axios';
+import { signin } from '../../redux/slices/userSlice';
+import { useAppDispatch } from '../../redux/hooks';
+import { PATHNAMES, REQUEST_A_R_PREFIX, REQUEST_U_R_PREFIX, defineUserPath } from '../../utils/pathnames';
+import { getErrorMessage } from '../../utils/getErrorMessage';
 
 const Signin: React.FC = () => {
   const location = useLocation();

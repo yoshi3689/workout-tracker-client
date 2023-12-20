@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { useLocation } from "react-router-dom"
 
-import Routines from '../components/Routines'
-import Unauthorized from '../components/Unauthorized';
-import RoutineCreate from './UserCreateEditLog';
+import Routines from '../../components/Routines'
+import Unauthorized from '../../components/Unauthorized';
+import RoutineCreate from './RoutineCreateEditLog';
 
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { getRoutines } from '../redux/slices/routineSlice';
-import { checkSigninStatus } from '../redux/slices/userSlice';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { getRoutines } from '../../redux/slices/routineSlice';
+import { checkSigninStatus } from '../../redux/slices/userSlice';
 import { Box, Container, Typography } from '@mui/material';
 
 

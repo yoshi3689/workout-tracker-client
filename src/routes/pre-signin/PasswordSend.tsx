@@ -1,15 +1,16 @@
 import React, { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
-import { request } from '../axios/axios';
+import { request } from '../../axios/axios';
 
-import UserForm, { ILinkProp, ITextFieldProp } from '../components/UserForm';
-import { PATHNAMES, REQUEST_U_R_PREFIX } from '../utils/pathnames';
+import UserForm, { ILinkProp, ITextFieldProp } from '../../components/UserForm';
+import { PATHNAMES, REQUEST_U_R_PREFIX } from '../../utils/pathnames';
 import { AxiosError, AxiosResponse } from 'axios';
 import { Typography } from '@mui/material';
 
-const VerificationResend: React.FC = () => {
+const PasswordSend: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [code, setCode] = useState("");
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [isSent, setIsSent] = useState(false);
@@ -17,10 +18,6 @@ const VerificationResend: React.FC = () => {
   const goToSignin = () => {
     navigate(PATHNAMES.SIGNIN);
   }
-
-  // const goToSendEmail = () => {
-  //   navigate(PATHNAMES.SIGNUP);
-  // }
 
   const textFieldProps: ITextFieldProp[] = [
   {
@@ -40,8 +37,8 @@ const VerificationResend: React.FC = () => {
 
   // send code to the BE and see if the email is decoded 
   // from the last segment of the request URL
-  const resendEmail = () => {
-    request.post(REQUEST_U_R_PREFIX+PATHNAMES.EMAIL_RESEND, { email })
+  const sendPassword = () => {
+    request.post(REQUEST_U_R_PREFIX+PATHNAMES.PASSWORD_SEND)
       .then((res: AxiosResponse)  => {
         if (res.data) setIsSent(true);
       })
@@ -53,37 +50,30 @@ const VerificationResend: React.FC = () => {
   
   return (
     <>
-      {isSent ? (
-        <>
-          <UserForm
-          formTitle={"Verification Email sent!"}
+      {isSent && (
+        <UserForm
+          formTitle={"Password Sent!"}
           handleSubmit={goToSignin}
           buttonText={"Sign In"}
           children={
             <>
               <Typography>
-                Verification email was sent to {email}.
-              </Typography>
-              <Typography>
-                Please verify your email before signing in. 
+                Your password was sent to {email}.
               </Typography>
             </>}
-            error={error}
+          error={error}
         />
-        </>
-      ) : (
-          <UserForm
-        formTitle={"Send Verification"}
+      )}
+      <UserForm
+        formTitle={"Send Password"}
         textFieldProps={textFieldProps}
-        handleSubmit={resendEmail}
-        buttonText={"send"}
+        handleSubmit={sendPassword}
+        buttonText={"Send"}
         bottomLinkProps={linkProps}
         error={error}
       />
-      )
-    }
     </>
   );
 }
 
-export default VerificationResend
+export default PasswordSend

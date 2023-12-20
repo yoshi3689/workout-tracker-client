@@ -7,14 +7,14 @@ import Input from "@mui/material/Input";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 
-import { addRoutine, modifyRoutine } from "../redux/slices/routineSlice";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { newRoutineInitialState, editNewRoutine, clearNewRoutine } from "../redux/slices/newRoutineSlice";
+import { addRoutine, modifyRoutine } from "../../redux/slices/routineSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { newRoutineInitialState, editNewRoutine, clearNewRoutine } from "../../redux/slices/newRoutineSlice";
 import { useLocation } from "react-router-dom";
-import ExerciseRows from "../components/ExerciseRows";
+import ExerciseRows from "../../components/ExerciseRows";
 import { Box, Button, Container } from "@mui/material";
-import { clearExercises } from "../redux/slices/exerciseSlice";
-import { clearSets } from "../redux/slices/setsSlice";
+import { clearExercises } from "../../redux/slices/exerciseSlice";
+import { clearSets } from "../../redux/slices/setsSlice";
 
 const CreateOrEdit: React.FC = () => {
   const dispatch = useAppDispatch();
