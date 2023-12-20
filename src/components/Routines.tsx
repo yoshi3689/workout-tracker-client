@@ -34,7 +34,7 @@ export const Dot = (bodyPart: string, createdAt: string) => (
 
 const Routines: React.FC = () => {
   const routines = useAppSelector(state => state.persistedReducer.routines)
-  const [controlledRoutines, setControlledRoutines] = useState<IRoutine[]>([]);
+  const [controlledRoutines, setControlledRoutines] = useState<Set<IRoutine>>(new Set());
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -51,13 +51,12 @@ const Routines: React.FC = () => {
 
   useEffect(() => {
     if (filters.length >= 1) {
-      filters.forEach((f, fi)=> {
-        setControlledRoutines(fi === 0
-          ? routines.filter(r => r.muscleGroups.includes(f))
-          : [...controlledRoutines, ...routines.filter(r => r.muscleGroups.includes(f))]
-          );
-        console.log(controlledRoutines)
+      const emCrs = new Set<IRoutine>();
+      filters.forEach((f, fi) => {
+        const rs = routines.filter(r => r.muscleGroups.includes(f))
+        rs.forEach(r => {emCrs.add(r)})
       })
+      setControlledRoutines(emCrs);
       console.log(filters)
     }
   }, [filters]);
@@ -103,7 +102,7 @@ const Routines: React.FC = () => {
           <CssBaseline />
       </Box>
       <RoutinesListView
-        routines={filters.length > 0 ? controlledRoutines : routines}
+        routines={filters.length > 0 ? Array.from(controlledRoutines) : routines}
         navigateToLog={navigateToLog}
       />
       <StyledFab color="secondary" onClick={() => onFabClick()}>
