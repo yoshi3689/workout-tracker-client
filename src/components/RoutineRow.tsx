@@ -17,6 +17,7 @@ import { editNewRoutine } from '../redux/slices/newRoutineSlice';
 import { IExercise, loadExercises } from '../redux/slices/exerciseSlice';
 import { ISet, loadSets } from '../redux/slices/setsSlice';
 import '../styles/tableCell.css';
+import { Dot } from './Routines';
 
 const iconCell = "iconCell";
 // represent a whole workout routine with exercises in it
@@ -45,30 +46,28 @@ const RoutineRow: React.FC<{ routine: IRoutine, isNew: boolean, navigateToLog: F
   }
   // console.log(isEditing, routineInForm)
   const rowContent = <>
-    <TableCell className={iconCell} sx={{marginBottom:"-0.5px"}}>
-      <IconButton color='warning' title="Edit Routine" size="small" onClick={onEditClick}>
-        <Edit />
-      </IconButton>
-      <IconButton
+    <TableCell >
+      <Box display={"flex"} alignItems="center" >
+        <IconButton
           aria-label="expand row"
-          size="small"
           onClick={() => setOpen(!open)}
         >
           {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
       </IconButton>
-    </TableCell>
-    <TableCell className={iconCell} >
-      <Box display={"flex"} justifyContent={"space-between"}>
         <Typography >{routine.createdAt.split("T")[0].replaceAll("-", "/")}</Typography>
+        <Box sx={{ marginLeft: "16px"}} >{routine.muscleGroups.map(mg => Dot(mg, routine.createdAt))}</Box>
         {/* {RoutineRow.name && <Typography>{routine.name}</Typography>} */}
-        
-        
-      </Box>
-      </TableCell>
+    </Box>
+    </TableCell>
+    <TableCell align='right' className={iconCell} sx={{marginBottom:"-0.5px"}}>
+      <IconButton color='warning' title="Edit Routine" size="small" onClick={onEditClick}>
+        <Edit />
+      </IconButton>
+    </TableCell>
   </>
   return (
     <React.Fragment>
-      <TableRow sx={{ "& > *": { borderBottom: "unset" }, position: "relative" }} selected={routineInForm.isEditing && routine._id === routineInForm._id}>
+      <TableRow onClick={() => setOpen(!open)} sx={{  position: "relative", cursor:"pointer" }} selected={open}>
         {rowContent}
       </TableRow>
       <TableRow>

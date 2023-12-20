@@ -49,15 +49,14 @@ const ExerciseRows: React.FC<{ isNew: boolean }> = ({ isNew }) => {
     <Table>
       <TableHead>
         <TableRow>
-          <TableCell className={iconCell} >
-            <IconButton color="primary" onClick={handleAdd}>
+          <TableCell >
+            <Typography variant='h6'  >Exercises</Typography>      
+          </TableCell>
+          <TableCell align='right' >
+            <IconButton size='small' color="primary" onClick={handleAdd}>
               <AddIcon />
             </IconButton>  
           </TableCell>
-          <TableCell className={cellNoILPadding} >
-            <Typography variant='h6' sx={{paddingLeft:0}} >Exercises</Typography>      
-          </TableCell>
-          
         </TableRow> 
       </TableHead>
       {(isNew && Object.values(exercises).length !== 0) &&

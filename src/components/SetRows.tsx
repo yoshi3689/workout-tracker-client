@@ -14,6 +14,7 @@ import IconButton from "@mui/material/IconButton";
 import SetRow from './SetRow';
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
 import { IExercise } from '../redux/slices/exerciseSlice';
+import { isMobile } from 'react-device-detect';
 
 const iconCell = "iconCell"
 const cellNoILPadding = "cellNoILPadding";
@@ -42,17 +43,14 @@ const SetRows: React.FC<{ exercise: IExercise, isNew: boolean }> = ({ exercise, 
     <Table size='small'>
       <TableHead>
         <TableRow >
-          {isNew && (
-            <TableCell className={iconCell}>
+          <TableCell align='left'>
+            <Typography variant="subtitle1">Sets</Typography>
+          </TableCell>
+            <TableCell align='right'>
             <IconButton size='small' color="primary" onClick={handleAdd}>
             <AddIcon />
             </IconButton>
           </TableCell>
-          )}
-          <TableCell className={cellNoILPadding}>
-            <Typography variant="subtitle1">Sets</Typography>
-          </TableCell>
-          
         </TableRow>
       </TableHead>
       <TableBody>

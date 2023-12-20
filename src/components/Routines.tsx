@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Fab from '@mui/material/Fab';
@@ -9,64 +9,58 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 import { isMobile } from 'react-device-detect'; 
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { Box, Collapse, Container, CssBaseline, IconButton, styled } from '@mui/material';
+import { Box, Collapse, Container, CssBaseline, IconButton, ToggleButton, ToggleButtonGroup, styled } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { clearNewRoutine } from '../redux/slices/newRoutineSlice';
 import { clearExercises } from '../redux/slices/exerciseSlice';
 import { clearSets } from '../redux/slices/setsSlice';
 import { colors } from '../utils/useColors';
 import RoutinesListView from './RoutinesListView';
+import { muscleGroups } from '../utils/filterByBodyPart';
+import { IRoutine } from '../redux/slices/routineSlice';
 
 
 const StyledFab = styled(Fab)({
   zIndex: 10000,
   top: "50%",
+  right: 100,
   margin: '0 0 auto 0',
   position: "fixed"
 });
 
-export const muscleGroups: string[] = [
-  "abs",
-  "chest",
-  "legs",
-  "shoulders",
-  "back",
-  "arms",
-];
-
-// export const muscleColors = [
-//   color: colors["abs"]
-// color: colors["chest"]
-// color: colors["legs"]
-// color: colors["shoulders"]
-// color: colors["back"]
-// color: colors["arms"]
-// ]
-
-export const Dot = (color: string) => (
-  <CircleIcon sx={{ color: color, height: "10px", width: "10px" }} />
+export const Dot = (bodyPart: string, createdAt: string) => (
+  <CircleIcon key={bodyPart+createdAt} sx={{ color: colors[bodyPart], height: "10px", width: "10px" }} />
 )
-
-const Dots = (
-  <Box sx={{marginBottom: "16px"}}>
-    {muscleGroups.map(mg => (
-      <IconButton sx={{marginLeft: "4px"}} >
-          {Dot(colors[mg])}
-        <Typography alignSelf="center" textAlign="center" variant='caption'>
-          {mg}
-        </Typography>
-      </IconButton>
-    ))}
-  </Box>
-);
 
 const Routines: React.FC = () => {
   const routines = useAppSelector(state => state.persistedReducer.routines)
+  const [controlledRoutines, setControlledRoutines] = useState<IRoutine[]>([]);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const username = location.pathname.split("/")[2];
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = useState(true);
+  const [filters, setFilters] = useState<string[]>([]);
+
+  const handleFilterChange = (
+    event: React.MouseEvent<HTMLElement>,
+    newFilters: string[],
+  ) => {
+    setFilters(newFilters);
+  };
+
+  useEffect(() => {
+    if (filters.length >= 1) {
+      filters.forEach((f, fi)=> {
+        setControlledRoutines(fi === 0
+          ? routines.filter(r => r.muscleGroups.includes(f))
+          : [...controlledRoutines, ...routines.filter(r => r.muscleGroups.includes(f))]
+          );
+        console.log(controlledRoutines)
+      })
+      console.log(filters)
+    }
+  }, [filters]);
 
   const navigateToLog = () => {
     navigate(`/dashboard/${username}/log`)
@@ -88,14 +82,28 @@ const Routines: React.FC = () => {
               <IconButton onClick={() => setOpen(!open)}><TuneIcon /></IconButton>
             </Box>
           </Box>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-          {Dots}
+        <Collapse in={open} timeout="auto" unmountOnExit>
+          <Box sx={{marginBottom: "16px",  overflowX:"scroll"}}  >
+    <ToggleButtonGroup
+              value={filters}
+              onChange={handleFilterChange}
+    >
+      {muscleGroups.map(mg => (
+      <ToggleButton value={mg} key={mg} sx={{marginLeft: "4px"}} >
+          {Dot(mg, new Date().toDateString())}
+        <Typography alignSelf="center" textAlign="center" variant='caption'>
+          {mg}
+        </Typography>
+      </ToggleButton>
+    ))}
+    </ToggleButtonGroup>
+  </Box>
           </Collapse>
           
           <CssBaseline />
       </Box>
       <RoutinesListView
-        routines={routines}
+        routines={filters.length > 0 ? controlledRoutines : routines}
         navigateToLog={navigateToLog}
       />
       <StyledFab color="secondary" onClick={() => onFabClick()}>

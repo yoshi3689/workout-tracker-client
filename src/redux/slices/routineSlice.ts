@@ -4,6 +4,7 @@ import axios from "axios";
 import { RootState } from "../store";
 import { request } from "../../axios/axios";
 import { ISet } from "./setsSlice";
+import { filterByBodyParts } from "../../utils/filterByBodyPart";
 
 export interface IRoutine {
   _id: string,
@@ -12,7 +13,7 @@ export interface IRoutine {
   createdAt: string,
   isEditing: boolean,
   exercises: IExercise[],
-  muscleGroups: Set<string>,
+  muscleGroups: string[],
 }
 
 export interface ICredentials {
@@ -31,14 +32,16 @@ const createReqBody = (
   newRoutine: IRoutine, 
   exercises: Record<string, IExercise>,
   sets: Record<string, Record<string, ISet>>
-) : IRoutine => {
+): IRoutine => {
+  const muscleGroups = new Set<string>();
   return {
     ...newRoutine,
     isEditing: false,
     exercises: Object.values(exercises).map(e => {
-      newRoutine.muscleGroups.add(e.muscleGroups[0]);
+      muscleGroups.add(e.muscleGroups[0]);
       return {...e, sets: Object.values(sets[e._id])}
     }),
+    muscleGroups: filterByBodyParts(muscleGroups)
   }
 }
 

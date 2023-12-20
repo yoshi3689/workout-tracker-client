@@ -23,6 +23,8 @@ import SetRow from './SetRow';
 import { isMobile } from 'react-device-detect';
 import ReadOnlySetRows from './ReadOnlySetRows';
 import '../styles/tableCell.css';
+import { Dot } from './Routines';
+import { assignMuscleGroup } from '../utils/filterByBodyPart';
 
 const iconCell = "iconCell";
 
@@ -40,25 +42,32 @@ const ExerciseRow: React.FC<{ exercise: IExercise, isNew: boolean }> = ({ exerci
 
   return (
     <>
-    <TableRow>
-      <TableCell size='small' className={iconCell}>
+      <TableRow onClick={() => setOpen(!open)} sx={{ "& > *": { borderBottom: "unset" }, position: "relative", cursor: "pointer" }} selected={open}>
+        <TableCell align='left'>
+          {/* <Box display={"flex"} alignItems="center" > */}
+          <Box display={"flex"} alignItems="center" >
+          <IconButton size='small' onClick={() => setOpen(!open)} >
+          {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+          </IconButton>
+        {isNew
+          ? (<Box><ExerciseDropdown exercise={exercise} /></Box>
+            ) : (
+                <Box display={"flex"} alignItems="center">
+                  <Typography>{exercise.name}</Typography>
+                  <Box sx={{ marginLeft: "16px"}} >{exercise.muscleGroups.map(mg => Dot(assignMuscleGroup(mg), exercise.name))}</Box>
+                </Box>
+          )
+            }
+            </Box>
+        </TableCell>
+        <TableCell align='right' className={iconCell}>
         {isNew &&
           <IconButton size='small' color="error" onClick={handleDelete}>
             <ClearIcon />
           </IconButton>
           }
-        <IconButton onClick={() => setOpen(!open)} size='small' >
-          {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-        </IconButton>
+        
       </TableCell>
-        {isNew
-          ? (<ExerciseDropdown exercise={exercise} />
-          ) : (
-          <TableCell className={iconCell} >
-            <Typography>{exercise.name}</Typography>
-          </TableCell>
-          )
-      }
   </TableRow>
     <TableRow>
       <TableCell colSpan={2} sx={{ padding: 0 }}>

@@ -55,9 +55,7 @@ const CreateOrEdit: React.FC = () => {
       if (routine._id) {
         dispatch(modifyRoutine(location.pathname.split("/")[2]));
         // i feel i shouldnot have to make the routine have a name
-      } else if (!workoutName) {
-        console.error("add name!")
-      }
+      } 
       else {
         dispatch(addRoutine(location.pathname.split("/")[2]));
       }

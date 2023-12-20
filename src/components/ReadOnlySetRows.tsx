@@ -13,8 +13,7 @@ const ReadOnlySetRows: React.FC<{ sets: ISet[] }> = ({ sets}) => {
     <Table>
           <TableHead>
             <TableRow>
-              <TableCell>
-                #        
+              <TableCell>   
               </TableCell>
               <TableCell>
                 lbs
