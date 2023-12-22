@@ -9,6 +9,7 @@ import { useAppDispatch } from '../../redux/hooks';
 import { PATHNAMES, REQUEST_A_R_PREFIX, REQUEST_U_R_PREFIX, defineUserPath } from '../../utils/pathnames';
 import { getErrorMessage } from '../../utils/getErrorMessage';
 
+
 const Signin: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -22,7 +23,8 @@ const Signin: React.FC = () => {
   const signIn = () => {
     request.post(REQUEST_A_R_PREFIX+PATHNAMES.SIGNIN, { username, password })
       .then((res: AxiosResponse) => {
-        dispatch(signin({ accessToken: res.data, isLoggedIn: true }));
+        console.log(res)
+        dispatch(signin({ accessToken: res.data.accessToken, isLoggedIn: true }));
         navigate(defineUserPath(username, PATHNAMES.USER_HOME));
         })
       .catch((error: AxiosError) => {

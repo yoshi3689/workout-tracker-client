@@ -13,7 +13,7 @@ export const AuthInitialState: IAuth|null = {
 };
 
 export const authSlice = createSlice({
-  name: "user",
+  name: "auth",
   initialState: AuthInitialState,
   reducers: {
     setCredentials: (state, action) => {

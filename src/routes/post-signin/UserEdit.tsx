@@ -8,13 +8,13 @@ import { AxiosError, AxiosResponse } from 'axios';
 import { Alert, AlertTitle, Container, Typography } from '@mui/material';
 import { useAppSelector, useAppDispatch } from '../../redux/hooks';
 import { IUser, getUser, updateUser } from '../../redux/slices/userSlice';
-import { getUsername } from '../../hooks/useUsername';
+import useAuth from '../../hooks/useAuth';
 
 const UserEdit: React.FC = () => {
   const user: IUser = useAppSelector(state => state.persistedReducer.user);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const username = getUsername(useLocation().pathname);
+  const username = useAuth().username;
   const [code, setCode] = useState("");
   const [email, setEmail] = useState("");
   // const [username, setUsername] = useState("");

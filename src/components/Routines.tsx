@@ -18,6 +18,7 @@ import { colors } from '../utils/useColors';
 import RoutinesListView from './RoutinesListView';
 import { muscleGroups } from '../utils/filterByBodyPart';
 import { IRoutine } from '../redux/slices/routineSlice';
+import useAuth from '../hooks/useAuth';
 
 
 const StyledFab = styled(Fab)({
@@ -38,7 +39,7 @@ const Routines: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const username = location.pathname.split("/")[2];
+  const { username } = useAuth();
   const [open, setOpen] = useState(true);
   const [filters, setFilters] = useState<string[]>([]);
 

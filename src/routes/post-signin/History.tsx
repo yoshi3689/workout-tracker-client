@@ -9,10 +9,11 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { getRoutines } from '../../redux/slices/routineSlice';
 import { checkSigninStatus, selectAccessToken } from '../../redux/slices/authSlice';
 import { Box, Container, Typography } from '@mui/material';
+import useAuth from '../../hooks/useAuth';
 
 
 const Root = () => {
-  const location = useLocation();
+  const { username } = useAuth();
   const dispatch = useAppDispatch();
   const [error, setError] = useState<string>(""); 
 
@@ -20,7 +21,7 @@ const Root = () => {
 
   const fetchRoutines = async () => {
     try {
-      await dispatch(getRoutines({accessToken: accessToken, username: location.pathname.split("/")[2] })).unwrap();
+      await dispatch(getRoutines({accessToken: accessToken, username })).unwrap();
     } catch (err) {
       dispatch(checkSigninStatus({
         isLoggedIn: false,
@@ -29,13 +30,9 @@ const Root = () => {
     }
   }
 
-  
-
   useEffect(() => {
     fetchRoutines();
   }, [accessToken]);
-
-  
   
   return (
     <Box component={"main"}>

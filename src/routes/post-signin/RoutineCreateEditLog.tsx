@@ -15,15 +15,16 @@ import ExerciseRows from "../../components/ExerciseRows";
 import { Box, Button, Container } from "@mui/material";
 import { clearExercises } from "../../redux/slices/exerciseSlice";
 import { clearSets } from "../../redux/slices/setsSlice";
+import useAuth from "../../hooks/useAuth";
+import { selectAccessToken, selectIsLoggedIn } from "../../redux/slices/authSlice";
 
 const CreateOrEdit: React.FC = () => {
   const dispatch = useAppDispatch();
   const routine = useAppSelector(state => state.persistedReducer.newRoutine);
-  const location = useLocation();
+  const { username } = useAuth();
 
-  const { accessToken, isLoggedIn } = useAppSelector(state => {
-    return state.persistedReducer.auth;
-  });
+  const accessToken = useAppSelector(selectAccessToken);
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
   const [workoutName, setWorkoutName] = useState(routine.name ? routine.name : "");
 
@@ -53,11 +54,11 @@ const CreateOrEdit: React.FC = () => {
   const handleCreateAndModify = () => {
     if (isLoggedIn && accessToken) {
       if (routine._id) {
-        dispatch(modifyRoutine(location.pathname.split("/")[2]));
+        dispatch(modifyRoutine(username));
         // i feel i shouldnot have to make the routine have a name
       } 
       else {
-        dispatch(addRoutine(location.pathname.split("/")[2]));
+        dispatch(addRoutine(username));
       }
     }
     handleCancel();
