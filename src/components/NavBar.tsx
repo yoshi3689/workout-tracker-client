@@ -17,6 +17,7 @@ import LoginIcon from '@mui/icons-material/Login';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 
 import { PATHNAMES } from "../utils/pathnames";
+import { selectIsLoggedIn } from '../redux/slices/authSlice';
 
 
 interface INavItem {
@@ -48,9 +49,10 @@ const NavBar = () => {
   
   const [open, setOpen] = useState(false);
   // const navigate = useNavigate();
-    const {isLoggedIn, username} = useAppSelector(state => {
-    return state.persistedReducer.user;  
-    });
+    // const {isLoggedIn, username} = useAppSelector(state => {
+    // return state.persistedReducer.user;
+  // });
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
   // const location = useLocation();
   return (
   <Paper component={"nav"} elevation={3}>
@@ -76,9 +78,9 @@ const NavBar = () => {
             <IconButton color="inherit">
               <MoreIcon />
             </IconButton>
-          {isLoggedIn &&
+          {/* {isLoggedIn &&
             <IconButton color="inherit">{username}</IconButton>
-            }
+            } */}
           </Toolbar>
         </AppBar>
       )}

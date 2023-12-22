@@ -5,8 +5,6 @@ import { RootState } from "../store";
 export interface IUser {
   username?: string;
   email?: string;
-  accessToken: string;
-  isLoggedIn?: boolean;
   createdAt?: string|null;
   lastActiveAt?: string|null;
   isEmailVerified?: boolean;
@@ -16,8 +14,6 @@ export interface IUser {
 export const UserInitialState: IUser|null = {
   username: "",
   email: "",
-  accessToken: "",
-  isLoggedIn: false,
   createdAt: "",
   lastActiveAt: "",
   isEmailVerified: false,
@@ -31,9 +27,9 @@ export const getUser = createAsyncThunk<
   "user/getUser",
   async (username: string, thunkAPI) => {
     const state = thunkAPI.getState() as RootState;
-    const { user } = state.persistedReducer;
+    const { auth } = state.persistedReducer;
     const response = await request.get(`user/${username}`, {
-      headers: { Authorization: `Bearer ${user.accessToken}` }
+      headers: { Authorization: `Bearer ${auth.accessToken}` }
     });
     console.log(response)
     return response.data as IUser;
@@ -47,10 +43,11 @@ export const updateUser = createAsyncThunk<
   "user/updateUser",
   async (username: string, thunkAPI) => {
     const state = thunkAPI.getState() as RootState;
-    const { user } = state.persistedReducer;
-    console.log(user.accessToken)
-    const response = await request.patch(`user/${username}`, {} ,{
-      headers: { Authorization: `Bearer ${user.accessToken}` }
+    const { auth } = state.persistedReducer;
+    const response = await request.patch(`user/${username}`, {
+      
+    } ,{
+      headers: { Authorization: `Bearer ${auth.accessToken}` }
     });
     console.log(response)
     return response.data as IUser;
@@ -64,15 +61,6 @@ export const userSlice = createSlice({
     editUser: (state, action: PayloadAction<IUser>) => {
       return { ...action.payload };
     },
-    logout: (state) => {
-      return UserInitialState;
-    },
-    signin: (state, action: PayloadAction<IUser>) => {
-      return action.payload;
-    },
-    checkSigninStatus: (state, action: PayloadAction<IUser>) => {
-      return { ...state, isLoggedIn: action.payload.isLoggedIn };
-    },
   },
   // extraReducers: (builder) => {
   //   builder.addCase(getUser.fulfilled, (state, action: PayloadAction<IUser>) => {
@@ -82,4 +70,4 @@ export const userSlice = createSlice({
   // },
 });
 
-export const { editUser, logout, signin, checkSigninStatus } = userSlice.actions
+export const { editUser, } = userSlice.actions

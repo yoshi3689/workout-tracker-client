@@ -49,13 +49,13 @@ export const addRoutine = createAsyncThunk(
   "routines/addRoutine",
   async (data: string, thunkAPI) => {
     const state = thunkAPI.getState() as RootState;
-    const { newRoutine, user, exercises, sets } = state.persistedReducer;
-    if (user.isLoggedIn) {
+    const { newRoutine, auth, exercises, sets } = state.persistedReducer;
+    if (auth.isLoggedIn) {
       const reqBody: IRoutine = createReqBody(newRoutine, exercises, sets);
       reqBody.username = data;
       reqBody.createdAt = new Date().toISOString();
       const response = await request.post(`routines`, reqBody,
-      { headers: { Authorization: `Bearer ${user.accessToken}` } }
+      { headers: { Authorization: `Bearer ${auth.accessToken}` } }
     );
     return response.data.response;
     } else {
@@ -68,11 +68,11 @@ export const modifyRoutine = createAsyncThunk(
   "routines/modifyRoutine",
   async (data: string, thunkAPI) => {
     const state = thunkAPI.getState() as RootState;
-    const { newRoutine, user, exercises, sets } = state.persistedReducer;
-    if (user.isLoggedIn) {
+    const { newRoutine, auth, exercises, sets } = state.persistedReducer;
+    if (auth.isLoggedIn) {
       const reqBody: IRoutine = createReqBody(newRoutine, exercises, sets);
       const response = await request.patch(`routines`, reqBody,
-        { headers: { Authorization: `Bearer ${user.accessToken}` } }
+        { headers: { Authorization: `Bearer ${auth.accessToken}` } }
     );
     return response.data.response;
     } else {
@@ -88,9 +88,9 @@ export const getRoutines = createAsyncThunk<
   "routines/getRoutines",
   async (credentials: ICredentials, thunkAPI) => {
     const state = thunkAPI.getState() as RootState;
-    const { user } = state.persistedReducer;
+    const { auth } = state.persistedReducer;
     const response = await request.get(`routines/${credentials.username}`, {
-      headers: { Authorization: `Bearer ${user.accessToken}` }
+      headers: { Authorization: `Bearer ${auth.accessToken}` }
     });
     return response.data as IRoutine[];
   }
@@ -99,7 +99,9 @@ export const getRoutines = createAsyncThunk<
 export const RoutineSlice = createSlice({
   name: "routines",
   initialState: RoutineInitialState,
-  reducers: {},
+  reducers: {
+    
+  },
   extraReducers: (builder) => {
     builder.addCase(getRoutines.fulfilled, (state, action: PayloadAction<IRoutine[]>) => {
       state = action.payload

@@ -22,7 +22,7 @@ const CreateOrEdit: React.FC = () => {
   const location = useLocation();
 
   const { accessToken, isLoggedIn } = useAppSelector(state => {
-    return state.persistedReducer.user;
+    return state.persistedReducer.auth;
   });
 
   const [workoutName, setWorkoutName] = useState(routine.name ? routine.name : "");

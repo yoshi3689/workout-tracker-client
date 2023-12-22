@@ -9,6 +9,7 @@ import { combineReducers } from '@reduxjs/toolkit'
 import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist'
 
 import storage from 'redux-persist/lib/storage'
+import { authSlice } from './slices/authSlice'
 
 const persistConfig = {
   key: "root",
@@ -21,7 +22,8 @@ const reducers = combineReducers({
   routines: RoutineSlice.reducer,
   exercises: ExerciseSlice.reducer,
   sets: SetSlice.reducer,
-  newRoutine: newRoutineSlice.reducer
+  newRoutine: newRoutineSlice.reducer,
+  auth: authSlice.reducer,
 });
 const persistedReducer = persistReducer(persistConfig, reducers);
 

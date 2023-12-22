@@ -7,7 +7,7 @@ import RoutineCreate from './RoutineCreateEditLog';
 
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { getRoutines } from '../../redux/slices/routineSlice';
-import { checkSigninStatus } from '../../redux/slices/userSlice';
+import { checkSigninStatus, selectAccessToken } from '../../redux/slices/authSlice';
 import { Box, Container, Typography } from '@mui/material';
 
 
@@ -15,30 +15,32 @@ const Root = () => {
   const location = useLocation();
   const dispatch = useAppDispatch();
   const [error, setError] = useState<string>(""); 
+
+  const accessToken = useAppSelector(selectAccessToken);
+
   const fetchRoutines = async () => {
     try {
-      await dispatch(getRoutines({accessToken:loggedInUser.accessToken, username: location.pathname.split("/")[2] })).unwrap();
+      await dispatch(getRoutines({accessToken: accessToken, username: location.pathname.split("/")[2] })).unwrap();
     } catch (err) {
       dispatch(checkSigninStatus({
         isLoggedIn: false,
-        email: '',
         accessToken: ''
       }));
     }
   }
 
-  const loggedInUser = useAppSelector(state => {
-    return state.persistedReducer.user;
-  });
+  
 
   useEffect(() => {
     fetchRoutines();
-  }, [loggedInUser]);
+  }, [accessToken]);
 
   
   
   return (
     <Box component={"main"}>
+
+      
       {!error ? (
         <Routines />
       ) : (

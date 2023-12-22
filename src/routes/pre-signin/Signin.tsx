@@ -4,7 +4,7 @@ import UserForm, { ILinkProp, ITextFieldProp } from "../../components/UserForm";
 import { AxiosError, AxiosResponse } from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { request } from '../../axios/axios';
-import { signin } from '../../redux/slices/userSlice';
+import { signin } from '../../redux/slices/authSlice';
 import { useAppDispatch } from '../../redux/hooks';
 import { PATHNAMES, REQUEST_A_R_PREFIX, REQUEST_U_R_PREFIX, defineUserPath } from '../../utils/pathnames';
 import { getErrorMessage } from '../../utils/getErrorMessage';
