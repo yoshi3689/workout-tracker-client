@@ -53,6 +53,7 @@ const TextFields = (textFieldProps: ITextFieldProp[]) => {
           id={tf.name}
           label={tf.customFieldLabel ? tf.customFieldLabel : tf.name}
           name={tf.name}
+          value={tf.fieldState ? tf.fieldState : ''}
           autoComplete={tf.name}
           autoFocus={i===0}
           onChange={(e) => tf.changeHandler(e.target.value)}
@@ -65,7 +66,7 @@ const TextFields = (textFieldProps: ITextFieldProp[]) => {
 
 const UserForm: React.FC<PropsWithChildren<{
   bottomLinkProps?: ILinkProp[],
-  formTitle: string,
+  formTitle?: string,
   handleSubmit: MouseEventHandler,
   textFieldProps?: ITextFieldProp[],
   buttonText: string,
@@ -78,7 +79,14 @@ const UserForm: React.FC<PropsWithChildren<{
   const errorPopup = (
     <Alert severity="error">
       <AlertTitle>Error</AlertTitle>
-      {error} <strong>check it out!</strong>
+      <strong>{error}</strong>
+    </Alert >
+  )
+
+  const successPopup = (
+    <Alert severity="success">
+      <AlertTitle>Success</AlertTitle>
+      <strong>{error}</strong>
     </Alert >
   )
 

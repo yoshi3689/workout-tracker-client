@@ -1,4 +1,6 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { request } from "../../axios/axios";
+import { RootState } from "../store";
 
 export interface IUser {
   username?: string;
@@ -22,6 +24,39 @@ export const UserInitialState: IUser|null = {
   roles: [""],
 };
 
+export const getUser = createAsyncThunk<
+  IUser,
+  string
+>(
+  "user/getUser",
+  async (username: string, thunkAPI) => {
+    const state = thunkAPI.getState() as RootState;
+    const { user } = state.persistedReducer;
+    const response = await request.get(`user/${username}`, {
+      headers: { Authorization: `Bearer ${user.accessToken}` }
+    });
+    console.log(response)
+    return response.data as IUser;
+  }
+);
+
+export const updateUser = createAsyncThunk<
+  IUser,
+  string
+>(
+  "user/updateUser",
+  async (username: string, thunkAPI) => {
+    const state = thunkAPI.getState() as RootState;
+    const { user } = state.persistedReducer;
+    console.log(user.accessToken)
+    const response = await request.patch(`user/${username}`, {} ,{
+      headers: { Authorization: `Bearer ${user.accessToken}` }
+    });
+    console.log(response)
+    return response.data as IUser;
+  }
+);
+
 export const userSlice = createSlice({
   name: "user",
   initialState: UserInitialState,
@@ -39,6 +74,12 @@ export const userSlice = createSlice({
       return { ...state, isLoggedIn: action.payload.isLoggedIn };
     },
   },
+  // extraReducers: (builder) => {
+  //   builder.addCase(getUser.fulfilled, (state, action: PayloadAction<IUser>) => {
+  //     state = action.payload
+  //     return action.payload;
+  //   })
+  // },
 });
 
 export const { editUser, logout, signin, checkSigninStatus } = userSlice.actions

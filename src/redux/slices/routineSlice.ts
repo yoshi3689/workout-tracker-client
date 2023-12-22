@@ -86,9 +86,11 @@ export const getRoutines = createAsyncThunk<
   ICredentials
 >(
   "routines/getRoutines",
-  async (credentials: ICredentials) => {
+  async (credentials: ICredentials, thunkAPI) => {
+    const state = thunkAPI.getState() as RootState;
+    const { user } = state.persistedReducer;
     const response = await request.get(`routines/${credentials.username}`, {
-      headers: { Authorization: `Bearer ${credentials.accessToken}` }
+      headers: { Authorization: `Bearer ${user.accessToken}` }
     });
     return response.data as IRoutine[];
   }

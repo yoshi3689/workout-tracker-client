@@ -72,7 +72,7 @@ const Routines: React.FC = () => {
     navigateToLog()
   }
   return (
-      <Container component={Paper} sx={{ padding: "24px", marginBottom: "100px"}}>
+      <Container sx={{ padding: "24px", marginBottom: "100px"}}>
         <Box>
           <Box display="flex" alignContent="center" justifyContent="space-between">
           <Typography variant="h5">Check Logs</Typography>
