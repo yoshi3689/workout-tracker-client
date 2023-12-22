@@ -5,7 +5,7 @@ import { PATHNAMES } from '../../utils/pathnames'
 import { isMobile } from 'react-device-detect'
 
 const Home = () => {
-  console.log(process.env.REACT_APP_ROOT_URL)
+  // console.log(process.env.REACT_APP_ROOT_URL)
   return (
     // <Box
     //       sx={{
