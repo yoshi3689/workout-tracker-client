@@ -45,7 +45,7 @@ const Home = () => {
     <Paper
       sx={{
         position: 'fixed',
-        // backgroundColor: 'grey.800',
+        backgroundColor: '#9bc0ff',
         color: '#fff',
         mb: 4,
         right: 0,
@@ -71,31 +71,32 @@ const Home = () => {
           // backgroundColor: 'rgba(0,0,0,.25)',
         }}
       />
-      <Grid container>
-        <Grid item md={6} lg={4}>
+      <Grid spacing={4} container sx={{
+          p: { xs: 2, sm: 4, md: 6 },
+          paddingBlock: { xs: 10, sm: 8,md: 8 },}}>
+        <Grid item sm={6} md={6}>
           <Box
             sx={{
               position: 'relative',
-              p: { xs: 2, sm: 4 ,md: 6 },
-              paddingBlock: { xs: 4, md: 8 },
+              paddingBlock: { sm: 2,md: 4, lg: 6 },
             }}
           >
             <Typography
               component="h1"
-              variant="h3"
+              sx={{typography: {xs: "h3", sm:"h3", lg:"h2"}}}
               color="text.primary"
               gutterBottom
             >
-              Sweat Snap
+              Track your sweaty effort
             </Typography>
-            <Typography variant="h6"  color="text.secondary" paragraph>
+            <Typography sx={{typography: {xs: "subtitle1", sm:"body1", lg:"subtitle1"}, pt:2}}  color="text.secondary" paragraph>
               Are you tired of beating yourself up internally for dissatisfied results at the gym?
             </Typography>
-            <Typography variant="h6" color="text.secondary" paragraph>
+            <Typography sx={{typography: {xs: "subtitle1", sm:"body1", lg:"subtitle1"}}} color="text.secondary" paragraph>
               This could happen due to unawareness of your past records. Let's log that sweaty gym effort and enjoy the process with us.
             </Typography>
             <Stack
-              sx={{ pt: 4 }}
+              sx={{ pt: 2 }}
               direction={ isMobile ? "column" : "row" }
               spacing={3}
             >
@@ -103,6 +104,14 @@ const Home = () => {
               <Button component={Link} to={PATHNAMES.SIGNUP} variant="outlined">sign up</Button>
             </Stack>
           </Box>
+        </Grid>
+        <Grid item sm={6} md={6}
+          sx={{
+            display: { xs: "none", sm: "block" }
+        }} >
+          {/* <img  src={`${process.env.PUBLIC_URL}/Fitz - Stretching.png`} alt={"some image"} /> */}
+          <img style={{maxWidth: "100%", maxHeight: "450px"}} src={`${process.env.PUBLIC_URL}/undraw_working_out_re_nhkg.svg`} alt={"some image"}  />
+          
         </Grid>
       </Grid>
     </Paper>

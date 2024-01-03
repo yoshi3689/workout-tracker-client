@@ -14,6 +14,7 @@ export const PATHNAMES = {
   PASSWORD_RESET: "/reset-password/",
   EMAIL_RESEND: "/resend-verification",
   USER_HOME: "/dashboard/:username",
+  USER_METRICS: "/dashboard/:username/metrics",
   USER_EDIT_ADD_LOG: "/dashboard/:username/log",
   USER_ACCOUNT_EDIT: "/dashboard/:username/account",
 };

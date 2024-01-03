@@ -1,5 +1,5 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import Root from "./routes/post-signin/History";
+import Root from "./routes/post-signin/Home";
 import Signin from "./routes/pre-signin/Signin";
 import Home from "./routes/pre-signin/Home";
 import Signup from "./routes/pre-signin/Signup";
@@ -14,6 +14,7 @@ import SigninPersist from "./middleware/SigninPersist"
 
 import PageBase from "./pageBase/PageBase";
 import UserEdit from "./routes/post-signin/UserEdit";
+import Metrics from "./routes/post-signin/Metrics";
 
 const router = createBrowserRouter([
   {
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
       {
         path: PATHNAMES.USER_HOME,
         element: <PageBase><Root /></PageBase>,
+      },
+      {
+        path: PATHNAMES.USER_METRICS,
+        element: <PageBase><Metrics /></PageBase>,
       },
       {
         path: PATHNAMES.USER_EDIT_ADD_LOG,

@@ -12,7 +12,7 @@ import EastIcon from '@mui/icons-material/East';
 
 
 
-const Metrics: React.FC<{ title: string, count: number, adornment: string ,percentage:number, extra: string, isProgress: boolean  }> = ({ title, count, adornment ,percentage, extra, isProgress }) => {
+const RecordsCard: React.FC<{ title: string, count: number, adornment: string ,percentage:number, extra: string, isProgress: boolean  }> = ({ title, count, adornment ,percentage, extra, isProgress }) => {
   return (
     <Card variant="outlined">
       <CardContent>
@@ -40,10 +40,10 @@ const Metrics: React.FC<{ title: string, count: number, adornment: string ,perce
       </Typography>
       </CardContent>
       <CardActions>
-        <Button size='small' variant="text" >Check Detailed Metrics<EastIcon /> </Button>
+        <Button size='small' variant="text" >Check more records<EastIcon /> </Button>
       </CardActions>
     </Card>
   )
 }
 
-export default Metrics
+export default RecordsCard
