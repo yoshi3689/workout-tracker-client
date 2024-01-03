@@ -21,10 +21,7 @@ export interface ICredentials {
   username: string
 }
 
-export interface ICredentials {
-  accessToken: string | undefined,
-  username: string
-}
+
 
 export const RoutineInitialState: IRoutine[] = [];
 

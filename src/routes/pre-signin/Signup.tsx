@@ -24,7 +24,7 @@ const Signup: React.FC = () => {
   }
 
   const goToSendPassword = () => {
-    navigate(PATHNAMES.PASSWORD_SEND);
+    navigate(PATHNAMES.PASSWORD_RESET);
   }
 
   const linkProps: ILinkProp[] = [

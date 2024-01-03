@@ -28,15 +28,15 @@ const CreateOrEdit: React.FC = () => {
 
   const [workoutName, setWorkoutName] = useState(routine.name ? routine.name : "");
 
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setWorkoutName(e.target.value);
-  }
+  // const handleNameChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  //   setWorkoutName(e.target.value);
+  // }
 
   useEffect(() => {
     dispatch(editNewRoutine({
       ...routine,
       name: workoutName
-    }))
+    }));
   }, [workoutName]);
   
   // set all the newRoutine states to the initial state
@@ -55,7 +55,6 @@ const CreateOrEdit: React.FC = () => {
     if (isLoggedIn && accessToken) {
       if (routine._id) {
         dispatch(modifyRoutine(username));
-        // i feel i shouldnot have to make the routine have a name
       } 
       else {
         dispatch(addRoutine(username));
@@ -70,14 +69,6 @@ const CreateOrEdit: React.FC = () => {
       <Box>
         <Typography gutterBottom variant="h5">Log Workout</Typography>
       </Box>
-      {/* <FormControl sx={{ m: 1 }} variant="standard">
-          <InputLabel htmlFor="routine_name">routine name</InputLabel>
-          <Input
-            id="routine_name"
-            value={routine.name}
-            onChange={handleNameChange}
-          />
-        </FormControl> */}
       <Box sx={{paddingBottom: "24px"}}>
       </Box>
       <TableContainer component={Paper} >

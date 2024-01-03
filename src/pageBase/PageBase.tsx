@@ -32,7 +32,7 @@ const PageBase: FunctionComponent<PropsWithChildren> = ({ children }) => {
       <Toolbar />
       {children}
       <Box component={"footer"} sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}>
-        <Copyright sx={{ mt: 8, mb: 2 }} />
+        <Copyright sx={{ mt: 2, mb: 2 }} />
         {isMobile && <NavBar />}
       </Box>
     </>

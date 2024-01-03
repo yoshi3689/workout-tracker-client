@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { generateObjectId } from "../../utils/idGenerator";
+import { RootState } from "../store";
 
 export interface ISet {
   _id: string;
@@ -63,3 +64,4 @@ export const SetSlice = createSlice({
 });
 
 export const { addSet, editSet, deleteSet, loadSets, clearSets } = SetSlice.actions
+export const selectSets = (state: RootState) => state.persistedReducer.sets

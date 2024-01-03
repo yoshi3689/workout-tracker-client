@@ -40,7 +40,7 @@ const Metrics: React.FC<{ title: string, count: number, adornment: string ,perce
       </Typography>
       </CardContent>
       <CardActions>
-        <Button  variant="text" >Check Detailed Metrics<EastIcon /> </Button>
+        <Button size='small' variant="text" >Check Detailed Metrics<EastIcon /> </Button>
       </CardActions>
     </Card>
   )

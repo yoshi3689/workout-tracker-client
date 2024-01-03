@@ -33,7 +33,7 @@ const router = createBrowserRouter([
     element: <PageBase><EmailVerify/></PageBase>,
   },
   {
-    path: PATHNAMES.PASSWORD_SEND,
+    path: PATHNAMES.PASSWORD_RESET,
     element: <PageBase><PasswordSend /></PageBase>,
   },
   {

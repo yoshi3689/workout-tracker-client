@@ -38,7 +38,11 @@ const Signin: React.FC = () => {
   }
 
   const goToSendPassword = () => {
-    navigate(PATHNAMES.PASSWORD_SEND);
+    navigate(PATHNAMES.PASSWORD_RESET);
+  }
+
+  const goToSendVerification = () => {
+    navigate(PATHNAMES.EMAIL_RESEND);
   }
 
   const linkProps: ILinkProp[] = [
@@ -49,6 +53,10 @@ const Signin: React.FC = () => {
     {
       linkText: "Forgot Passowrd?",
       clickHandler: goToSendPassword,
+    },
+    {
+      linkText: "Didn't receive email?",
+      clickHandler: goToSendVerification,
     }
   ];
 

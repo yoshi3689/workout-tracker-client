@@ -43,7 +43,7 @@ const VerifyEmail: React.FC = () => {
   // send code to the BE and see if the email is decoded 
   // from the last segment of the request URL
   const verifyEmail = () => {
-    request.post(`${REQUEST_U_R_PREFIX}${defineUserPath(location.pathname.split("/")[2],PATHNAMES.EMAIL_VERIFY)}/`, { code })
+    request.post(`${REQUEST_U_R_PREFIX}${defineUserPath(location.pathname.split("/")[2],PATHNAMES.EMAIL_VERIFY)}`, { code })
       .then((res: AxiosResponse)  => {
         if (res.data.isVerfied) navigate(PATHNAMES.SIGNIN)
       })

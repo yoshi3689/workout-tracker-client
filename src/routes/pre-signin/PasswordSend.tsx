@@ -38,7 +38,7 @@ const PasswordSend: React.FC = () => {
   // send code to the BE and see if the email is decoded 
   // from the last segment of the request URL
   const sendPassword = () => {
-    request.post(REQUEST_U_R_PREFIX+PATHNAMES.PASSWORD_SEND)
+    request.post(REQUEST_U_R_PREFIX+PATHNAMES.PASSWORD_RESET)
       .then((res: AxiosResponse)  => {
         if (res.data) setIsSent(true);
       })
