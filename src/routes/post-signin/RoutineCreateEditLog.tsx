@@ -66,10 +66,16 @@ const CreateOrEdit: React.FC = () => {
 
   return (
       <Container component={Paper} sx={{paddingBlock: "24px", marginBottom: "100px"}}>
-      <Box>
+      <Box display={"flex"}>
         <Typography gutterBottom variant="h5">Log Workout</Typography>
+        <Button>Use Previous Log as a template</Button>
+        
       </Box>
-      <Box sx={{paddingBottom: "24px"}}>
+      <Box sx={{ paddingBottom: "24px" }}>
+        {routine.isEditing && routine._id
+          ? <Typography>Editing {routine.createdAt}</Typography>
+          : <Typography>Creating new routine</Typography>
+        }
       </Box>
       <TableContainer component={Paper} >
         <ExerciseRows isNew={true} />

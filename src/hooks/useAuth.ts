@@ -14,7 +14,7 @@ const useAuth = () => {
       const decoded = jwtDecode(token)
       const { username } = decoded
 
-      return { username }
+      return { username, token }
     }
 
     return { username: '' }

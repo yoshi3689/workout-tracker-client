@@ -7,13 +7,15 @@ export interface IExercise {
   name: string;
   muscleGroups: string[];
   sets: ISet[];
+  maxWeight: number;
 }
 
 export const exerciseSkelton: IExercise = {
   _id: "",
   name: "",
   sets: [],
-  muscleGroups: []
+  muscleGroups: [],
+  maxWeight: 0
 };
 
 export const ExerciseInitialState: Record<string, IExercise> = {};
@@ -29,7 +31,7 @@ export const ExerciseSlice = createSlice({
     addExercise: (state, action: PayloadAction<IExercise>) => {
       const id = generateObjectId();
       action.payload._id = id;
-      state = {...state, [id]:{...action.payload}};
+      state = { ...state, [id]: { ...action.payload } };
       return state;
     },
     editExercise: (state, action: PayloadAction<IExercise>) => {

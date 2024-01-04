@@ -15,6 +15,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import HistoryIcon from '@mui/icons-material/History';
 import LoginIcon from '@mui/icons-material/Login';
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import EqualizerIcon from '@mui/icons-material/Equalizer';
 
 import { PATHNAMES } from "../utils/pathnames";
 import { selectIsLoggedIn } from '../redux/slices/authSlice';
@@ -36,7 +37,7 @@ const beforeSignin: INavItem[] = [
 
 const afterSignin: INavItem[] = [
   { appRoute: PATHNAMES.USER_HOME, icon: <DashboardIcon /> },
-  { appRoute: PATHNAMES.USER_HOME, icon: <HistoryIcon /> },
+  { appRoute: PATHNAMES.USER_METRICS, icon: <EqualizerIcon /> },
   { appRoute: PATHNAMES.USER_ACCOUNT_EDIT, icon: <PersonIcon /> },
   { appRoute: PATHNAMES.HOME, icon: <LogoutIcon /> },
 ];
@@ -58,9 +59,18 @@ const NavBar = () => {
   <Paper component={"nav"} elevation={3}>
       {isMobile ? (
         <BottomNavigation showLabels>
-          <BottomNavigationAction label="Recents" />
-          <BottomNavigationAction label="Favorites" />
-          <BottomNavigationAction label="Nearby" />
+            {isLoggedIn
+                ? afterSignin.map(as => (<>
+                  <IconButton color="inherit" href={as.appRoute}>
+                    {as.icon}
+                  </IconButton>  
+                </>))  
+                : beforeSignin.map(as => (<>
+                  <IconButton color="inherit" href={as.appRoute}>
+                    {as.icon}
+                  </IconButton>  
+                </>))  
+            }
         </BottomNavigation>
       ) : (
         <AppBar >
@@ -71,16 +81,23 @@ const NavBar = () => {
             <Box sx={{ flexGrow: 1 }} />
             {isLoggedIn && <IconButton color="inherit">
               <ViewListIcon />
-            </IconButton>}
-            <IconButton color="inherit">
-              <SearchIcon />
-            </IconButton>
+              </IconButton>}
+              {isLoggedIn
+                ? afterSignin.map(as => (<>
+                  <IconButton color="inherit" href={as.appRoute}>
+                    {as.icon}
+                  </IconButton>  
+                </>))  
+                : beforeSignin.map(as => (<>
+                  <IconButton color="inherit" href={as.appRoute}>
+                    {as.icon}
+                  </IconButton>  
+                </>))  
+            }
+            
             <IconButton color="inherit">
               <MoreIcon />
             </IconButton>
-          {/* {isLoggedIn &&
-            <IconButton color="inherit">{username}</IconButton>
-            } */}
           </Toolbar>
         </AppBar>
       )}

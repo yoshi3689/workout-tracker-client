@@ -36,7 +36,7 @@ const Root = () => {
   }, [accessToken]);
   
   return (
-    <Box component={"main"} sx={{ padding: "24px", marginBottom: "100px"}}>
+    <Box component={"main"} sx={{ padding: "24px", marginBottom: "100px" }}>
       {!error ? (
         <Routines />
       ) : (

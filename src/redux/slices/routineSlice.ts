@@ -5,6 +5,8 @@ import { RootState } from "../store";
 import { request } from "../../axios/axios";
 import { ISet } from "./setsSlice";
 import { filterByBodyParts } from "../../utils/filterByBodyPart";
+import { selectAccessToken } from "./authSlice";
+import { useAppSelector } from "../hooks";
 
 export interface IRoutine {
   _id: string,
@@ -25,6 +27,8 @@ export interface ICredentials {
 
 export const RoutineInitialState: IRoutine[] = [];
 
+
+
 const createReqBody = (
   newRoutine: IRoutine, 
   exercises: Record<string, IExercise>,
@@ -36,9 +40,10 @@ const createReqBody = (
     isEditing: false,
     exercises: Object.values(exercises).map(e => {
       muscleGroups.add(e.muscleGroups[0]);
-      return {...e, sets: Object.values(sets[e._id])}
+      let ss = Object.values(sets[e._id])
+      return {...e, sets: ss, maxWeight: Math.max(...ss.map(s=>s.weight))}
     }),
-    muscleGroups: filterByBodyParts(muscleGroups)
+    muscleGroups: filterByBodyParts(muscleGroups),
   }
 }
 
@@ -47,8 +52,10 @@ export const addRoutine = createAsyncThunk(
   async (data: string, thunkAPI) => {
     const state = thunkAPI.getState() as RootState;
     const { newRoutine, auth, exercises, sets } = state.persistedReducer;
+    console.log(auth.isLoggedIn)
     if (auth.isLoggedIn) {
       const reqBody: IRoutine = createReqBody(newRoutine, exercises, sets);
+      console.log(reqBody);
       reqBody.username = data;
       reqBody.createdAt = new Date().toISOString();
       const response = await request.post(`routines`, reqBody,
@@ -88,6 +95,19 @@ export const getRoutines = createAsyncThunk<
     const { auth } = state.persistedReducer;
     const response = await request.get(`routines/${credentials.username}`, {
       headers: { Authorization: `Bearer ${auth.accessToken}` }
+    });
+    return response.data as IRoutine[];
+  }
+);
+
+export const getPRs = createAsyncThunk<
+  IRoutine[],
+  ICredentials
+>(
+  "routines/getPRs",
+  async ({username, accessToken}) => {
+    const response = await request.get(`routines/${username}/prs`, {
+      headers: { Authorization: `Bearer ${accessToken}` }
     });
     return response.data as IRoutine[];
   }
