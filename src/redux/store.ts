@@ -1,30 +1,35 @@
 import { configureStore } from '@reduxjs/toolkit'
 
-import { RoutineSlice } from './slices/routineSlice'
+import { routineSlice } from './slices/routineSlice'
 import { newRoutineSlice } from './slices/newRoutineSlice'
-import { ExerciseSlice } from './slices/exerciseSlice'
-import { SetSlice } from './slices/setsSlice'
+import { exerciseSlice } from './slices/exerciseSlice'
+import { setSlice } from './slices/setsSlice'
 import { userSlice } from './slices/userSlice'
 import { combineReducers } from '@reduxjs/toolkit'
 import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist'
 
 import storage from 'redux-persist/lib/storage'
 import { authSlice } from './slices/authSlice'
+import { personalRecordSlice } from './slices/personalRecordSlice'
+import { exerciseRecordSlice } from './slices/exerciseRecordSlice'
 
 const persistConfig = {
   key: "root",
   storage,
-  blackList: ["user", "routines"]
+  blackList: ["user", "routines", "personalRecords", "exerciseRecords"]
 };
 
 const reducers = combineReducers({
   user: userSlice.reducer,
-  routines: RoutineSlice.reducer,
-  exercises: ExerciseSlice.reducer,
-  sets: SetSlice.reducer,
+  routines: routineSlice.reducer,
+  exercises: exerciseSlice.reducer,
+  sets: setSlice.reducer,
   newRoutine: newRoutineSlice.reducer,
+  personalRecords: personalRecordSlice.reducer,
+  exerciseRecords: exerciseRecordSlice.reducer,
   auth: authSlice.reducer,
 });
+
 const persistedReducer = persistReducer(persistConfig, reducers);
 
 export const store = configureStore({

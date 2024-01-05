@@ -9,7 +9,7 @@ import { IExercise } from '../../redux/slices/exerciseSlice'
 const Metrics = () => {
   const dispatch = useAppDispatch();
   const { username, token } = useAuth();
-
+  
   const fetchPRs = async () => {
   try {
     const res = await dispatch(getPRs({ username, accessToken: token })).unwrap();

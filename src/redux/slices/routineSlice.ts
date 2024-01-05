@@ -25,7 +25,7 @@ export interface ICredentials {
 
 
 
-export const RoutineInitialState: IRoutine[] = [];
+export const routineInitialState: IRoutine[] = [];
 
 
 
@@ -113,9 +113,9 @@ export const getPRs = createAsyncThunk<
   }
 );
 
-export const RoutineSlice = createSlice({
+export const routineSlice = createSlice({
   name: "routines",
-  initialState: RoutineInitialState,
+  initialState: routineInitialState,
   reducers: {
     
   },
@@ -126,5 +126,3 @@ export const RoutineSlice = createSlice({
     })
   },
 });
-
-// export const { editRoutine, deleteRoutine } = RoutineSlice.actions

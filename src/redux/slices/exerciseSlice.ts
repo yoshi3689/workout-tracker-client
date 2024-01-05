@@ -20,7 +20,7 @@ export const exerciseSkelton: IExercise = {
 
 export const ExerciseInitialState: Record<string, IExercise> = {};
 
-export const ExerciseSlice = createSlice({
+export const exerciseSlice = createSlice({
   name: "Exercises",
   initialState: ExerciseInitialState,
   reducers: {
@@ -48,4 +48,4 @@ export const ExerciseSlice = createSlice({
   },
 });
 
-export const { addExercise, editExercise, deleteExercise, loadExercises, clearExercises } = ExerciseSlice.actions
+export const { addExercise, editExercise, deleteExercise, loadExercises, clearExercises } = exerciseSlice.actions

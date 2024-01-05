@@ -18,7 +18,7 @@ export const setSkelton = {
 
 export const SetInitialState: Record<string, Record<string, ISet>> = {};
 
-export const SetSlice = createSlice({
+export const setSlice = createSlice({
   name: "Sets",
   initialState: SetInitialState,
   reducers: {
@@ -63,5 +63,5 @@ export const SetSlice = createSlice({
   },
 });
 
-export const { addSet, editSet, deleteSet, loadSets, clearSets } = SetSlice.actions
+export const { addSet, editSet, deleteSet, loadSets, clearSets } = setSlice.actions
 export const selectSets = (state: RootState) => state.persistedReducer.sets
