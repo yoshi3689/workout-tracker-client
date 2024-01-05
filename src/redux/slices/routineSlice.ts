@@ -1,12 +1,9 @@
 import { createAsyncThunk, createSlice, nanoid, PayloadAction, ActionReducerMapBuilder } from "@reduxjs/toolkit";
 import { IExercise } from "./exerciseSlice";
-import axios from "axios";
 import { RootState } from "../store";
 import { request } from "../../axios/axios";
 import { ISet } from "./setsSlice";
 import { filterByBodyParts } from "../../utils/filterByBodyPart";
-import { selectAccessToken } from "./authSlice";
-import { useAppSelector } from "../hooks";
 
 export interface IRoutine {
   _id: string,
@@ -23,11 +20,7 @@ export interface ICredentials {
   username: string
 }
 
-
-
 export const routineInitialState: IRoutine[] = [];
-
-
 
 const createReqBody = (
   newRoutine: IRoutine, 
@@ -41,7 +34,9 @@ const createReqBody = (
     exercises: Object.values(exercises).map(e => {
       muscleGroups.add(e.muscleGroups[0]);
       let ss = Object.values(sets[e._id])
-      return {...e, sets: ss, maxWeight: Math.max(...ss.map(s=>s.weight))}
+      const maxWeight = Math.max(...ss.map(s => s.weight));
+      console.log(maxWeight)
+      return {...e, sets: ss, maxWeight}
     }),
     muscleGroups: filterByBodyParts(muscleGroups),
   }

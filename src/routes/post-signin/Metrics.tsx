@@ -2,22 +2,31 @@ import { Box, Button, Grid, Typography } from '@mui/material'
 import React from 'react'
 import RecordsCard from '../../components/RecordsCard'
 import { getPRs } from '../../redux/slices/routineSlice'
-import { useAppDispatch } from '../../redux/hooks'
+import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import useAuth from '../../hooks/useAuth'
 import { IExercise } from '../../redux/slices/exerciseSlice'
+import { getPersonalRecords } from '../../redux/slices/personalRecordSlice'
+import { getExerciseRecords } from '../../redux/slices/exerciseRecordSlice'
 
 const Metrics = () => {
   const dispatch = useAppDispatch();
   const { username, token } = useAuth();
-  
+  const personalRecords = useAppSelector(state => state.persistedReducer.personalRecords);
+  const exerciseRecords = useAppSelector(state => state.persistedReducer.exerciseRecords);
+
   const fetchPRs = async () => {
   try {
-    const res = await dispatch(getPRs({ username, accessToken: token })).unwrap();
-    console.log(res);
+    const res1 = await dispatch(getPersonalRecords({ username, accessToken: token })).unwrap();
+    console.log(res1);
+    const res2 = await dispatch(getExerciseRecords({ username, accessToken: token })).unwrap();
+    console.log(res2);
   } catch (err) {
     console.error(err)
   }
-}
+  }
+  
+  console.log(personalRecords)
+  exerciseRecords.length > 1 && console.log(exerciseRecords[0].exercises)
   return (
     <Box component={"main"} sx={{ padding: "24px", marginBottom: "100px" }}>
           <Grid container rowSpacing={4.5} columnSpacing={2.75}>
