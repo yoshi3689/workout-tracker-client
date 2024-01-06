@@ -26,7 +26,7 @@ const Copyright = (props: any) => {
 const PageBase: FunctionComponent<PropsWithChildren> = ({ children }) => {
   return (
     <>
-      <Box component={"header"} >
+      <Box component={"header"} sx={{height: 0}} >
         <NavBar />
       </Box>
       <Toolbar />

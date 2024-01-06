@@ -58,7 +58,7 @@ const NavBar = () => {
   return (
     <Paper component={"nav"} elevation={3}>
       (
-        <AppBar key={beforeSignin[0].appRoute+isMobile}>
+        <AppBar component={"div"}>
           <Toolbar>
             <IconButton key={"open drawer"} color="inherit" aria-label="open drawer">
               <MenuIcon />

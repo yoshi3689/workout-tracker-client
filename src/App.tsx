@@ -14,7 +14,9 @@ import SigninPersist from "./middleware/SigninPersist"
 
 import PageBase from "./pageBase/PageBase";
 import UserEdit from "./routes/post-signin/UserEdit";
-import Metrics from "./routes/post-signin/Metrics";
+import Metrics from "./routes/post-signin/metrics/Metrics";
+import MetricsPersonalRecord from "./routes/post-signin/metrics/MetricsPersonalRecord";
+import MetricsLiftedWeight from "./routes/post-signin/metrics/MetricsLiftedWeight";
 
 const router = createBrowserRouter([
   {
@@ -52,6 +54,14 @@ const router = createBrowserRouter([
       {
         path: PATHNAMES.USER_METRICS,
         element: <PageBase><Metrics /></PageBase>,
+      },
+      {
+        path: PATHNAMES.USER_METRICS_PR,
+        element: <PageBase><MetricsPersonalRecord /></PageBase>,
+      },
+      {
+        path: PATHNAMES.USER_METRICS_LW,
+        element: <PageBase><MetricsLiftedWeight /></PageBase>,
       },
       {
         path: PATHNAMES.USER_EDIT_ADD_LOG,

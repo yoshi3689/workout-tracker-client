@@ -1,12 +1,13 @@
-import { Box, Button, CssBaseline, Grid, Paper, Typography } from '@mui/material'
-import RecordsCard from '../../components/RecordsCard'
-import { useAppDispatch, useAppSelector } from '../../redux/hooks'
-import useAuth from '../../hooks/useAuth'
-import { getPersonalRecords } from '../../redux/slices/personalRecordSlice'
-import { getLiftableWeightsByExercise } from '../../redux/slices/liftableWeightSlice'
+import { Box, Button, Grid, Paper, Typography } from '@mui/material'
+import RecordsCard from '../../../components/RecordsCard'
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks'
+import useAuth from '../../../hooks/useAuth'
+import { getPersonalRecords } from '../../../redux/slices/personalRecordSlice'
+import { getLiftableWeightsByExercise } from '../../../redux/slices/liftableWeightSlice'
 import { LineChart } from '@mui/x-charts'
 import { Link } from 'react-router-dom'
 import EastIcon from '@mui/icons-material/East';
+import MetricsCardList from '../../../components/MetricsCardList'
 
 
 const Metrics = () => {
@@ -34,12 +35,12 @@ const Metrics = () => {
       <Typography variant="h4">Dashboard <Button onClick={fetchPRs}>
         Get PRs
       </Button></Typography>
-      <Grid container component={Paper} rowSpacing={4.5} columnSpacing={2.75}>
-        <Grid item xs={12}  sx={{ mb: -4.5 }}>
-          <Typography variant="h5">Personal Records</Typography>
-          <Link to={`dashboard/${username}/metrics/personal-records`}><Button size='small' variant="text">All Personal Records<EastIcon /></Button></Link>  
-        </Grid>
-          {personalRecords.length > 1 && personalRecords.map((pr) => {
+      <MetricsCardList
+        listTitle="Personal Records"
+        linkToDetails={`/dashboard/${username}/metrics/personal-records`}
+        linkToDetailsText="All Personal Records"
+        children={
+          personalRecords.length > 1 && personalRecords.map((pr) => {
             return (
               <Grid item xs={12} sm={6} md={4} lg={3} key={pr.documentId}>
                 <RecordsCard
@@ -51,18 +52,15 @@ const Metrics = () => {
                   actionLink={`dashboard/${username}/metrics/${pr.exerciseName.replaceAll(" ", "-")}`}
                 />
               </Grid>)
-          })}
-        <Grid item xs={12}>
-          <Link to={`dashboard/${username}/metrics/personal-records`}><Button size='small' variant="text">All Personal Records<EastIcon /></Button></Link>
-        </Grid>
-      </Grid>
+          })
+        } />
       
-      <Grid container component={Paper} sx={{mt: 6}} rowSpacing={4.5} columnSpacing={2.75}>
-        <Grid item xs={12} sx={{ mb: -4.5 }}>
-          <Typography variant="h5">Lifted Weight</Typography> 
-          <Link to={`dashboard/${username}/metrics/liftable-weights`}><Button size='small' variant="text">All lifted weights by exercise<EastIcon /></Button></Link>
-        </Grid>
-        {liftableWeights.length > 1 && liftableWeights.map((lw, i) => {
+      <MetricsCardList
+        listTitle='Lifted Weight'
+        linkToDetails={`/dashboard/${username}/metrics/liftable-weights`}
+        linkToDetailsText='All lifted weights by exercise'
+        children={
+          liftableWeights.length > 1 && liftableWeights.map((lw, i) => {
           return (
             <Grid item xs={12} sm={6} md={6} lg={4} key={lw.exerciseName}>
               <LineChart
@@ -81,10 +79,7 @@ const Metrics = () => {
             </Grid>
         )
         })}
-        <Grid item xs={12} >
-          <Link to={`dashboard/${username}/metrics/liftable-weights`}><Button size='small' variant="text">All lifted weights by exercise<EastIcon /></Button></Link>
-        </Grid>
-      </Grid>
+      />
       </Box >
   )
 }

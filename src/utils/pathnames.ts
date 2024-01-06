@@ -15,6 +15,9 @@ export const PATHNAMES = {
   EMAIL_RESEND: "/resend-verification",
   USER_HOME: "/dashboard/:username",
   USER_METRICS: "/dashboard/:username/metrics",
+  USER_METRICS_PR: "/dashboard/:username/metrics/personal-records",
+  USER_METRICS_LW: "/dashboard/:username/metrics/liftable-weights",
+  USER_METRICS_EXERCISE_DETAILS: "/dashboard/:username/metrics/liftable-weights",
   USER_EDIT_ADD_LOG: "/dashboard/:username/log",
   USER_ACCOUNT_EDIT: "/dashboard/:username/account",
 };
