@@ -11,12 +11,13 @@ import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, 
 import storage from 'redux-persist/lib/storage'
 import { authSlice } from './slices/authSlice'
 import { personalRecordSlice } from './slices/personalRecordSlice'
-import { exerciseRecordSlice } from './slices/exerciseRecordSlice'
+import { liftableWeightSlice } from './slices/liftableWeightSlice'
 
 const persistConfig = {
   key: "root",
   storage,
-  blackList: ["user", "routines", "personalRecords", "exerciseRecords"]
+  blackList: ["user", "routines"]
+  // blackList: ["user", "routines", "personalRecords", "liftableWeights"]
 };
 
 const reducers = combineReducers({
@@ -26,7 +27,7 @@ const reducers = combineReducers({
   sets: setSlice.reducer,
   newRoutine: newRoutineSlice.reducer,
   personalRecords: personalRecordSlice.reducer,
-  exerciseRecords: exerciseRecordSlice.reducer,
+  liftableWeights: liftableWeightSlice.reducer,
   auth: authSlice.reducer,
 });
 

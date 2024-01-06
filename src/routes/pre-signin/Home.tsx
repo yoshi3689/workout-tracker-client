@@ -7,41 +7,6 @@ import { isMobile } from 'react-device-detect'
 const Home = () => {
 
   return (
-    // <Box
-    //       sx={{
-    //         background: `url(${process.env.PUBLIC_URL}/landing_bg.jpg)`,
-    //         pt: 8,
-    //         pb: 6,
-    //       }}
-    //       >
-    //       <Container maxWidth="sm">
-    //         <Typography
-    //           component="h1"
-    //           variant="h3"
-    //           align="center"
-    //           color="text.primary"
-    //           gutterBottom
-    //         >
-    //           Sweat Snap
-    //         </Typography>
-    //         <Typography variant="h6" align="center" color="text.secondary" paragraph>
-    //           Are you tired of beating yourself up internally for dissatisfied results at the gym?
-    //         </Typography>
-    //         <Typography variant="h6" align="center" color="text.secondary" paragraph>
-    //           This could happen due to unawareness of your past records. Let's log that sweaty gym effort and enjoy the process with us.
-    //         </Typography>
-    //         <Stack
-    //           sx={{ pt: 4 }}
-    //           direction="row"
-    //           spacing={3}
-    //           justifyContent="center"
-    //         >
-    //           <Button component={Link} to={PATHNAMES.SIGNIN} variant="contained">sign in</Button>
-    //           <Button component={Link} to={PATHNAMES.SIGNUP} variant="outlined">sweat with us</Button>
-    //         </Stack>
-    //       </Container>
-    //     </Box>
-
     <Paper
       sx={{
         position: 'fixed',
@@ -54,13 +19,10 @@ const Home = () => {
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
-        // backgroundImage: `url(${process.env.PUBLIC_URL}/landing_bg.jpg)`,
         p: { xs: 2, sm: 4 ,md: 6 },
         paddingBlock: { xs: 4, md: 8 },
       }}
     >
-      {/* Increase the priority of the hero background image */}
-      {/* {<img style={{ display: 'none' }} src={`${process.env.PUBLIC_URL}/landing_bg.jpg`} alt={"some image"} />} */}
       <Box
         sx={{
           position: 'absolute',
@@ -68,7 +30,6 @@ const Home = () => {
           bottom: 0,
           right: 0,
           left: 0,
-          // backgroundColor: 'rgba(0,0,0,.25)',
         }}
       />
       <Grid spacing={4} container sx={{

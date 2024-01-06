@@ -5,21 +5,24 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { Box, CardHeader, Chip, Link } from '@mui/material';
+import { Box, CardHeader, Chip, Link} from '@mui/material';
 import MovingIcon from '@mui/icons-material/Moving';
 import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 import EastIcon from '@mui/icons-material/East';
 
+import { Link as RRDLink } from "react-router-dom"
 
 
-const RecordsCard: React.FC<{ title: string, count: number, adornment: string ,percentage:number, extra: string, isProgress: boolean  }> = ({ title, count, adornment ,percentage, extra, isProgress }) => {
+
+const RecordsCard: React.FC<{ title: string, count: number, adornment: string, isProgress: boolean, prDate: string, actionLink: string }>
+  = ({ title, count, adornment, isProgress, prDate, actionLink }) => {
   return (
     <Card variant="outlined">
       <CardContent>
-      <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+      <Typography sx={ {typography: {xs: "h6", sm: "h6",}} } color="text.secondary" gutterBottom>
         {title}
         </Typography>
-      <Box display="flex" alignItems="center" ><Typography variant="h5" component="div">
+      <Box display="flex" alignItems="center" ><Typography sx={ {typography: {xs: "h5", sm: "h5",}} } component="div">
         {count} {adornment}
       </Typography>
       <Chip
@@ -30,17 +33,15 @@ const RecordsCard: React.FC<{ title: string, count: number, adornment: string ,p
             {isProgress ? <MovingIcon style={{ fontSize: '0.75rem', color: 'inherit' }} /> : <TrendingDownIcon style={{ fontSize: '0.75rem', color: 'inherit' }} />}
           </>
         }
-        label={`${percentage}%`}
+        label={`Achieved on ${prDate}`}
         sx={{ ml: 1.25, pl: 1 }}
         size="small"
-          />  </Box>
+          />
+        </Box>
         
-      <Typography color="text.secondary">
-        {extra} more since last time!
-      </Typography>
       </CardContent>
       <CardActions>
-        <Button size='small' variant="text" >Check more records<EastIcon /> </Button>
+        <RRDLink to={actionLink}><Button size='small' variant="text">Details of this exercise</Button></RRDLink>
       </CardActions>
     </Card>
   )

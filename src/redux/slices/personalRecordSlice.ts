@@ -4,7 +4,9 @@ import { request } from "../../axios/axios";
 import { ICredentials } from "./routineSlice";
 
 export interface IPersonalRecord extends IExercise {
+  documentId: string;
   createdAt: string;
+  exerciseName: string;
 }
 
 export const personalRecordInitialState: IPersonalRecord[] = [];

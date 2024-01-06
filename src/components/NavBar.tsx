@@ -8,7 +8,7 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import { isMobile } from 'react-device-detect'; 
 import { useAppSelector } from '../redux/hooks';
 
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -56,51 +56,55 @@ const NavBar = () => {
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   // const location = useLocation();
   return (
-  <Paper component={"nav"} elevation={3}>
-      {isMobile ? (
+    <Paper component={"nav"} elevation={3}>
+      (
+        <AppBar key={beforeSignin[0].appRoute+isMobile}>
+          <Toolbar>
+            <IconButton key={"open drawer"} color="inherit" aria-label="open drawer">
+              <MenuIcon />
+            </IconButton>
+            <Box sx={{ flexGrow: 1 }} />
+          {isLoggedIn &&
+            <IconButton color="inherit">
+              <ViewListIcon />
+            </IconButton>}
+          
+              {isLoggedIn
+                ? afterSignin.map((as,i) => {console.log(as.appRoute+i); return (<Link to={as.appRoute}>
+                  <IconButton color="inherit" sx={{color:"white"}} key={as.appRoute+i}>
+                    {as.icon}
+                  </IconButton>  
+                </Link>)})  
+            : beforeSignin.map((bs, i) => {
+              console.log(bs.appRoute+i+bs.name);  return (<Link to={bs.appRoute}>
+                  <IconButton color="inherit" sx={{color:"white"}} href={bs.appRoute} key={bs.appRoute+i}>
+                    {bs.icon}
+                  </IconButton>  
+                </Link>)})  
+            }
+            
+            <IconButton key={"more"} color="inherit">
+              <MoreIcon />
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+      )
+      {/* {isMobile ? (
         <BottomNavigation showLabels>
             {isLoggedIn
-                ? afterSignin.map(as => (<>
-                  <IconButton color="inherit" href={as.appRoute}>
+                ? afterSignin.map((as, i) => (<>
+                  <IconButton color="inherit" href={as.appRoute} key={as.appRoute+i}>
                     {as.icon}
                   </IconButton>  
                 </>))  
-                : beforeSignin.map(as => (<>
-                  <IconButton color="inherit" href={as.appRoute}>
+                : beforeSignin.map((as, i) => (<>
+                  <IconButton color="inherit" href={as.appRoute} key={as.appRoute+i}>
                     {as.icon}
                   </IconButton>  
                 </>))  
             }
         </BottomNavigation>
-      ) : (
-        <AppBar >
-          <Toolbar>
-            <IconButton color="inherit" aria-label="open drawer">
-              <MenuIcon />
-            </IconButton>
-            <Box sx={{ flexGrow: 1 }} />
-            {isLoggedIn && <IconButton color="inherit">
-              <ViewListIcon />
-              </IconButton>}
-              {isLoggedIn
-                ? afterSignin.map(as => (<>
-                  <IconButton color="inherit" href={as.appRoute}>
-                    {as.icon}
-                  </IconButton>  
-                </>))  
-                : beforeSignin.map(as => (<>
-                  <IconButton color="inherit" href={as.appRoute}>
-                    {as.icon}
-                  </IconButton>  
-                </>))  
-            }
-            
-            <IconButton color="inherit">
-              <MoreIcon />
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-      )}
+      ) : } */}
     </Paper>
   )
 }
