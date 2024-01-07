@@ -38,7 +38,6 @@ const Routines: React.FC = () => {
   const [controlledRoutines, setControlledRoutines] = useState<Set<IRoutine>>(new Set());
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
   const { username } = useAuth();
   const [open, setOpen] = useState(true);
   const [filters, setFilters] = useState<string[]>([]);
@@ -104,7 +103,6 @@ const Routines: React.FC = () => {
       </Box>
       <RoutinesListView
         routines={filters.length > 0 ? Array.from(controlledRoutines) : routines}
-        navigateToLog={navigateToLog}
       />
       <StyledFab color="secondary" onClick={() => onFabClick()}>
               <AddIcon />

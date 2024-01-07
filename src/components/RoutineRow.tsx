@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { ChangeEvent, MouseEventHandler, useState } from 'react'
 
 import ExerciseRow from './ExerciseRow';
 import { IRoutine } from '../redux/slices/routineSlice';
@@ -8,6 +8,7 @@ import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
+import Radio from '@mui/material/Radio';
 
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
@@ -18,16 +19,24 @@ import { IExercise, loadExercises } from '../redux/slices/exerciseSlice';
 import { ISet, loadSets } from '../redux/slices/setsSlice';
 import '../styles/tableCell.css';
 import { Dot } from './Routines';
+import useAuth from '../hooks/useAuth';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const iconCell = "iconCell";
 // represent a whole workout routine with exercises in it
-const RoutineRow: React.FC<{ routine: IRoutine, isNew: boolean, navigateToLog: Function }> = ({ routine, isNew, navigateToLog }) => {
+const RoutineRow: React.FC<{ routine: IRoutine, isNew: boolean, isRadioButton: boolean, selectedValue: string, handleRadioChange: (event: ChangeEvent<HTMLInputElement>, checked: boolean) => void,}>
+  = ({ routine, isNew, isRadioButton, selectedValue, handleRadioChange }) => {
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
   
-  const routineInForm = useAppSelector(state => state.persistedReducer.newRoutine);
+  const { username } = useAuth();
+  const navigate = useNavigate();
+  const navigateToLog = () => {
+    navigate(`/dashboard/${username}/log`)
+  }
   
-  const onEditClick = () => {
+    const onEditClick = (event: React.MouseEvent<HTMLElement>): void => {
+      event.stopPropagation();
     dispatch(editNewRoutine({...routine, isEditing: true, exercises: []}));
     let exercises: Record<string, IExercise> = {};
     routine.exercises.forEach(e => {
@@ -44,7 +53,24 @@ const RoutineRow: React.FC<{ routine: IRoutine, isNew: boolean, navigateToLog: F
     dispatch(loadSets(sets))
     navigateToLog();
   }
-  // console.log(isEditing, routineInForm)
+
+  
+
+  const RightMostElement = isRadioButton
+    ? (
+      <Radio
+        value={routine._id}
+        checked={selectedValue === routine._id}
+        onChange={handleRadioChange}
+        name="radio-buttons"
+        inputProps={{ 'aria-label': `routine ${routine.createdAt}` }}
+      />
+    )    
+  : (
+    <IconButton color='warning' title="Edit Routine" size="small" onClick={onEditClick}>
+        <Edit />
+      </IconButton>)
+  
   const rowContent = <>
     <TableCell >
       <Box display={"flex"} alignItems="center" >
@@ -60,14 +86,12 @@ const RoutineRow: React.FC<{ routine: IRoutine, isNew: boolean, navigateToLog: F
     </Box>
     </TableCell>
     <TableCell align='right' className={iconCell} sx={{marginBottom:"-0.5px"}}>
-      <IconButton color='warning' title="Edit Routine" size="small" onClick={onEditClick}>
-        <Edit />
-      </IconButton>
+      {RightMostElement}
     </TableCell>
   </>
   return (
     <React.Fragment>
-      <TableRow onClick={() => setOpen(!open)} sx={{  position: "relative", cursor:"pointer" }} selected={open}>
+      <TableRow  sx={{  position: "relative", cursor:"pointer" }} selected={open}>
         {rowContent}
       </TableRow>
       <TableRow>

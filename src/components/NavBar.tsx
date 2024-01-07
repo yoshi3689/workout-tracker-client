@@ -70,7 +70,7 @@ const NavBar = () => {
             </IconButton>}
           
               {isLoggedIn
-                ? afterSignin.map((as,i) => {console.log(as.appRoute+i); return (<Link to={as.appRoute}>
+                ? afterSignin.map((as,i) => { return (<Link to={as.appRoute}>
                   <IconButton color="inherit" sx={{color:"white"}} key={as.appRoute+i}>
                     {as.icon}
                   </IconButton>  
