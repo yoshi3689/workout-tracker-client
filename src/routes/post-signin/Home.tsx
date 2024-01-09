@@ -40,7 +40,7 @@ const Root = () => {
     <Box component={"main"} sx={{ padding: 6, marginBottom: "100px" }}>
       {!error ? (
         <Box>
-          <Routines titleTextElement={<Typography variant='h5'>Past Routines</Typography>} />
+          <Routines titleTextElement={<Typography variant='h5'>Past Logs</Typography>} />
           <NewLogFab />
         </Box>
       ) : (

@@ -4,20 +4,18 @@ import Paper from "@mui/material/Paper";
 import TableContainer from "@mui/material/TableContainer";
 import Typography from "@mui/material/Typography";
 
-import { IRoutine, addRoutine, getRoutines, modifyRoutine } from "../../redux/slices/routineSlice";
+import { addRoutine, getRoutines, modifyRoutine } from "../../redux/slices/routineSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { editNewRoutine, clearNewRoutine } from "../../redux/slices/newRoutineSlice";
 import { useNavigate } from "react-router-dom";
 import ExerciseRows from "../../components/ExerciseRows";
 import { Box, Button, Container } from "@mui/material";
-import { IExercise, clearExercises } from "../../redux/slices/exerciseSlice";
+import { clearExercises } from "../../redux/slices/exerciseSlice";
 import { clearSets } from "../../redux/slices/setsSlice";
 import useAuth from "../../hooks/useAuth";
 import { checkSigninStatus, selectAccessToken, selectIsLoggedIn } from "../../redux/slices/authSlice";
 import { PATHNAMES, defineUserPath } from "../../utils/pathnames";
 import Modal from '@mui/material/Modal';
-import RoutinesListView from "../../components/RoutinesListView";
-import { selectRoutineTemplate } from "../../redux/slices/routineTemplateSlice";
 import Routines from "../../components/Routines";
 
 const CreateOrEdit: React.FC = () => {
@@ -31,8 +29,6 @@ const CreateOrEdit: React.FC = () => {
   const accessToken = useAppSelector(selectAccessToken);
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
-  const routineTemplateId = useAppSelector(selectRoutineTemplate)
-
   const [workoutName, setWorkoutName] = useState(routine.name ? routine.name : "");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -43,6 +39,9 @@ const CreateOrEdit: React.FC = () => {
     }));
   }, [workoutName]);
   
+  const goToUserHome = () => {
+    naviagte(defineUserPath(username, PATHNAMES.USER_HOME));
+  }
   // set all the newRoutine states to the initial state
   // refelect the rest on the redux store
   const handleCancel = () => {
@@ -50,7 +49,7 @@ const CreateOrEdit: React.FC = () => {
     dispatch(clearNewRoutine());
     dispatch(clearExercises())
     dispatch(clearSets())
-
+    goToUserHome();
   };
 
   // for now just add the new workout routine to an array
@@ -66,7 +65,7 @@ const CreateOrEdit: React.FC = () => {
       }
     }
     handleCancel();
-    naviagte(defineUserPath(username, PATHNAMES.USER_HOME));
+    goToUserHome();
   };
 
 
@@ -82,7 +81,9 @@ const CreateOrEdit: React.FC = () => {
   }
 
   const handleOpenRoutinesModal = async () => {
-    if (routines.length < 1) await fetchRoutines();
+    if (routines.length < 1) {
+      await fetchRoutines();
+    }
     setIsModalOpen(true);
   }
 
@@ -111,7 +112,7 @@ const CreateOrEdit: React.FC = () => {
         }}>
         <Routines
           titleTextElement={<Typography variant="h6">Select Routine</Typography>}
-          onSelectCallBack={() => setIsModalOpen(false)}
+          onSelectCallBack={handleCloseRoutinesModal}
         />
         </Box>
       </Modal>
@@ -128,7 +129,7 @@ const CreateOrEdit: React.FC = () => {
           ? <Typography>Editing {routine.createdAt}</Typography>
           : <>
             <Typography>Creating new routine</Typography>
-            <Button onClick={handleOpenRoutinesModal}>Use Previous Log as a Template</Button>
+            <Button onClick={handleOpenRoutinesModal}>Use Previous Log to Start</Button>
           </>
         }
       </Box>
