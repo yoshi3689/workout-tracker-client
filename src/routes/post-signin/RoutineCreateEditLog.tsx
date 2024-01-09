@@ -4,32 +4,34 @@ import Paper from "@mui/material/Paper";
 import TableContainer from "@mui/material/TableContainer";
 import Typography from "@mui/material/Typography";
 
-import { addRoutine, getRoutines, modifyRoutine } from "../../redux/slices/routineSlice";
+import { IRoutine, addRoutine, getRoutines, modifyRoutine } from "../../redux/slices/routineSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { editNewRoutine, clearNewRoutine } from "../../redux/slices/newRoutineSlice";
 import { useNavigate } from "react-router-dom";
 import ExerciseRows from "../../components/ExerciseRows";
 import { Box, Button, Container } from "@mui/material";
-import { clearExercises } from "../../redux/slices/exerciseSlice";
+import { IExercise, clearExercises } from "../../redux/slices/exerciseSlice";
 import { clearSets } from "../../redux/slices/setsSlice";
 import useAuth from "../../hooks/useAuth";
 import { checkSigninStatus, selectAccessToken, selectIsLoggedIn } from "../../redux/slices/authSlice";
 import { PATHNAMES, defineUserPath } from "../../utils/pathnames";
 import Modal from '@mui/material/Modal';
 import RoutinesListView from "../../components/RoutinesListView";
-
-const style = {
-  
-};
+import { selectRoutineTemplate } from "../../redux/slices/routineTemplateSlice";
+import Routines from "../../components/Routines";
 
 const CreateOrEdit: React.FC = () => {
   const dispatch = useAppDispatch();
+
+  // there is already a routine variable having a new routine
   const routine = useAppSelector(state => state.persistedReducer.newRoutine);
   const routines = useAppSelector(state => state.persistedReducer.routines);
   const { username } = useAuth();
   const naviagte = useNavigate();
   const accessToken = useAppSelector(selectAccessToken);
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
+
+  const routineTemplateId = useAppSelector(selectRoutineTemplate)
 
   const [workoutName, setWorkoutName] = useState(routine.name ? routine.name : "");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -79,12 +81,12 @@ const CreateOrEdit: React.FC = () => {
     }
   }
 
-  const handleOpenRoutinesModal = async (event: React.ChangeEvent<unknown>) => {
+  const handleOpenRoutinesModal = async () => {
     if (routines.length < 1) await fetchRoutines();
     setIsModalOpen(true);
   }
 
-  const handleCloseRoutinesModal = (event: React.ChangeEvent<unknown>) => {
+  const handleCloseRoutinesModal = () => {
     setIsModalOpen(false);
   }
 
@@ -100,22 +102,17 @@ const CreateOrEdit: React.FC = () => {
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          width: "70%",
-          height: 400,
+          width: "85%",
+          height: 450,
           overflow: "hidden", 
           bgcolor: 'background.paper',
           boxShadow: 24,
           p: 4,
-      }}>
-        <Box display={"flex"} alignItems="center" justifyContent="space-between">
-          <Typography>Select a Routine</Typography>
-        <Button variant="contained">Use as Template</Button>
-        </Box>
-        <Box sx={{overflowY: "scroll", height: "90%", mt: 2, paddingInline: "2px"}}>
-          <RoutinesListView
-            routines={routines}
-          />
-        </Box>
+        }}>
+        <Routines
+          titleTextElement={<Typography variant="h6">Select Routine</Typography>}
+          onSelectCallBack={() => setIsModalOpen(false)}
+        />
         </Box>
       </Modal>
   )

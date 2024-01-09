@@ -19,57 +19,35 @@ import { IExercise, loadExercises } from '../redux/slices/exerciseSlice';
 import { ISet, loadSets } from '../redux/slices/setsSlice';
 import '../styles/tableCell.css';
 import { Dot } from './Routines';
-import useAuth from '../hooks/useAuth';
-import { useLocation, useNavigate } from 'react-router-dom';
+
+import { changeRoutineTemplate, selectRoutineTemplate } from '../redux/slices/routineTemplateSlice';
 
 const iconCell = "iconCell";
 // represent a whole workout routine with exercises in it
-const RoutineRow: React.FC<{ routine: IRoutine, isNew: boolean, isRadioButton: boolean, selectedValue: string, handleRadioChange: (event: ChangeEvent<HTMLInputElement>, checked: boolean) => void,}>
-  = ({ routine, isNew, isRadioButton, selectedValue, handleRadioChange }) => {
+const RoutineRow: React.FC<{ routine: IRoutine, isNew: boolean }>
+  = ({ routine, isNew,  }) => {
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
+  const routineId = useAppSelector(selectRoutineTemplate);
   
-  const { username } = useAuth();
-  const navigate = useNavigate();
-  const navigateToLog = () => {
-    navigate(`/dashboard/${username}/log`)
+  const onEditClick = (event: React.MouseEvent<HTMLElement>): void => {
+    event.stopPropagation();
   }
-  
-    const onEditClick = (event: React.MouseEvent<HTMLElement>): void => {
-      event.stopPropagation();
-    dispatch(editNewRoutine({...routine, isEditing: true, exercises: []}));
-    let exercises: Record<string, IExercise> = {};
-    routine.exercises.forEach(e => {
-      exercises[e._id] = {...e, sets: []}
-    });
-    dispatch(loadExercises(exercises))
-    const sets: Record<string, Record<string, ISet>> = {};
-      routine.exercises.forEach(e => {
-        sets[e._id] = {};
-        e.sets.forEach(s => {
-            sets[e._id][s._id] = s
-          })
-    });
-    dispatch(loadSets(sets))
-    navigateToLog();
+    
+  const handleRadioChangeVal = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const test = dispatch(changeRoutineTemplate(event.target.value));
+    console.log(test)
   }
 
-  
-
-  const RightMostElement = isRadioButton
-    ? (
+    const RightMostElement = (
       <Radio
         value={routine._id}
-        checked={selectedValue === routine._id}
-        onChange={handleRadioChange}
+        checked={routineId === routine._id}
+        onChange={handleRadioChangeVal}
         name="radio-buttons"
         inputProps={{ 'aria-label': `routine ${routine.createdAt}` }}
       />
-    )    
-  : (
-    <IconButton color='warning' title="Edit Routine" size="small" onClick={onEditClick}>
-        <Edit />
-      </IconButton>)
+    );
   
   const rowContent = <>
     <TableCell >
@@ -82,7 +60,6 @@ const RoutineRow: React.FC<{ routine: IRoutine, isNew: boolean, isRadioButton: b
       </IconButton>
         <Typography >{routine.createdAt.split("T")[0].replaceAll("-", "/")}</Typography>
         <Box sx={{ marginLeft: "16px"}} >{routine.muscleGroups.map(mg => Dot(mg, routine.createdAt))}</Box>
-        {/* {RoutineRow.name && <Typography>{routine.name}</Typography>} */}
     </Box>
     </TableCell>
     <TableCell align='right' className={iconCell} sx={{marginBottom:"-0.5px"}}>

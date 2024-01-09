@@ -12,6 +12,7 @@ import storage from 'redux-persist/lib/storage'
 import { authSlice } from './slices/authSlice'
 import { personalRecordSlice } from './slices/personalRecordSlice'
 import { liftableWeightSlice } from './slices/liftableWeightSlice'
+import { routineTemplateSlice } from './slices/routineTemplateSlice'
 
 const persistConfig = {
   key: "root",
@@ -29,6 +30,7 @@ const reducers = combineReducers({
   personalRecords: personalRecordSlice.reducer,
   liftableWeights: liftableWeightSlice.reducer,
   auth: authSlice.reducer,
+  routineTemplate: routineTemplateSlice.reducer
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);

@@ -11,6 +11,7 @@ import { checkSigninStatus, selectAccessToken } from '../../redux/slices/authSli
 import { Box, Container, Grid, Typography } from '@mui/material';
 import useAuth from '../../hooks/useAuth';
 import Metrics from '../../components/RecordsCard';
+import NewLogFab from '../../components/NewLogFab';
 
 
 const Root = () => {
@@ -36,9 +37,12 @@ const Root = () => {
   }, [accessToken]);
   
   return (
-    <Box component={"main"} sx={{ padding: "24px", marginBottom: "100px" }}>
+    <Box component={"main"} sx={{ padding: 6, marginBottom: "100px" }}>
       {!error ? (
-        <Routines />
+        <Box>
+          <Routines titleTextElement={<Typography variant='h5'>Past Routines</Typography>} />
+          <NewLogFab />
+        </Box>
       ) : (
         <Unauthorized error={error} />
         )}
