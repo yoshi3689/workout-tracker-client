@@ -1,4 +1,4 @@
-import React, { ChangeEvent, MouseEventHandler, useState } from 'react'
+import React, { ChangeEvent, MouseEventHandler, useEffect, useState } from 'react'
 
 import ExerciseRow from './ExerciseRow';
 import { IRoutine } from '../redux/slices/routineSlice';
@@ -25,25 +25,25 @@ import { changeRoutineTemplate, selectRoutineTemplate } from '../redux/slices/ro
 const iconCell = "iconCell";
 // represent a whole workout routine with exercises in it
 const RoutineRow: React.FC<{ routine: IRoutine, isNew: boolean }>
-  = ({ routine, isNew,  }) => {
+  = ({ routine, isNew }) => {
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
   const routineId = useAppSelector(selectRoutineTemplate);
   
-  const onEditClick = (event: React.MouseEvent<HTMLElement>): void => {
-    event.stopPropagation();
+    const handleRadioChangeVal = (event: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(changeRoutineTemplate(event.target.value))
   }
     
-  const handleRadioChangeVal = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const test = dispatch(changeRoutineTemplate(event.target.value));
-    console.log(test)
-  }
+  useEffect(() => {
+    setOpen(routine._id === routineId)
+  }, [routineId])
 
     const RightMostElement = (
       <Radio
         value={routine._id}
         checked={routineId === routine._id}
         onChange={handleRadioChangeVal}
+        onClick={(e) => e.stopPropagation()}
         name="radio-buttons"
         inputProps={{ 'aria-label': `routine ${routine.createdAt}` }}
       />
@@ -68,7 +68,7 @@ const RoutineRow: React.FC<{ routine: IRoutine, isNew: boolean }>
   </>
   return (
     <React.Fragment>
-      <TableRow  sx={{  position: "relative", cursor:"pointer" }} selected={open}>
+      <TableRow onClick={()=>setOpen(!open)} sx={{  position: "relative", cursor:"pointer" }} selected={open}>
         {rowContent}
       </TableRow>
       <TableRow>

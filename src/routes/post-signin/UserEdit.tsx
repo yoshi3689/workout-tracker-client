@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom';
-import { request } from '../../axios/axios';
+import { useNavigate } from 'react-router-dom';
 
-import UserForm, { ILinkProp, ITextFieldProp } from '../../components/UserForm';
-import { PATHNAMES, REQUEST_U_R_PREFIX } from '../../utils/pathnames';
-import { AxiosError, AxiosResponse } from 'axios';
+import UserForm, { ITextFieldProp } from '../../components/UserForm';
+import { AxiosError } from 'axios';
 import { Alert, AlertTitle, Container, Typography } from '@mui/material';
 import { useAppSelector, useAppDispatch } from '../../redux/hooks';
 import { IUser, getUser, updateUser } from '../../redux/slices/userSlice';
@@ -17,7 +15,6 @@ const UserEdit: React.FC = () => {
   const username = useAuth().username;
   const [code, setCode] = useState("");
   const [email, setEmail] = useState("");
-  // const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const [error, setError] = useState("");
@@ -42,12 +39,6 @@ const UserEdit: React.FC = () => {
   
 
   const textFieldProps: ITextFieldProp[] = [
-    // {
-    //   name: "username",
-    //   changeHandler: setUsername,
-    //   fieldState: username,
-    //   customFieldLabel: "Username"
-    // },
     {
       name: "email",
       changeHandler: setEmail,
@@ -87,7 +78,9 @@ const UserEdit: React.FC = () => {
     <Container sx={{ padding: "24px", marginBottom: "100px" }}>
       <Typography variant="h5">Edit Account Info</Typography>
 
-      {isSuccess ? successPopup :(<UserForm
+      {isSuccess
+        ? successPopup
+        : (<UserForm
         textFieldProps={textFieldProps}
         handleSubmit={editUserInfo}
         formTitle={username}

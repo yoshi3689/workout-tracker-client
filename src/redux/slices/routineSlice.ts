@@ -56,7 +56,7 @@ export const addRoutine = createAsyncThunk(
       const response = await request.post(`routines`, reqBody,
       { headers: { Authorization: `Bearer ${auth.accessToken}` } }
     );
-    return response.data.response;
+      return response.data.response as IRoutine;
     } else {
       return {};
     }
@@ -73,7 +73,7 @@ export const modifyRoutine = createAsyncThunk(
       const response = await request.patch(`routines`, reqBody,
         { headers: { Authorization: `Bearer ${auth.accessToken}` } }
     );
-    return response.data.response;
+    return response.data.response as IRoutine;
     } else {
       return {};
     }
@@ -95,19 +95,6 @@ export const getRoutines = createAsyncThunk<
   }
 );
 
-export const getPRs = createAsyncThunk<
-  IRoutine[],
-  ICredentials
->(
-  "routines/getPRs",
-  async ({username, accessToken}) => {
-    const response = await request.get(`routines/${username}/prs`, {
-      headers: { Authorization: `Bearer ${accessToken}` }
-    });
-    return response.data as IRoutine[];
-  }
-);
-
 export const routineSlice = createSlice({
   name: "routines",
   initialState: routineInitialState,
@@ -121,3 +108,15 @@ export const routineSlice = createSlice({
     })
   },
 });
+
+export const selectPaginatedRoutines = (state: RootState) => {
+  return state.persistedReducer.routines.reduce<IRoutine[][]>((acc, curr, i) => {
+    console.log(curr)
+    const index = Math.floor(i / 6);
+    if (!acc[index]) {
+      acc[index] = [];
+    }
+    acc[index].push(curr);
+    return acc;
+  }, []);
+}

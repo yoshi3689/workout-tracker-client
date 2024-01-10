@@ -1,13 +1,12 @@
-import { Box, Button, Grid, Paper, Typography } from '@mui/material'
+import { Box, Grid, Typography } from '@mui/material'
 import RecordsCard from '../../../components/RecordsCard'
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks'
 import useAuth from '../../../hooks/useAuth'
 import { getPersonalRecords } from '../../../redux/slices/personalRecordSlice'
 import { getLiftableWeightsByExercise } from '../../../redux/slices/liftableWeightSlice'
 import { LineChart } from '@mui/x-charts'
-import { Link } from 'react-router-dom'
-import EastIcon from '@mui/icons-material/East';
 import MetricsCardList from '../../../components/MetricsCardList'
+import { useEffect } from 'react'
 
 
 const Metrics = () => {
@@ -19,23 +18,31 @@ const Metrics = () => {
 
   const fetchPRs = async () => {
   try {
-    const res1 = await dispatch(getPersonalRecords({ username, accessToken: token })).unwrap();
-    console.log(res1);
-    const res2 = await dispatch(getLiftableWeightsByExercise({ username, accessToken: token })).unwrap();
-    console.log(res2);
+    await dispatch(getPersonalRecords({ username, accessToken: token })).unwrap();
   } catch (err) {
     console.error(err)
   }
   }
-  
-  console.log(personalRecords)
-  liftableWeights.length > 1 && console.log(liftableWeights)
+
+  const fetchLiftedWeights = async () => {
+  try {
+    await dispatch(getLiftableWeightsByExercise({ username, accessToken: token })).unwrap();
+  } catch (err) {
+    console.error(err)
+  }
+  }
+
+  useEffect(() => {
+    fetchPRs();
+    fetchLiftedWeights();
+  }, [])
+
   return (
     <Box component={"main"} sx={{ padding: "24px", marginBottom: "100px" }}>
-      <Typography variant="h4">Dashboard <Button onClick={fetchPRs}>
-        Get PRs
-      </Button></Typography>
-      <MetricsCardList
+      <Typography variant="h4">Dashboard
+        
+      </Typography>
+      {/* <MetricsCardList
         listTitle="Personal Records"
         linkToDetails={`/dashboard/${username}/metrics/personal-records`}
         linkToDetailsText="All Personal Records"
@@ -53,7 +60,7 @@ const Metrics = () => {
                 />
               </Grid>)
           })
-        } />
+        } /> */}
       
       <MetricsCardList
         listTitle='Lifted Weight'

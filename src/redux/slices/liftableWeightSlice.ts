@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IExercise } from "./exerciseSlice";
 import { request } from "../../axios/axios";
 import { ICredentials } from "./routineSlice";
+import { RootState } from "../store";
 
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
 
@@ -43,3 +44,14 @@ export const liftableWeightSlice = createSlice({
     });
   },
 });
+
+export const selectPaginatedLiftableWeights = (state: RootState) => {
+  return state.persistedReducer.liftableWeights.reduce<IExerciseLiftableWeight[][]>((acc, curr, i) => {
+    const index = Math.floor(i / 6);
+    if (!acc[index]) {
+      acc[index] = [];
+    }
+    acc[index].push(curr);
+    return acc;
+  }, []);
+}

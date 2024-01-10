@@ -13,6 +13,7 @@ import { authSlice } from './slices/authSlice'
 import { personalRecordSlice } from './slices/personalRecordSlice'
 import { liftableWeightSlice } from './slices/liftableWeightSlice'
 import { routineTemplateSlice } from './slices/routineTemplateSlice'
+import { routineStateSlice } from './slices/routineStateSlice'
 
 const persistConfig = {
   key: "root",
@@ -29,6 +30,7 @@ const reducers = combineReducers({
   newRoutine: newRoutineSlice.reducer,
   personalRecords: personalRecordSlice.reducer,
   liftableWeights: liftableWeightSlice.reducer,
+  routineState: routineStateSlice.reducer,
   auth: authSlice.reducer,
   routineTemplate: routineTemplateSlice.reducer
 });

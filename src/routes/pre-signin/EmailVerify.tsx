@@ -11,6 +11,7 @@ const VerifyEmail: React.FC = () => {
   const navigate = useNavigate();
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const goToSignin = () => {
     navigate(PATHNAMES.SIGNIN);
@@ -45,7 +46,10 @@ const VerifyEmail: React.FC = () => {
   const verifyEmail = () => {
     request.post(`${REQUEST_U_R_PREFIX}${defineUserPath(location.pathname.split("/")[2],PATHNAMES.EMAIL_VERIFY)}`, { code })
       .then((res: AxiosResponse)  => {
-        if (res.data.isVerfied) navigate(PATHNAMES.SIGNIN)
+        if (res.data.isVerfied) {
+          setSuccess("Email Verified");
+          navigate(PATHNAMES.SIGNIN)
+        }
       })
       .catch((error: AxiosError) => {
         setError(error.message);
@@ -61,6 +65,7 @@ const VerifyEmail: React.FC = () => {
         handleSubmit={verifyEmail}
         buttonText={"Verify"}
         bottomLinkProps={linkProps}
+        success={success}
         error={error}
       />
       

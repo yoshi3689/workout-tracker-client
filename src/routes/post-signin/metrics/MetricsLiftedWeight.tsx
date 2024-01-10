@@ -4,7 +4,7 @@ import useAuth from '../../../hooks/useAuth';
 import { Box, Grid, Typography } from '@mui/material';
 import MetricsCardList from '../../../components/MetricsCardList';
 import { LineChart } from '@mui/x-charts';
-import { IExerciseLiftableWeight, getLiftableWeightsByExercise } from '../../../redux/slices/liftableWeightSlice';
+import { IExerciseLiftableWeight, getLiftableWeightsByExercise, selectPaginatedLiftableWeights } from '../../../redux/slices/liftableWeightSlice';
 
 import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
@@ -21,21 +21,7 @@ const MetricsLiftedWeight = () => {
   };
   const dispatch = useAppDispatch();
   const { username, token } = useAuth();
-  const liftableWeights = useAppSelector(state => {
-    if (state.persistedReducer.liftableWeights.length > 1) {
-      return state.persistedReducer.liftableWeights.reduce<IExerciseLiftableWeight[][]>((acc, curr, i) => {
-        console.log(curr)
-      const index = Math.floor(i / 6);
-      if (!acc[index]) {
-        acc[index] = [];
-      }
-      acc[index].push(curr);
-      return acc;
-    }, []);
-    } else {
-      return [state.persistedReducer.liftableWeights]
-    }
-  });
+  const liftableWeights = useAppSelector(state => selectPaginatedLiftableWeights(state));
 
   console.log(liftableWeights)
   const fetchLiftableWeights = async () => {
@@ -48,7 +34,7 @@ const MetricsLiftedWeight = () => {
   }
 
   useEffect(() => {
-    if (liftableWeights[0].length < 1) {
+    if (liftableWeights.length < 1) {
       fetchLiftableWeights();
     }
   }, []);

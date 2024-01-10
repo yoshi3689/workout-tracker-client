@@ -11,14 +11,13 @@ import { Box, Button, Collapse, Container, CssBaseline, IconButton, ToggleButton
 import { useLocation, useNavigate } from 'react-router-dom';
 import { clearNewRoutine, editNewRoutine } from '../redux/slices/newRoutineSlice';
 import { IExercise, clearExercises, loadExercises } from '../redux/slices/exerciseSlice';
-import { ISet, clearSets, loadSets } from '../redux/slices/setsSlice';
+import { ISet, loadSets } from '../redux/slices/setsSlice';
 import { colors } from '../utils/useColors';
 import RoutinesListView from './RoutinesListView';
 import { muscleGroups } from '../utils/filterByBodyPart';
 import { IRoutine } from '../redux/slices/routineSlice';
 import useAuth from '../hooks/useAuth';
 import { selectRoutineTemplate } from '../redux/slices/routineTemplateSlice';
-import NewLogFab from './NewLogFab';
 
 export const Dot = (bodyPart: string, createdAt: string) => (
   <CircleIcon key={bodyPart+createdAt} sx={{ color: colors[bodyPart], height: "10px", width: "10px" }} />
@@ -88,11 +87,12 @@ const Routines: React.FC<{titleTextElement: ReactElement, onSelectCallBack?: Fun
       <>
         <Box>
         <Box>
-          <Box display={"flex"} justifyContent={"space-between"} alignItems="center" >
+          <Box display={"flex"} alignItems="center" >
             {titleTextElement}
+            <IconButton onClick={() => setOpen(!open)}><TuneIcon /></IconButton>
             <Box>
-              <IconButton><CalendarMonthIcon /></IconButton>
-              <IconButton onClick={() => setOpen(!open)}><TuneIcon /></IconButton></Box>
+
+          </Box>
           </Box>
         </Box>
 

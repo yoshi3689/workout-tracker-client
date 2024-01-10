@@ -17,8 +17,9 @@ import LoginIcon from '@mui/icons-material/Login';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import EqualizerIcon from '@mui/icons-material/Equalizer';
 
-import { PATHNAMES } from "../utils/pathnames";
+import { PATHNAMES, defineUserPath } from "../utils/pathnames";
 import { selectIsLoggedIn } from '../redux/slices/authSlice';
+import useAuth from '../hooks/useAuth';
 
 
 interface INavItem {
@@ -36,75 +37,47 @@ const beforeSignin: INavItem[] = [
 ];
 
 const afterSignin: INavItem[] = [
-  { appRoute: PATHNAMES.USER_HOME, icon: <DashboardIcon /> },
+  { appRoute: PATHNAMES.USER_HOME, icon: <ViewListIcon />  },
   { appRoute: PATHNAMES.USER_METRICS, icon: <EqualizerIcon /> },
-  { appRoute: PATHNAMES.USER_ACCOUNT_EDIT, icon: <PersonIcon /> },
+  // { appRoute: PATHNAMES.USER_ACCOUNT_EDIT, icon: <PersonIcon /> },
   { appRoute: PATHNAMES.HOME, icon: <LogoutIcon /> },
 ];
 
-//TODO: get isLoggedIn from redux
-//TODO: define a clickHandler in another appropriate component and export to this one
-//TODO: get isLoggedIn from redux
-
 const NavBar = () => {
-  
-  const [open, setOpen] = useState(false);
-  // const navigate = useNavigate();
-    // const {isLoggedIn, username} = useAppSelector(state => {
-    // return state.persistedReducer.user;
-  // });
+  const { username } = useAuth();
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
-  // const location = useLocation();
+  const navigationContents = isLoggedIn
+    ? afterSignin.map((as, i) => {
+      return (
+        <Link to={defineUserPath(username, as.appRoute)}>
+          <IconButton color="inherit" sx={{ color: "white" }} key={as.appRoute + i}>
+            {as.icon}
+          </IconButton>
+        </Link>
+      )
+    })
+    : beforeSignin.map((bs, i) => {
+      return (<Link to={defineUserPath(username, bs.appRoute)}>
+        <IconButton color="inherit" sx={{ color: "white" }} key={bs.appRoute + i}>
+          {bs.icon}
+        </IconButton>
+      </Link>)
+    })  
   return (
     <Paper component={"nav"} elevation={3}>
-      (
-        <AppBar component={"div"}>
+      {!isMobile && (
+        <AppBar component={"div"} key={username+isLoggedIn}>
           <Toolbar>
-            <IconButton key={"open drawer"} color="inherit" aria-label="open drawer">
-              <MenuIcon />
-            </IconButton>
             <Box sx={{ flexGrow: 1 }} />
-          {isLoggedIn &&
-            <IconButton color="inherit">
-              <ViewListIcon />
-            </IconButton>}
-          
-              {isLoggedIn
-                ? afterSignin.map((as,i) => { return (<Link to={as.appRoute}>
-                  <IconButton color="inherit" sx={{color:"white"}} key={as.appRoute+i}>
-                    {as.icon}
-                  </IconButton>  
-                </Link>)})  
-            : beforeSignin.map((bs, i) => {
-              console.log(bs.appRoute+i+bs.name);  return (<Link to={bs.appRoute}>
-                  <IconButton color="inherit" sx={{color:"white"}} href={bs.appRoute} key={bs.appRoute+i}>
-                    {bs.icon}
-                  </IconButton>  
-                </Link>)})  
-            }
-            
-            <IconButton key={"more"} color="inherit">
-              <MoreIcon />
-            </IconButton>
+            { navigationContents }
           </Toolbar>
         </AppBar>
-      )
-      {/* {isMobile ? (
+      )}
+      {isMobile && (
         <BottomNavigation showLabels>
-            {isLoggedIn
-                ? afterSignin.map((as, i) => (<>
-                  <IconButton color="inherit" href={as.appRoute} key={as.appRoute+i}>
-                    {as.icon}
-                  </IconButton>  
-                </>))  
-                : beforeSignin.map((as, i) => (<>
-                  <IconButton color="inherit" href={as.appRoute} key={as.appRoute+i}>
-                    {as.icon}
-                  </IconButton>  
-                </>))  
-            }
+          { navigationContents }
         </BottomNavigation>
-      ) : } */}
+      )}
     </Paper>
   )
 }

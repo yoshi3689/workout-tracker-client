@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IExercise } from "./exerciseSlice";
 import { request } from "../../axios/axios";
 import { ICredentials } from "./routineSlice";
+import { RootState } from "../store";
 
 export interface IPersonalRecord extends IExercise {
   documentId: string;
@@ -37,3 +38,14 @@ export const personalRecordSlice = createSlice({
     })
   },
 });
+
+export const selectPaginatedLiftableWeights = (state: RootState) => {
+  return state.persistedReducer.personalRecords.reduce<IPersonalRecord[][]>((acc, curr, i) => {
+    const index = Math.floor(i / 6);
+    if (!acc[index]) {
+      acc[index] = [];
+    }
+    acc[index].push(curr);
+    return acc;
+  }, []);
+}

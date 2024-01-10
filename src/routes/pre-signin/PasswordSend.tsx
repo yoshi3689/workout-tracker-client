@@ -8,11 +8,11 @@ import { AxiosError, AxiosResponse } from 'axios';
 import { Typography } from '@mui/material';
 
 const PasswordSend: React.FC = () => {
-  const location = useLocation();
+  
   const navigate = useNavigate();
-  const [code, setCode] = useState("");
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [isSent, setIsSent] = useState(false);
 
   const goToSignin = () => {
@@ -40,7 +40,10 @@ const PasswordSend: React.FC = () => {
   const sendPassword = () => {
     request.post(REQUEST_U_R_PREFIX+PATHNAMES.PASSWORD_RESET)
       .then((res: AxiosResponse)  => {
-        if (res.data) setIsSent(true);
+        if (res.data) {
+          setIsSent(true);
+          setSuccess("The password is sent. Please check your email inbox.");
+        }
       })
       .catch((error: AxiosError) => {
         setError(error.message);
@@ -55,13 +58,7 @@ const PasswordSend: React.FC = () => {
           formTitle={"Password Sent!"}
           handleSubmit={goToSignin}
           buttonText={"Sign In"}
-          children={
-            <>
-              <Typography>
-                Your password was sent to {email}.
-              </Typography>
-            </>}
-          error={error}
+          success={success}
         />
       )}
       <UserForm

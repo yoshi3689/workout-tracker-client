@@ -71,9 +71,10 @@ const UserForm: React.FC<PropsWithChildren<{
   textFieldProps?: ITextFieldProp[],
   buttonText: string,
   children?: ReactElement<any, any>,
-  error?: string
+  error?: string,
+  success?: string,
 }>> = ({
-  bottomLinkProps, formTitle, handleSubmit, textFieldProps, buttonText, children, error
+  bottomLinkProps, formTitle, handleSubmit, textFieldProps, buttonText, children, error, success
 }) => {
 
   const errorPopup = (
@@ -86,7 +87,7 @@ const UserForm: React.FC<PropsWithChildren<{
   const successPopup = (
     <Alert severity="success">
       <AlertTitle>Success</AlertTitle>
-      <strong>{error}</strong>
+      <strong>{success}</strong>
     </Alert >
   )
 
@@ -118,6 +119,7 @@ const UserForm: React.FC<PropsWithChildren<{
             >
               {children && children}
               {error && errorPopup}
+              {success && successPopup}
               {textFieldProps && TextFields(textFieldProps)}
               <Button
                 fullWidth

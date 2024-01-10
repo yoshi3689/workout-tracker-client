@@ -4,7 +4,7 @@ import Paper from "@mui/material/Paper";
 import TableContainer from "@mui/material/TableContainer";
 import Typography from "@mui/material/Typography";
 
-import { addRoutine, getRoutines, modifyRoutine } from "../../redux/slices/routineSlice";
+import { IRoutine, addRoutine, getRoutines, modifyRoutine } from "../../redux/slices/routineSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { editNewRoutine, clearNewRoutine } from "../../redux/slices/newRoutineSlice";
 import { useNavigate } from "react-router-dom";
@@ -17,11 +17,12 @@ import { checkSigninStatus, selectAccessToken, selectIsLoggedIn } from "../../re
 import { PATHNAMES, defineUserPath } from "../../utils/pathnames";
 import Modal from '@mui/material/Modal';
 import Routines from "../../components/Routines";
+import { getErrorMessage } from "../../utils/getErrorMessage";
+import { modifyRoutineState } from "../../redux/slices/routineStateSlice";
 
 const CreateOrEdit: React.FC = () => {
   const dispatch = useAppDispatch();
 
-  // there is already a routine variable having a new routine
   const routine = useAppSelector(state => state.persistedReducer.newRoutine);
   const routines = useAppSelector(state => state.persistedReducer.routines);
   const { username } = useAuth();
@@ -29,15 +30,8 @@ const CreateOrEdit: React.FC = () => {
   const accessToken = useAppSelector(selectAccessToken);
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
-  const [workoutName, setWorkoutName] = useState(routine.name ? routine.name : "");
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  useEffect(() => {
-    dispatch(editNewRoutine({
-      ...routine,
-      name: workoutName
-    }));
-  }, [workoutName]);
+  const [error, setError] = useState("");
   
   const goToUserHome = () => {
     naviagte(defineUserPath(username, PATHNAMES.USER_HOME));
@@ -45,27 +39,40 @@ const CreateOrEdit: React.FC = () => {
   // set all the newRoutine states to the initial state
   // refelect the rest on the redux store
   const handleCancel = () => {
-    setWorkoutName("");
     dispatch(clearNewRoutine());
     dispatch(clearExercises())
     dispatch(clearSets())
     goToUserHome();
   };
 
+  const unsetCredentials = () => {
+    dispatch(checkSigninStatus({
+      isLoggedIn: false,
+      accessToken: ''
+    }));
+  }
+
   // for now just add the new workout routine to an array
   // add a new workout routine to the list(probs API call to the DB)
   // reset the name
-  const handleCreateAndModify = async () => {
-    if (isLoggedIn && accessToken) {
-      if (routine._id) {
-        await dispatch(modifyRoutine(username));
-      } 
-      else {
-        await dispatch(addRoutine(username));
+  const handleCreateAndModify = async() => {
+    try {
+      if (isLoggedIn && accessToken) {
+        const isIdEmpty: boolean = routine._id === "";
+        console.log(isIdEmpty)
+        await dispatch(isIdEmpty ? addRoutine(username) : modifyRoutine(username));
+        dispatch(modifyRoutineState({
+            date: new Date().toDateString(),
+            created: isIdEmpty,
+            modified: !isIdEmpty
+          }));
+        handleCancel();
+        goToUserHome();
       }
+    } catch (err) {
+        setError(getErrorMessage(err));
+        unsetCredentials();
     }
-    handleCancel();
-    goToUserHome();
   };
 
 
@@ -73,10 +80,8 @@ const CreateOrEdit: React.FC = () => {
     try {
       await dispatch(getRoutines({accessToken: accessToken, username })).unwrap();
     } catch (err) {
-      dispatch(checkSigninStatus({
-        isLoggedIn: false,
-        accessToken: ''
-      }));
+      setError(getErrorMessage(err));
+      unsetCredentials();
     }
   }
 
@@ -104,7 +109,7 @@ const CreateOrEdit: React.FC = () => {
           left: '50%',
           transform: 'translate(-50%, -50%)',
           width: "85%",
-          height: 450,
+          height: "70%",
           overflow: "hidden", 
           bgcolor: 'background.paper',
           boxShadow: 24,
