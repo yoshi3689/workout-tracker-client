@@ -6,7 +6,7 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import NativeSelect from '@mui/material/NativeSelect';
 import { Box } from "@mui/material";
-import {useEditExercise} from "../hooks/useEditExercise";
+import {useEditExercise} from "../hooks/exercise/useEditExercise";
 
 export const formControlStyle = {
   display: "inline-flex",
@@ -22,13 +22,6 @@ export const formControlStyle = {
 
 const ExerciseDropdown: React.FC<{ exercise: IExercise }> = ({ exercise }) => {
   const [MuscleGroup, setMuscleGroup, setExerciseName] = useEditExercise(exercise);
-
-  const handleMuscleGroupChange = (value: string) => {
-    setMuscleGroup(value);
-  }
-  const handleNameChange = (value: string) => {
-    setExerciseName(value);
-  }
   
   const exercises = exercisesData as Record<string, any[]>
   
@@ -47,7 +40,7 @@ const ExerciseDropdown: React.FC<{ exercise: IExercise }> = ({ exercise }) => {
         onSelect={e => e.stopPropagation()}
         onFocus={e => e.stopPropagation()}
         onClick={e => e.stopPropagation()}  
-        onChange={(e) => handleMuscleGroupChange(e.target.value)}
+        onChange={(e) => setMuscleGroup(e.target.value)}
       >
         {Object.keys(exercises).map((m, i) => (
                 <option key={m + exercise._id} value={m} onClick={e => e.stopPropagation}>
@@ -69,7 +62,7 @@ const ExerciseDropdown: React.FC<{ exercise: IExercise }> = ({ exercise }) => {
         onSelect={e => e.stopPropagation()}
         onFocus={e => e.stopPropagation()}
         onClick={e => e.stopPropagation()}
-        onChange={(e) => handleNameChange(e.target.value)}
+        onChange={(e) => setExerciseName(e.target.value)}
       >
         {exercises[MuscleGroup].map((e, i) => (
                 <option key={e.name + exercise._id} value={e.name}>

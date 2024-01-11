@@ -1,8 +1,8 @@
 import React from 'react'
-import { useAppDispatch } from '../redux/hooks';
-import { IExercise, addExercise, exerciseSkelton } from '../redux/slices/exerciseSlice';
-import { addSet, setSkelton } from '../redux/slices/setsSlice';
-import exerciseData from "../data/exercises.json"
+import { useAppDispatch } from '../../redux/hooks';
+import { IExercise, addExercise, exerciseSkelton } from '../../redux/slices/exerciseSlice';
+import { addSet, setSkelton } from '../../redux/slices/setsSlice';
+import exerciseData from "../../data/exercises.json"
 
 export const useAddExercise = () => {
   const dispatch = useAppDispatch();

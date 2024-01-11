@@ -19,7 +19,7 @@ import ReadOnlySetRows from './ReadOnlySetRows';
 import '../styles/tableCell.css';
 import { Dot } from './Routines';
 import { assignMuscleGroup } from '../utils/filterByBodyPart';
-import { useDeleteExercise } from '../hooks/useDeleteExercise';
+import { useDeleteExercise } from '../hooks/exercise/useDeleteExercise';
 
 const iconCell = "iconCell";
 

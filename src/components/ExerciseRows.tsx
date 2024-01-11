@@ -14,7 +14,7 @@ import AddIcon from '@mui/icons-material/Add';
 import TableHead from '@mui/material/TableHead';
 
 import '../styles/tableCell.css';
-import { useAddExercise } from '../hooks/useAddExercise';
+import { useAddExercise } from '../hooks/exercise/useAddExercise';
 
 const ExerciseRows: React.FC<{ isNew: boolean }> = ({ isNew }) => {
   const exercises = useAppSelector(state => state.persistedReducer.exercises);
