@@ -5,13 +5,12 @@ import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 import Paper from "@mui/material/Paper";
-import { IRoutine } from '../redux/slices/routineSlice';
+import { IRoutine } from '../../redux/slices/routineSlice';
 import { Typography } from '@mui/material';
 
 const RoutinesListView: React.FC<{ routines: IRoutine[] }> = ({ routines }) => {
   return (
-    (routines) 
-    ? ( 
+    routines ? ( 
       <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
         <TableBody>
@@ -20,7 +19,6 @@ const RoutinesListView: React.FC<{ routines: IRoutine[] }> = ({ routines }) => {
               <RoutineRow
                 key={routine._id}
                 routine={routine}
-                isNew={false}
               ></RoutineRow>
             ))
           )}

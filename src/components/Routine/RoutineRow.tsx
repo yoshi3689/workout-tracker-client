@@ -1,8 +1,8 @@
-import React, { ChangeEvent, MouseEventHandler, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
-import ExerciseRow from './ExerciseRow';
-import { IRoutine } from '../redux/slices/routineSlice';
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import ExerciseRow from '../Exercise/ExerciseRow';
+import { IRoutine } from '../../redux/slices/routineSlice';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 
 import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
@@ -14,18 +14,17 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { Edit } from '@mui/icons-material';
 import { Box, Table, TableBody, TableHead, Typography } from '@mui/material';
-import { editNewRoutine } from '../redux/slices/newRoutineSlice';
-import { IExercise, loadExercises } from '../redux/slices/exerciseSlice';
-import { ISet, loadSets } from '../redux/slices/setsSlice';
-import '../styles/tableCell.css';
+import '../../styles/tableCell.css';
 import { Dot } from './Routines';
 
-import { changeRoutineTemplate, selectRoutineTemplate } from '../redux/slices/routineTemplateSlice';
+import { changeRoutineTemplate, selectRoutineTemplate } from '../../redux/slices/routineTemplateSlice';
+import ReadOnlySetRows from '../Set/ReadOnlySetRows';
+import { assignMuscleGroup } from '../../utils/filterByBodyPart';
 
 const iconCell = "iconCell";
 // represent a whole workout routine with exercises in it
-const RoutineRow: React.FC<{ routine: IRoutine, isNew: boolean }>
-  = ({ routine, isNew }) => {
+const RoutineRow: React.FC<{ routine: IRoutine }>
+  = ({ routine }) => {
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
   const routineId = useAppSelector(selectRoutineTemplate);
@@ -76,11 +75,21 @@ const RoutineRow: React.FC<{ routine: IRoutine, isNew: boolean }>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Table>
               <TableBody>
-                {!isNew && routine.exercises.map((exercise, i) => (
+                {routine.exercises.map((exercise, i) => (
                   <ExerciseRow
                     exercise={exercise}
                     key={i + exercise._id}
-                    isNew={isNew}
+                    collapsibleContent={
+                      <ReadOnlySetRows sets={exercise.sets} />
+                    }
+                    rowContent={
+                      <Box display={"flex"} alignItems="center">
+                        <Typography>{exercise.name}</Typography>
+                        <Box sx={{ marginLeft: "16px" }} >
+                          {exercise.muscleGroups.map(mg => Dot(assignMuscleGroup(mg), exercise.name))}
+                        </Box>
+                      </Box>
+                    }
                   />
                 ))} 
               </TableBody>

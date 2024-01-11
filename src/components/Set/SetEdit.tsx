@@ -1,15 +1,15 @@
 import React from "react";
-import { ISet } from '../redux/slices/setsSlice';
+import { ISet } from '../../redux/slices/setsSlice';
 
-import weights from "../data/weights.json"
-import rests from "../data/rests.json"
-import reps from "../data/reps.json"
+import weights from "../../data/weights.json"
+import rests from "../../data/rests.json"
+import reps from "../../data/reps.json"
 
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import { NativeSelect, TableCell } from "@mui/material";
-import { formControlStyle } from "./ExerciseDropdown";
-import { useEditSet } from "../hooks/set/useEditSet";
+import { formControlStyle } from "../Exercise/ExerciseDropdown";
+import { useEditSet } from "../../hooks/set/useEditSet";
 
 const SetEdit: React.FC<{ set: ISet, exerciseId: string }> = ({ set, exerciseId }) => {
   const [setWeight, setRep, setRest] = useEditSet(set, exerciseId);

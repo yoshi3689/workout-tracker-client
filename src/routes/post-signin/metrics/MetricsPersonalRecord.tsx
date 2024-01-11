@@ -3,8 +3,8 @@ import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import useAuth from '../../../hooks/useAuth';
 import { IPersonalRecord, getPersonalRecords } from '../../../redux/slices/personalRecordSlice';
 import { Box, Button, Grid, Pagination, PaginationItem, Stack, Typography } from '@mui/material';
-import MetricsCardList from '../../../components/MetricsCardList';
-import RecordsCard from '../../../components/RecordsCard';
+import MetricsCardList from '../../../components/Metrics/MetricsCardList';
+import RecordsCard from '../../../components/Metrics/RecordsCard';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 

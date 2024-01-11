@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import useAuth from '../../../hooks/useAuth';
 import { Box, Grid, Typography } from '@mui/material';
-import MetricsCardList from '../../../components/MetricsCardList';
+import MetricsCardList from '../../../components/Metrics/MetricsCardList';
 import { LineChart } from '@mui/x-charts';
 import { IExerciseLiftableWeight, getLiftableWeightsByExercise, selectPaginatedLiftableWeights } from '../../../redux/slices/liftableWeightSlice';
 

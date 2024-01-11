@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
-import UserForm, { ITextFieldProp } from '../../components/UserForm';
+import UserForm, { ITextFieldProp } from '../../components/UserActionForm/UserForm';
 import { AxiosError } from 'axios';
 import { Alert, AlertTitle, Container, Typography } from '@mui/material';
 import { useAppSelector, useAppDispatch } from '../../redux/hooks';

@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom'
 
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
 import { AxiosError, AxiosResponse } from 'axios';
-import Unauthorized from '../components/Unauthorized';
+import Unauthorized from '../components/Error/Unauthorized';
 import { signin } from '../redux/slices/authSlice';
 import { request } from '../axios/axios';
 import { Box, CircularProgress } from '@mui/material';

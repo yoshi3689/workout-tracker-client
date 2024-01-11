@@ -6,18 +6,18 @@ import TuneIcon from '@mui/icons-material/Tune';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 import { isMobile } from 'react-device-detect'; 
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { Box, Button, Collapse, Container, CssBaseline, IconButton, ToggleButton, ToggleButtonGroup, styled } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { clearNewRoutine, editNewRoutine } from '../redux/slices/newRoutineSlice';
-import { IExercise, clearExercises, loadExercises } from '../redux/slices/exerciseSlice';
-import { ISet, loadSets } from '../redux/slices/setsSlice';
-import { colors } from '../utils/useColors';
+import { clearNewRoutine, editNewRoutine } from '../../redux/slices/newRoutineSlice';
+import { IExercise, clearExercises, loadExercises } from '../../redux/slices/exerciseSlice';
+import { ISet, loadSets } from '../../redux/slices/setsSlice';
+import { colors } from '../../utils/useColors';
 import RoutinesListView from './RoutinesListView';
-import { muscleGroups } from '../utils/filterByBodyPart';
-import { IRoutine } from '../redux/slices/routineSlice';
-import useAuth from '../hooks/useAuth';
-import { selectRoutineTemplate } from '../redux/slices/routineTemplateSlice';
+import { muscleGroups } from '../../utils/filterByBodyPart';
+import { IRoutine } from '../../redux/slices/routineSlice';
+import useAuth from '../../hooks/useAuth';
+import { selectRoutineTemplate } from '../../redux/slices/routineTemplateSlice';
 
 export const Dot = (bodyPart: string, createdAt: string) => (
   <CircleIcon key={bodyPart+createdAt} sx={{ color: colors[bodyPart], height: "10px", width: "10px" }} />

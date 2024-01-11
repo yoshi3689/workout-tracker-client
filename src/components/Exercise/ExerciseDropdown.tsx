@@ -1,12 +1,12 @@
 import React from "react";
-import { IExercise } from "../redux/slices/exerciseSlice";
-import exercisesData from "../data/exercises.json";
+import { IExercise } from "../../redux/slices/exerciseSlice";
+import exercisesData from "../../data/exercises.json";
 
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import NativeSelect from '@mui/material/NativeSelect';
 import { Box } from "@mui/material";
-import {useEditExercise} from "../hooks/exercise/useEditExercise";
+import {useEditExercise} from "../../hooks/exercise/useEditExercise";
 
 export const formControlStyle = {
   display: "inline-flex",
@@ -27,7 +27,7 @@ const ExerciseDropdown: React.FC<{ exercise: IExercise }> = ({ exercise }) => {
   
   return (
       <Box>
-        <FormControl sx={formControlStyle}  >
+        <FormControl sx={formControlStyle}>
       <InputLabel variant="standard" htmlFor={exercise._id}>
         Muscle Group
       </InputLabel>

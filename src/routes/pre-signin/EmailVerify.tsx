@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { request } from '../../axios/axios';
 
-import UserForm, { ILinkProp, ITextFieldProp } from '../../components/UserForm';
+import UserForm, { ILinkProp, ITextFieldProp } from '../../components/UserActionForm/UserForm';
 import { PATHNAMES, REQUEST_U_R_PREFIX, defineUserPath } from '../../utils/pathnames';
 import { AxiosError, AxiosResponse } from 'axios';
 

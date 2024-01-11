@@ -1,7 +1,7 @@
 import React from "react";
 
-import { ISet, deleteSet } from '../redux/slices/setsSlice';
-import { useAppDispatch } from "../redux/hooks";
+import { ISet, deleteSet } from '../../redux/slices/setsSlice';
+import { useAppDispatch } from "../../redux/hooks";
 
 import Typography from "@mui/material/Typography";
 
@@ -11,10 +11,10 @@ import SetEdit from "./SetEdit";
 import { TableCell, TableRow } from "@mui/material";
 
 import { isMobile } from "react-device-detect";
-import "../styles/tableCell.css"
-import { useDeleteSet } from "../hooks/set/useDeleteSet";
 
-const SetRow: React.FC<{ set: ISet, index: number, exerciseId: string }>
+import { useDeleteSet } from "../../hooks/set/useDeleteSet";
+
+const SetDelete: React.FC<{ set: ISet, index: number, exerciseId: string }>
   = ({ set, index, exerciseId }) => {
   const [handleDelete] = useDeleteSet(set._id, exerciseId);
 
@@ -38,4 +38,4 @@ const SetRow: React.FC<{ set: ISet, index: number, exerciseId: string }>
   );
 };
 
-export default SetRow
+export default SetDelete

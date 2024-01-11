@@ -1,11 +1,11 @@
 import { Box, Grid, Typography } from '@mui/material'
-import RecordsCard from '../../../components/RecordsCard'
+import RecordsCard from '../../../components/Metrics/RecordsCard'
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks'
 import useAuth from '../../../hooks/useAuth'
 import { getPersonalRecords } from '../../../redux/slices/personalRecordSlice'
 import { getLiftableWeightsByExercise } from '../../../redux/slices/liftableWeightSlice'
 import { LineChart } from '@mui/x-charts'
-import MetricsCardList from '../../../components/MetricsCardList'
+import MetricsCardList from '../../../components/Metrics/MetricsCardList'
 import { useEffect } from 'react'
 
 

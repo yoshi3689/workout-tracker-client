@@ -1,8 +1,6 @@
 import React from 'react'
 
-import ExerciseRow from './ExerciseRow';
-
-import { useAppSelector } from "../redux/hooks";
+import { useAppSelector } from "../../redux/hooks";
 
 import IconButton from "@mui/material/IconButton";
 import TableCell from "@mui/material/TableCell";
@@ -13,13 +11,14 @@ import Typography from "@mui/material/Typography";
 import AddIcon from '@mui/icons-material/Add';
 import TableHead from '@mui/material/TableHead';
 
-import '../styles/tableCell.css';
-import { useAddExercise } from '../hooks/exercise/useAddExercise';
+import '../../styles/tableCell.css';
+import { useAddExercise } from '../../hooks/exercise/useAddExercise';
+import ExerciseDelete from './ExerciseDelete';
 
-const ExerciseRows: React.FC<{ isNew: boolean }> = ({ isNew }) => {
+const ExerciseAdd: React.FC<{ }> = ({ }) => {
   const exercises = useAppSelector(state => state.persistedReducer.exercises);
   const [handleAdd] = useAddExercise();
-
+  
   return (
     <Table>
       <TableHead>
@@ -34,19 +33,17 @@ const ExerciseRows: React.FC<{ isNew: boolean }> = ({ isNew }) => {
           </TableCell>
         </TableRow> 
       </TableHead>
-      {(isNew && Object.values(exercises).length !== 0) &&
+      {Object.values(exercises).length !== 0 &&
         <TableBody>
           {Object.values(exercises).map((exercise, i) => (
-            <ExerciseRow
-              isNew={isNew}
+            <ExerciseDelete
               exercise={exercise}
               key={i + "" + exercise._id}
             />
           ))}
-        </TableBody>
-      }
+        </TableBody>}
       </Table>
   )
 }
 
-export default ExerciseRows
+export default ExerciseAdd

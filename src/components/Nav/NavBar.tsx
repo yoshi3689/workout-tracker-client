@@ -6,7 +6,7 @@ import ViewListIcon from '@mui/icons-material/ViewList';
 import SearchIcon from '@mui/icons-material/Search';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { isMobile } from 'react-device-detect'; 
-import { useAppSelector } from '../redux/hooks';
+import { useAppSelector } from '../../redux/hooks';
 
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
@@ -17,9 +17,9 @@ import LoginIcon from '@mui/icons-material/Login';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import EqualizerIcon from '@mui/icons-material/Equalizer';
 
-import { PATHNAMES, defineUserPath } from "../utils/pathnames";
-import { selectIsLoggedIn } from '../redux/slices/authSlice';
-import useAuth from '../hooks/useAuth';
+import { PATHNAMES, defineUserPath } from "../../utils/pathnames";
+import { selectIsLoggedIn } from '../../redux/slices/authSlice';
+import useAuth from '../../hooks/useAuth';
 
 
 interface INavItem {

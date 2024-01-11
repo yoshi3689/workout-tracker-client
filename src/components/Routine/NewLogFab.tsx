@@ -1,11 +1,11 @@
 import AddIcon from '@mui/icons-material/Add';
-import { useAppDispatch } from '../redux/hooks';
+import { useAppDispatch } from '../../redux/hooks';
 import { useNavigate } from 'react-router-dom';
-import useAuth from '../hooks/useAuth';
+import useAuth from '../../hooks/useAuth';
 import Fab from '@mui/material/Fab';
-import { clearNewRoutine } from '../redux/slices/newRoutineSlice';
-import { clearExercises } from '../redux/slices/exerciseSlice';
-import { clearSets } from '../redux/slices/setsSlice';
+import { clearNewRoutine } from '../../redux/slices/newRoutineSlice';
+import { clearExercises } from '../../redux/slices/exerciseSlice';
+import { clearSets } from '../../redux/slices/setsSlice';
 
 
 const NewLogFab = () => {

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useLocation } from "react-router-dom"
 
-import Routines from '../../components/Routines'
-import Unauthorized from '../../components/Unauthorized';
+import Routines from '../../components/Routine/Routines'
+import Unauthorized from '../../components/Error/Unauthorized';
 
 
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
@@ -10,7 +10,7 @@ import { getRoutines } from '../../redux/slices/routineSlice';
 import { checkSigninStatus, selectAccessToken } from '../../redux/slices/authSlice';
 import { Box, Typography } from '@mui/material';
 import useAuth from '../../hooks/useAuth';
-import NewLogFab from '../../components/NewLogFab';
+import NewLogFab from '../../components/Routine/NewLogFab';
 import { modifyRoutineState, selectRoutineState } from '../../redux/slices/routineStateSlice';
 import { Alert, AlertTitle } from '@mui/material';
 

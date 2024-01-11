@@ -1,6 +1,6 @@
 import { FunctionComponent, PropsWithChildren } from 'react'
 
-import NavBar from "../components/NavBar";
+import NavBar from "../components/Nav/NavBar";
 import { Box, Link, Toolbar, Typography } from "@mui/material";
 import { isMobile } from "react-device-detect";
 

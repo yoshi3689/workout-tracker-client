@@ -10,13 +10,13 @@ import Typography from "@mui/material/Typography";
 import AddIcon from "@mui/icons-material/Add";
 import IconButton from "@mui/material/IconButton";
 
-import SetRow from './SetRow';
-import { useAppSelector } from "../redux/hooks";
-import { IExercise } from '../redux/slices/exerciseSlice';
+import SetDelete from './SetDelete';
+import { useAppSelector } from "../../redux/hooks";
+import { IExercise } from '../../redux/slices/exerciseSlice';
 import { isMobile } from 'react-device-detect';
-import { useAddSet } from '../hooks/set/useAddSet';
+import { useAddSet } from '../../hooks/set/useAddSet';
 
-const SetRows: React.FC<{ exercise: IExercise, isNew: boolean }> = ({ exercise, isNew }) => {
+const SetAdd: React.FC<{ exercise: IExercise }> = ({ exercise }) => {
 
   let sets = useAppSelector(state => state.persistedReducer.sets[exercise._id]);
   const [handleAdd] = useAddSet(sets, exercise._id);
@@ -43,15 +43,14 @@ const SetRows: React.FC<{ exercise: IExercise, isNew: boolean }> = ({ exercise, 
           >
             <Table size="small">
               <TableBody>
-                {isNew && Object.values(sets).map((set, i) => (
-                    <SetRow
-                      key={"" + i + set._id + exercise._id}
-                      exerciseId={exercise._id}
-                      index={i}
-                      set={set}
-                    />
-                   ))
-                  }
+                {Object.values(sets).map((set, i) => (
+                  <SetDelete
+                    key={"" + i + set._id + exercise._id}
+                    exerciseId={exercise._id}
+                    index={i}
+                    set={set}
+                  />
+                ))}
               </TableBody>
             </Table>
         </TableCell>
@@ -61,4 +60,4 @@ const SetRows: React.FC<{ exercise: IExercise, isNew: boolean }> = ({ exercise, 
   )
 }
 
-export default SetRows
+export default SetAdd

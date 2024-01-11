@@ -6,7 +6,7 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 // import Typography from "@mui/material/Typography";
-import { ISet } from '../redux/slices/setsSlice';
+import { ISet } from '../../redux/slices/setsSlice';
 
 const ReadOnlySetRows: React.FC<{ sets: ISet[] }> = ({ sets}) => {
   return (

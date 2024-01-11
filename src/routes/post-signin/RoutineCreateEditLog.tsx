@@ -8,7 +8,6 @@ import { IRoutine, addRoutine, getRoutines, modifyRoutine } from "../../redux/sl
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { editNewRoutine, clearNewRoutine } from "../../redux/slices/newRoutineSlice";
 import { useNavigate } from "react-router-dom";
-import ExerciseRows from "../../components/ExerciseRows";
 import { Box, Button, Container } from "@mui/material";
 import { clearExercises } from "../../redux/slices/exerciseSlice";
 import { clearSets } from "../../redux/slices/setsSlice";
@@ -16,9 +15,10 @@ import useAuth from "../../hooks/useAuth";
 import { checkSigninStatus, selectAccessToken, selectIsLoggedIn } from "../../redux/slices/authSlice";
 import { PATHNAMES, defineUserPath } from "../../utils/pathnames";
 import Modal from '@mui/material/Modal';
-import Routines from "../../components/Routines";
+import Routines from "../../components/Routine/Routines";
 import { getErrorMessage } from "../../utils/getErrorMessage";
 import { modifyRoutineState } from "../../redux/slices/routineStateSlice";
+import ExerciseAdd from "../../components/Exercise/ExerciseAdd";
 
 const CreateOrEdit: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -139,7 +139,7 @@ const CreateOrEdit: React.FC = () => {
         }
       </Box>
       <TableContainer component={Paper} >
-        <ExerciseRows isNew={true} />
+        <ExerciseAdd />
       </TableContainer>
       <Box paddingTop={"24px"} display={"flex"} justifyContent={"end"} >
         <Button
