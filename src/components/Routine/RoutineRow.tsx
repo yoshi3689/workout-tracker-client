@@ -20,6 +20,7 @@ import { Dot } from './Routines';
 import { changeRoutineTemplate, selectRoutineTemplate } from '../../redux/slices/routineTemplateSlice';
 import ReadOnlySetRows from '../Set/ReadOnlySetRows';
 import { assignMuscleGroup } from '../../utils/filterByBodyPart';
+import { formatDateString } from '../../utils/formatDateString';
 
 const iconCell = "iconCell";
 // represent a whole workout routine with exercises in it
@@ -57,7 +58,7 @@ const RoutineRow: React.FC<{ routine: IRoutine }>
         >
           {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
       </IconButton>
-        <Typography >{routine.createdAt.split("T")[0].replaceAll("-", "/")}</Typography>
+        <Typography >{formatDateString(routine.createdAt)}</Typography>
         <Box sx={{ marginLeft: "16px"}} >{routine.muscleGroups.map(mg => Dot(mg, routine.createdAt))}</Box>
     </Box>
     </TableCell>
@@ -65,6 +66,7 @@ const RoutineRow: React.FC<{ routine: IRoutine }>
       {RightMostElement}
     </TableCell>
   </>
+    
   return (
     <React.Fragment>
       <TableRow onClick={()=>setOpen(!open)} sx={{  position: "relative", cursor:"pointer" }} selected={open}>

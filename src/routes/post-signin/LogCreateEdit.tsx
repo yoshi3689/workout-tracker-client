@@ -17,6 +17,8 @@ import { useNavigate } from "react-router-dom";
 import { selectAccessToken } from "../../redux/slices/authSlice";
 import { PATHNAMES, defineUserPath } from "../../utils/pathnames";
 import Unauthorized from "../../components/Error/Unauthorized";
+import ModalWindow from "../../components/Modal/ModalWindow";
+import { formatDateString } from "../../utils/formatDateString";
 
 
 const LogCreateEdit: React.FC = () => {
@@ -37,34 +39,6 @@ const LogCreateEdit: React.FC = () => {
     handleClear();
     naviagte(defineUserPath(username, PATHNAMES.USER_HOME));
   }
-  
-
-  const RoutineSelectModal = (
-    <Modal
-      component={Container}
-      open={isModalOpen}
-      onClose={() => setIsModalOpen(false)}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-      >
-        <Box sx={{ position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: "85%",
-          height: "70%",
-          overflow: "hidden", 
-          bgcolor: 'background.paper',
-          boxShadow: 24,
-          p: 4,
-        }}>
-        <Routines
-          titleTextElement={<Typography variant="h6">Select Routine</Typography>}
-          onSelectCallBack={() => setIsModalOpen(false)}
-        />
-        </Box>
-      </Modal>
-  )
 
   return ((!fetchError && !createModifyError)
     ? (
@@ -74,7 +48,7 @@ const LogCreateEdit: React.FC = () => {
       </Box>
       <Box sx={{ paddingBottom: "24px" }}>
         {routine.isEditing && routine._id
-          ? <Typography>Editing {routine.createdAt}</Typography>
+          ? <Typography>Editing {formatDateString(routine.createdAt)}</Typography>
           : <>
             <Typography>Creating new routine</Typography>
             <Button onClick={() => setIsModalOpen(true)}>Use Previous Log to Start</Button>
@@ -99,7 +73,15 @@ const LogCreateEdit: React.FC = () => {
           </Button>
          }
       </Box>
-      {RoutineSelectModal}
+      <ModalWindow
+        isOpen={isModalOpen}   
+        handleClose={() => setIsModalOpen(false)}  
+        children={
+          <Routines
+            titleTextElement={<Typography variant="h6">Select Routine</Typography>}
+            onSelectCallBack={() => setIsModalOpen(false)}
+        />}  
+      />
     </Container>
     )
     : fetchError ? (
