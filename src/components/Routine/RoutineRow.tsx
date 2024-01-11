@@ -12,8 +12,8 @@ import Radio from '@mui/material/Radio';
 
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { Edit } from '@mui/icons-material';
-import { Box, Table, TableBody, TableHead, Typography } from '@mui/material';
+
+import { Box, Table, TableBody, Typography } from '@mui/material';
 import '../../styles/tableCell.css';
 import { Dot } from './Routines';
 
@@ -29,7 +29,7 @@ const RoutineRow: React.FC<{ routine: IRoutine }>
   const [open, setOpen] = useState(false);
   const routineId = useAppSelector(selectRoutineTemplate);
   
-    const handleRadioChangeVal = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleRadioChangeVal = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(changeRoutineTemplate(event.target.value))
   }
     

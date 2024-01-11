@@ -6,13 +6,13 @@ import Signup from "./routes/pre-signin/Signup";
 import EmailVerify from "./routes/pre-signin/EmailVerify";
 import PasswordSend from "./routes/pre-signin/PasswordSend";
 import VerificationResend from "./routes/pre-signin/VerificationResend";
-import CreateOrEdit from "./routes/post-signin/RoutineCreateEditLog";
+import LogCreateEdit from "./routes/post-signin/LogCreateEdit";
 
 import { PATHNAMES } from "./utils/pathnames";
 
 import SigninPersist from "./middleware/SigninPersist"
 
-import PageBase from "./pageBase/PageBase";
+import PageBase from "./components/pageBase/PageBase";
 import UserEdit from "./routes/post-signin/UserEdit";
 import Metrics from "./routes/post-signin/metrics/Metrics";
 import MetricsPersonalRecord from "./routes/post-signin/metrics/MetricsPersonalRecord";
@@ -65,7 +65,7 @@ const router = createBrowserRouter([
       },
       {
         path: PATHNAMES.USER_EDIT_ADD_LOG,
-        element: <PageBase><CreateOrEdit /></PageBase>,
+        element: <PageBase><LogCreateEdit /></PageBase>,
       },
       {
         path: PATHNAMES.USER_ACCOUNT_EDIT,

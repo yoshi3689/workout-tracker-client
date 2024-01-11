@@ -6,7 +6,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { request } from '../../axios/axios';
 import { PATHNAMES, REQUEST_U_R_PREFIX } from '../../utils/pathnames';
 import { Box, Typography } from '@mui/material';
-import BeforeSignin from '../../pageBase/PageBase';
+import BeforeSignin from '../../components/pageBase/PageBase';
 
 const Signup: React.FC = () => {
   const location = useLocation();
