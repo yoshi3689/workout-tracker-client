@@ -46,9 +46,9 @@ const VerifyEmail: React.FC = () => {
   const verifyEmail = () => {
     request.post(`${REQUEST_U_R_PREFIX}${defineUserPath(location.pathname.split("/")[2],PATHNAMES.EMAIL_VERIFY)}`, { code })
       .then((res: AxiosResponse)  => {
-        if (res.data.isVerfied) {
-          setSuccess("Email Verified");
-          navigate(PATHNAMES.SIGNIN)
+        if (res.data) {
+          setSuccess("Email Verified. Please go to signin page to log in :)");
+          // navigate(PATHNAMES.SIGNIN)
         }
       })
       .catch((error: AxiosError) => {

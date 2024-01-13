@@ -17,12 +17,11 @@ const Root = () => {
   const { fetchError } = useFetchRoutines(accessToken, username);
   
   return (
-    <Box component={"main"} sx={{ padding: 6, marginBottom: "100px" }}>
+    <Box component={"main"}>
       {!fetchError ? (
         <Box>
           <RoutineNotification />
           <Routines titleTextElement={<Typography variant='h5'>Past Logs</Typography>} />
-          <NewLogFab />
         </Box>
       ) : (
         <Unauthorized error={fetchError} />

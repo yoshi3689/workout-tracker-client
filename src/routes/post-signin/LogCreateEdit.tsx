@@ -40,21 +40,22 @@ const LogCreateEdit: React.FC = () => {
     naviagte(defineUserPath(username, PATHNAMES.USER_HOME));
   }
 
+  const topText = (routine.isEditing && routine._id)
+    ? ` editing ${formatDateString(routine.createdAt)}`
+    : " logging a new routine"
+
   return ((!fetchError && !createModifyError)
     ? (
-      <Container component={Paper} sx={{paddingBlock: "24px", marginBottom: "100px"}}>
-      <Box display={"flex"}>
-        <Typography gutterBottom variant="h5">Log Workout</Typography>
-      </Box>
-      <Box sx={{ paddingBottom: "24px" }}>
-        {routine.isEditing && routine._id
-          ? <Typography>Editing {formatDateString(routine.createdAt)}</Typography>
-          : <>
-            <Typography>Creating new routine</Typography>
-            <Button onClick={() => setIsModalOpen(true)}>Use Previous Log to Start</Button>
-          </>
-        }
-      </Box>
+      <Box>
+      <Typography gutterBottom variant="h5">Log Workout</Typography> 
+      <Box display="flex" justifyContent="space-between" sx={{ paddingBottom: "24px" }}>
+        
+        <Button variant="outlined" onClick={() => setIsModalOpen(true)}>Use Previous Log</Button>    
+        
+        </Box>
+        <Typography variant="overline">
+          You are {topText}
+        </Typography>
       <TableContainer component={Paper} >
         <ExerciseAdd />
       </TableContainer>
@@ -82,7 +83,7 @@ const LogCreateEdit: React.FC = () => {
             onSelectCallBack={() => setIsModalOpen(false)}
         />}  
       />
-    </Container>
+    </Box>
     )
     : fetchError ? (
       <Unauthorized error={fetchError} />

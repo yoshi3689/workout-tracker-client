@@ -5,15 +5,17 @@ import { request } from '../../axios/axios';
 import UserForm, { ILinkProp, ITextFieldProp } from '../../components/UserActionForm/UserForm';
 import { PATHNAMES, REQUEST_U_R_PREFIX } from '../../utils/pathnames';
 import { AxiosError, AxiosResponse } from 'axios';
-import { Typography } from '@mui/material';
 
-const PasswordSend: React.FC = () => {
+
+const PasswordReset: React.FC = () => {
   
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [code, setCode] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isSent, setIsSent] = useState(false);
+  const pathname = useLocation().pathname
 
   const goToSignin = () => {
     navigate(PATHNAMES.SIGNIN);
@@ -21,10 +23,16 @@ const PasswordSend: React.FC = () => {
 
   const textFieldProps: ITextFieldProp[] = [
   {
-    name: "email",
-    changeHandler: setEmail,
-    fieldState: email,
-    customFieldLabel: "Email Address"
+    name: "New Pasword",
+    changeHandler: setNewPassword,
+    fieldState: newPassword,
+    customFieldLabel: "New Password"
+    },
+    {
+    name: "username",
+    changeHandler: setCode,
+    fieldState: code,
+    customFieldLabel: "Verification Code"
   },
   ]
 
@@ -35,14 +43,14 @@ const PasswordSend: React.FC = () => {
     }
   ];
 
-  // send code to the BE and see if the email is decoded 
+  // send code to the BE and see if the newPassword is decoded 
   // from the last segment of the request URL
-  const sendPassword = () => {
-    request.post(REQUEST_U_R_PREFIX+PATHNAMES.PASSWORD_RESET_SEND, { email })
+  const resetPassword = () => {
+    request.post(REQUEST_U_R_PREFIX+PATHNAMES.PASSWORD_RESET_AFTER_LINK_CLICKED, { newPassword, code, userInfoEncoded: pathname.split("/")[2] })
       .then((res: AxiosResponse)  => {
         if (res.data) {
           setIsSent(true);
-          setSuccess("The password reset email is sent. Please check your email inbox.");
+          setSuccess("The password is reset! Please go to signin page");
         }
       })
       .catch((error: AxiosError) => {
@@ -55,7 +63,7 @@ const PasswordSend: React.FC = () => {
     <>
       {isSent ? (
         <UserForm
-          formTitle={"Reset email sent!"}
+          formTitle={"Password Sent!"}
           handleSubmit={goToSignin}
           buttonText={"Sign In"}
           success={success}
@@ -64,7 +72,7 @@ const PasswordSend: React.FC = () => {
           <UserForm
         formTitle={"Reset Password"}
         textFieldProps={textFieldProps}
-        handleSubmit={sendPassword}
+        handleSubmit={resetPassword}
         buttonText={"Send"}
         bottomLinkProps={linkProps}
         error={error}
@@ -76,4 +84,4 @@ const PasswordSend: React.FC = () => {
   );
 }
 
-export default PasswordSend
+export default PasswordReset

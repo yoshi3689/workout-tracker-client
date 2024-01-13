@@ -4,6 +4,7 @@ import { RootState } from "../store";
 import { request } from "../../axios/axios";
 import { ISet } from "./setsSlice";
 import { filterByBodyParts } from "../../utils/filterByBodyPart";
+import { adoptForPagination } from "../../utils/paginationAdapter";
 
 export interface IRoutine {
   _id: string,
@@ -110,13 +111,5 @@ export const routineSlice = createSlice({
 });
 
 export const selectPaginatedRoutines = (state: RootState) => {
-  return state.persistedReducer.routines.reduce<IRoutine[][]>((acc, curr, i) => {
-    console.log(curr)
-    const index = Math.floor(i / 6);
-    if (!acc[index]) {
-      acc[index] = [];
-    }
-    acc[index].push(curr);
-    return acc;
-  }, []);
+  return adoptForPagination(state.persistedReducer.routines);
 }

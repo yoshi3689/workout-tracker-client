@@ -34,7 +34,7 @@ const Signin: React.FC = () => {
   }
 
   const goToSendPassword = () => {
-    navigate(PATHNAMES.PASSWORD_RESET);
+    navigate(PATHNAMES.PASSWORD_RESET_BEFORE_LINK_CLICKED);
   }
 
   const goToSendVerification = () => {

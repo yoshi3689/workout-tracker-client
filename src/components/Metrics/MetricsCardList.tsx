@@ -7,7 +7,7 @@ const MetricsCardList: React.FC<{ linkToDetails?: string, listTitle: string, lin
   return (
     <Grid container rowSpacing={4.5} columnSpacing={2.75}>
       <Grid item xs={12}  sx={{ mb: -4.5 }}>
-        <Typography variant="h5">{listTitle}</Typography>
+        <Typography variant="subtitle1">{listTitle}</Typography>
         {(linkToDetails && linkToDetailsText) && <Link to={linkToDetails}><Button size='small' variant="text">{linkToDetailsText}<EastIcon /></Button></Link>}
         {pagination && pagination}
       </Grid>

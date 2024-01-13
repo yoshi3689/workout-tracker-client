@@ -1,7 +1,7 @@
 import { FunctionComponent, PropsWithChildren } from 'react'
 
 import NavBar from "../Nav/NavBar";
-import { Box, Link, Toolbar, Typography } from "@mui/material";
+import { Box, Container, Link, Toolbar, Typography } from "@mui/material";
 import { isMobile } from "react-device-detect";
 
 const Copyright = (props: any) => {
@@ -26,13 +26,18 @@ const Copyright = (props: any) => {
 const PageBase: FunctionComponent<PropsWithChildren> = ({ children }) => {
   return (
     <>
-      <Box component={"header"} sx={{height: 0}} >
-        <NavBar />
+      <Box component={"header"} >
+        {!isMobile && <>
+          <NavBar />
+          <Toolbar component="div" sx={{ mb: 3 }} />
+        </>}
       </Box>
-      <Toolbar />
-      {children}
-      <Box component={"footer"} sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}>
-        <Copyright sx={{ mt: 2, mb: 2 }} />
+      <Container sx={{ paddingBlock: 3, paddingInline: 2 }}>
+        {children}
+      </Container>
+      <Box component={"footer"} sx={{ position: 'sticky', bottom: 0, left: 0, right: 0 }}>
+        <Copyright sx={{ mt: 2, mb: isMobile ? 0 : 2 }} />
+        {isMobile && <NavBar />}
       </Box>
     </>
   )

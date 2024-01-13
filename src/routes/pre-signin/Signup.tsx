@@ -1,15 +1,14 @@
 import React, { useState } from 'react'
 
 import UserForm, { ILinkProp, ITextFieldProp } from "../../components/UserActionForm/UserForm";
-import { AxiosError, AxiosResponse } from 'axios';
+import { AxiosError } from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { request } from '../../axios/axios';
 import { PATHNAMES, REQUEST_U_R_PREFIX } from '../../utils/pathnames';
-import { Box, Typography } from '@mui/material';
-import BeforeSignin from '../../components/pageBase/PageBase';
+import { Typography } from '@mui/material';
+import { getErrorMessage } from '../../utils/getErrorMessage';
 
 const Signup: React.FC = () => {
-  const location = useLocation();
   const navigate = useNavigate();
 
   const [error, setError] = useState("");
@@ -24,7 +23,7 @@ const Signup: React.FC = () => {
   }
 
   const goToSendPassword = () => {
-    navigate(PATHNAMES.PASSWORD_RESET);
+    navigate(PATHNAMES.PASSWORD_RESET_BEFORE_LINK_CLICKED);
   }
 
   const linkProps: ILinkProp[] = [
@@ -65,7 +64,8 @@ const Signup: React.FC = () => {
         if (res.data) setIsSignedUp(true);
       })
       .catch((error: AxiosError) => {
-        setError(error.message);
+        setError(getErrorMessage(error.response ? error.response.data : error.message));
+        console.log(error)
         console.error(error);
       });
   }
@@ -100,7 +100,6 @@ const Signup: React.FC = () => {
       />
       )
     }
-    {error && (<Typography>{error}</Typography>)}
     </>
   );
 }

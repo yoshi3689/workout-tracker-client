@@ -7,22 +7,17 @@ import { isMobile } from 'react-device-detect'
 const Home = () => {
 
   return (
-    <Paper
+    <Box
       sx={{
-        position: 'fixed',
-        backgroundColor: '#9bc0ff',
+        
         color: '#fff',
-        mb: 4,
-        right: 0,
-        left: 0,
         height: "100vh",
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
-        p: { xs: 2, sm: 4 ,md: 6 },
-        paddingBlock: { xs: 4, md: 8 },
       }}
     >
+      <Box />
       <Box
         sx={{
           position: 'absolute',
@@ -75,7 +70,7 @@ const Home = () => {
           
         </Grid>
       </Grid>
-    </Paper>
+    </Box>
 
   )
 }

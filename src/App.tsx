@@ -17,6 +17,7 @@ import UserEdit from "./routes/post-signin/UserEdit";
 import Metrics from "./routes/post-signin/metrics/Metrics";
 import MetricsPersonalRecord from "./routes/post-signin/metrics/MetricsPersonalRecord";
 import MetricsLiftedWeight from "./routes/post-signin/metrics/MetricsLiftedWeight";
+import PasswordReset from "./routes/pre-signin/ResetPassword";
 
 const router = createBrowserRouter([
   {
@@ -36,8 +37,12 @@ const router = createBrowserRouter([
     element: <PageBase><EmailVerify/></PageBase>,
   },
   {
-    path: PATHNAMES.PASSWORD_RESET,
+    path: PATHNAMES.PASSWORD_RESET_BEFORE_LINK_CLICKED,
     element: <PageBase><PasswordSend /></PageBase>,
+  },
+  {
+    path: PATHNAMES.PASSWORD_RESET_AFTER_LINK_CLICKED,
+    element: <PageBase><PasswordReset /></PageBase>,
   },
   {
     path: PATHNAMES.EMAIL_RESEND,

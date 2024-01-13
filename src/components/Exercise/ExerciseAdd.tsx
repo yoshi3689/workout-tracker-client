@@ -15,7 +15,7 @@ import '../../styles/tableCell.css';
 import { useAddExercise } from '../../hooks/exercise/useAddExercise';
 import ExerciseDelete from './ExerciseDelete';
 
-const ExerciseAdd: React.FC<{ }> = ({ }) => {
+const ExerciseAdd: React.FC = () => {
   const exercises = useAppSelector(state => state.persistedReducer.exercises);
   const [handleAdd] = useAddExercise();
   

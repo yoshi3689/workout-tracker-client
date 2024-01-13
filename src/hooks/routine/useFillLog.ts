@@ -1,4 +1,3 @@
-import React from 'react'
 import { useAppDispatch } from '../../redux/hooks';
 import { editNewRoutine } from '../../redux/slices/newRoutineSlice';
 import { IExercise, loadExercises } from '../../redux/slices/exerciseSlice';
