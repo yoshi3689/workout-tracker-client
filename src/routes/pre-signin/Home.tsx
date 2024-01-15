@@ -43,13 +43,13 @@ const Home = () => {
               color="text.primary"
               gutterBottom
             >
-              Track your sweaty effort
+              Empower Your Fitness Journey
             </Typography>
             <Typography sx={{typography: {xs: "subtitle1", sm:"body1", lg:"subtitle1"}, pt:2}}  color="text.secondary" paragraph>
-              Are you tired of beating yourself up internally for dissatisfied results at the gym?
+              Are you frustrated with lackluster results despite your hard work at the gym?
             </Typography>
             <Typography sx={{typography: {xs: "subtitle1", sm:"body1", lg:"subtitle1"}}} color="text.secondary" paragraph>
-              This could happen due to unawareness of your past records. Let's log that sweaty gym effort and enjoy the process with us.
+              Discover the key to unlocking your potential by tracking your fitness journey with us. Say goodbye to internal self-criticism and hello to progress. Let's track those sweaty efforts together and relish the transformation process.
             </Typography>
             <Stack
               sx={{ pt: 2 }}
