@@ -10,21 +10,13 @@ import { useEffect } from 'react'
 import { PATHNAMES, defineUserPath } from '../../../utils/pathnames'
 import { useNavigate } from 'react-router-dom'
 
-
+// displays accumulated exercise data in different graphs
+// (for now just lifted weight over time)
 const Metrics = () => {
   const dispatch = useAppDispatch();
   const { username, token } = useAuth();
-  const personalRecords = useAppSelector(state => state.persistedReducer.personalRecords.slice(0, 3));
   const liftableWeights = useAppSelector(state => state.persistedReducer.liftableWeights.slice(0, 3));
   const navigate = useNavigate();
-
-  const fetchPRs = async () => {
-  try {
-    await dispatch(getPersonalRecords({ username, accessToken: token })).unwrap();
-  } catch (err) {
-    console.error(err)
-  }
-  }
 
   const fetchLiftedWeights = async () => {
   try {
@@ -35,7 +27,6 @@ const Metrics = () => {
   }
 
   useEffect(() => {
-    fetchPRs();
     fetchLiftedWeights();
   }, [])
 
